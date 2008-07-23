@@ -14,7 +14,7 @@
  (defvar depo-root "c:/work"
    "Personal repository's root directory"))
 
-(defvar emacs-root (concat depo-root "/baris-emacs")
+(defvar emacs-root (concat depo-root "/emacs")
   "Personal emacs directory")
 
 (defvar 3rd_party-root (concat emacs-root "/3rd_party")
