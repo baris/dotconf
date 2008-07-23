@@ -3,18 +3,18 @@
 (require 'functions)
 
 (Linux
- (defvar depo-root (concat (getenv "HOME") "/depo")
+ (defvar depo-root (concat (getenv "HOME") "/work/")
    "Personal repository's root directory"))
 
 (Darwin
- (defvar depo-root (concat (getenv "HOME") "/depo")
+ (defvar depo-root (concat (getenv "HOME") "/work")
    "Personal repository's root directory"))
 
 (Windows
- (defvar depo-root "c:/depo"
+ (defvar depo-root "c:/work"
    "Personal repository's root directory"))
 
-(defvar emacs-root (concat depo-root "/emacs")
+(defvar emacs-root (concat depo-root "/baris-emacs")
   "Personal emacs directory")
 
 (defvar 3rd_party-root (concat emacs-root "/3rd_party")
