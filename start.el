@@ -145,7 +145,7 @@
 ;;;;;;;;;;;;;;;;
 ;; Mode Hooks ;;
 ;;;;;;;;;;;;;;;;
-;; Don't use tabs in any text-mode
+
 (dolist (elt (list 'python-mode-hook
                    'lua-mode-hook
                    'c++-mode-hook 'c-mode-hook
@@ -159,6 +159,7 @@
                                         ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
               (local-set-key (kbd "C-j") 'newline-and-indent)
               (outline-minor-mode)
+              (textmate-mode)
               (imenu-add-menubar-index)))) ; generate index
 
 
