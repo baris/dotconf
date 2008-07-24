@@ -196,61 +196,6 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (defalias 'shell 'new-shell)
 
-;; For Bakery
-(setq tags-table-list '("/studio/resource/rnd"))
-
-(defun ccmd (&optional d) (cd (concat "~/work/cmd/" d)))
-(defun clib (&optional d) (cd (concat "~/work/lib/" d)))
-(defun cdso (&optional d) (cd (concat "~/work/dso/" d)))
-
-;;;;;;;;;;;;;;;;;;;;;;;
-;; Abandoned modules ;;
-;;;;;;;;;;;;;;;;;;;;;;;
-
-;; scroll before the end/beginning of the buffer
-;; (Emacs22+
-;;  (require 'smooth-scrolling))
-
-;; show white space
-;;(require 'show-wspace)
-;;(toggle-tabs-font-lock)
-;;(toggle-hardspace-font-lock)
-
-
-;; CMake
-;;(load-3rd_party-file "cmake-mode.el")
-;;(add-to-list 'auto-mode-alist '("CMakeLists.txt" . cmake-mode))
-
-
-;; highlight the symbol under point in the
-;;(require 'light-symbol)
-
-
-;; show line numbers like vim does
-;;(require 'setnu)
-
-
-;; ;;setup gnus for Gmail
-;; (setq user-mail-address "baris@metin.org")
-;; (setq user-full-name "Baris Metin")
-;; (setq gnus-user-agent '(emacs gnus))
-;; (setq gnus-select-method '(nnimap "metin"
-;;                                   (nnimap-address "imap.gmail.com")
-;;                                   (nnimap-server-port 993)
-;;                                   (nnimap-stream ssl)))
-;; (setq smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-;;       smtpmail-smtp-server "smtp.gmail.com"
-;;       smtpmail-default-smtp-server "smtp.gmail.com"
-;;       send-mail-function 'smtpmail-send-it
-;;       message-send-mail-function 'smtpmail-send-it
-;;       smtpmail-smtp-service 587
-;;       smtpmail-auth-credentials '(("smtp.gmail.com" 587 "baris@metin.org"  nil)))
-;; (require 'starttls)
-;; (require 'smtpmail)
-;; ;;Gnus keys
-;; ;;(define-key gnus-summary-mode-map (kbd "d") '(lambda )
-
-
 ;; Ask if I want to use untabify at save
 ;; (add-hook 'before-save-hook
 ;;           (lambda ()
