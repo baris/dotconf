@@ -58,6 +58,12 @@
  '(font-lock-negation-char-face ((t (:bold t :foreground "#000000"))))
  '(font-lock-preprocessor-face ((t (:bold t :foreground "#000000")))))
 
+(if (not (eq window-system nil))
+    (progn 
+      (set-frame-height (selected-frame)
+                        (- (/ (x-display-pixel-height) (frame-char-height)) 6))
+      (set-frame-width (selected-frame) 120)))
+
 
 ;;;;;;;;;;;
 ;; Modes ;;
