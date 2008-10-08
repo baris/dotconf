@@ -73,15 +73,6 @@ Using this with KPDF works fine."
           (find-alternate-file fname)))))
 (add-hook 'find-file-hooks 'read-real-file)
 
-(defun save-emacs-file-to-repo ()
-  "While writing to ~/.emacs sync with the one in the repository(depo)"
-  (let ((dot_emacs (concat depo-root "/.emacs")))
-    (if (equal user-init-file buffer-file-name)
-        (progn
-          (delete-file dot_emacs)
-          (copy-file user-init-file dot_emacs)))))
-(add-hook 'after-save-hook 'save-emacs-file-to-repo)
-
 ;; start IRC client
 (defun start-erc ()
   (interactive "")
