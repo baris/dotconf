@@ -191,4 +191,7 @@ Using this with KPDF works fine."
   (eshell)
   (rename-buffer (format "*shell-%s*" name)))
 
+(defun ff (filename)
+  (find-file filename))
+
 (provide 'functions)

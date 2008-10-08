@@ -42,10 +42,8 @@
 (set-cursor-color "#000000")
 (custom-set-faces
  '(default ((t (:background "#f0f0f0" :foreground "#000000"))))
- 
  '(ido-first-match ((t (:foreground "#99FF00"))))
  '(ido-subdir ((t (:foreground "#6BCFF7"))))
-
  '(font-lock-comment-face ((t (:foreground "#229955"))))
  '(font-lock-string-face ((t (:foreground "#4444ff"))))
  '(font-lock-keyword-face ((t (:bold nil :foreground "#851565"))))
@@ -60,9 +58,9 @@
 
 (if (not (eq window-system nil))
     (progn 
+      (set-frame-width (selected-frame) 120)
       (set-frame-height (selected-frame)
-                        (- (/ (x-display-pixel-height) (frame-char-height)) 6))
-      (set-frame-width (selected-frame) 120)))
+                        (- (/ (x-display-pixel-height) (frame-char-height)) 2))))
 
 
 ;;;;;;;;;;;
@@ -178,12 +176,6 @@
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 
-;; nxml mode use spaces instead of tabs
-(add-to-list 'auto-mode-alist
-             '("\\.\\(xml\\|xsl\\|rng\\|xhtml\\|html\\)\\'" . nxml-mode))
-(fset 'xml-mode 'nxml-mode)
-
-
 ;; Open the files designated by emacsclient in their own frame
 (add-hook 'server-switch-hook
           (lambda nil
@@ -198,19 +190,10 @@
 
 
 (require 'yasnippet-bundle)
-(require 'keys)
 (defalias 'yes-or-no-p 'y-or-n-p)
 (defalias 'shell 'new-shell)
+(require 'keys)
 
-;; Ask if I want to use untabify at save
-;; (add-hook 'before-save-hook
-;;           (lambda ()
-;;             (save-excursion
-;;               (save-restriction
-;;                 (goto-char (point-min))
-;;                 (if (search-forward "\t" nil t)
-;;                     (if (y-or-n-p "Tabs detected! Untabify file? ")
-;;                         (untabify (point-min) (point-max))))))))
 
 (provide 'start)
 
