@@ -15,6 +15,7 @@
 (global-set-key (kbd "M-p") (lambda () (interactive) (scroll-down 1)))
 
 (global-set-key (kbd "C-j") 'newline-and-indent)
+(global-set-key (kbd "C-o") 'open-line-keeping-indent)
 
 ;;; completions
 (global-set-key (kbd "C-/") 'hippie-expand)

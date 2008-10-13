@@ -47,7 +47,8 @@
         )       
       :group 'textmate
       (progn
-        (setq skeleton-pair t))
+        (setq skeleton-pair t)
+        (indent-according-to-mode))
       )
 
 ;;implementation stuff

@@ -142,6 +142,13 @@ Using this with KPDF works fine."
       (setq first-run nil))))
 
 
+(defun open-line-keeping-indent ()
+  (interactive)
+  (progn
+    (move-beginning-of-line nil)
+    (open-line 1)
+    (indent-according-to-mode)))
+
 (defun rnd_make_call (&optional has_args)
   (interactive)
   (progn 
