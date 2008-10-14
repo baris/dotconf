@@ -149,6 +149,13 @@ Using this with KPDF works fine."
     (open-line 1)
     (indent-according-to-mode)))
 
+(defun yank-keeping-indent ()
+  (interactive)
+  (progn
+    (set-mark (point))
+    (yank)
+    (indent-region (mark) (point))))
+
 (defun rnd_make_call (&optional has_args)
   (interactive)
   (progn 

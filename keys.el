@@ -16,6 +16,7 @@
 
 (global-set-key (kbd "C-j") 'newline-and-indent)
 (global-set-key (kbd "C-o") 'open-line-keeping-indent)
+(global-set-key (kbd "C-y") 'yank-keeping-indent)
 
 ;;; completions
 (global-set-key (kbd "C-/") 'hippie-expand)
