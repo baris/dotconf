@@ -56,11 +56,16 @@
  '(font-lock-negation-char-face ((t (:bold t :foreground "#000000"))))
  '(font-lock-preprocessor-face ((t (:bold t :foreground "#000000")))))
 
+(defun change-frame-size-to-my-pref (frame)
+  (if (not (eq window-system nil))
+      (progn
+        (set-frame-width frame 120)
+        (set-frame-height frame
+                          (- (/ (x-display-pixel-height) (frame-char-height)) 2)))))
+(add-to-list 'after-make-frame-functions 'change-frame-size-to-my-pref)
 (if (not (eq window-system nil))
     (progn
-      (set-frame-width (selected-frame) 120)
-      (set-frame-height (selected-frame)
-                        (- (/ (x-display-pixel-height) (frame-char-height)) 2))
+      (change-frame-size-to-my-pref (selected-frame))
       (set-frame-position (selected-frame) (- (x-display-pixel-width) (frame-width)) 0)))
 
 
