@@ -6,8 +6,6 @@
 (require 'variables)
 (require 'functions)
 
-(server-start)
-
 ;;;;;;;;;;;
 ;; Style ;;
 ;;;;;;;;;;;
