@@ -59,7 +59,7 @@
       (progn
         (set-frame-width frame 120)
         (set-frame-height frame
-                          (- (/ (x-display-pixel-height) (frame-char-height)) 2)))))
+                          (- (/ (x-display-pixel-height) (frame-char-height)) 5)))))
 (add-to-list 'after-make-frame-functions 'change-frame-size-to-my-pref)
 (if (not (eq window-system nil))
     (progn
