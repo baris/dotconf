@@ -1,4 +1,5 @@
-;; specific to the bakery
+;; Baris Metin <baris@metin.org>
+
 (setq tags-table-list '("/studio/resource/rnd"))
 
 

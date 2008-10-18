@@ -1,4 +1,4 @@
-;; Copyright (c) 2005-2007 Baris Metin <baris@metin.org>
+;; Baris Metin <baris@metin.org>
 
 (defun emacs-major-version ()
   "extract major emacs version from emacs-version and return as integer"

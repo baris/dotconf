@@ -1,6 +1,6 @@
-;; Copyright (c) 2005-2007 Baris Metin <baris@metin.org>
+;; Baris Metin <baris@metin.org>
 ;;
-;; emacs is such a slut, there's nothing she won't do for you.
+;; emacs is such a slut, there's nothing she won't do for you ;)
 
 (add-to-list 'load-path (file-name-directory load-file-name))
 (require 'variables)

@@ -1,4 +1,4 @@
-;; personal key bindings...
+;; Baris Metin <baris@metin.org>
 
 ; make ALT+backspace work
 (define-key global-map [(meta backspace)] 'backward-kill-word)

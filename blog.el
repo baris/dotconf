@@ -1,4 +1,5 @@
-;; Copyright (c) 2005-2007 Baris Metin <baris@metin.org>
+;; Baris Metin <baris@metin.org>
+
 (autoload 'xml-rpc-method-call "xml-rpc" t)
 
 (defvar weblog-xmlrpc-url "http://www.metin.org/weblog/xml_rpc/"
