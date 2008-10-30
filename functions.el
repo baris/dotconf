@@ -141,6 +141,11 @@ Using this with KPDF works fine."
             new-width (window-width (selected-window)))
       (setq first-run nil))))
 
+(defun newline-and-indent-with-curline-indent ()
+  (interactive)
+  (progn
+    (indent-according-to-mode)
+    (newline-and-indent)))
 
 (defun open-line-keeping-indent ()
   (interactive)
@@ -155,6 +160,22 @@ Using this with KPDF works fine."
     (set-mark (point))
     (yank)
     (indent-region (mark) (point))))
+
+
+(defun change-frame-size-to-my-pref (frame)
+  (if (not (eq window-system nil))
+      (progn
+        (set-frame-width frame 120)
+        (set-frame-height frame
+                          (- (/ (x-display-pixel-height) (frame-char-height)) 5)))))
+
+(defun current-frame-to-my-pref ()
+  (interactive)
+  (if (not (eq window-system nil))
+      (progn
+        (change-frame-size-to-my-pref (selected-frame))
+        (set-frame-position (selected-frame) (- (x-display-pixel-width) (frame-width)) 0))))
+
 
 (defun rnd_make_call (&optional has_args)
   (interactive)

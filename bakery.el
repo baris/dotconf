@@ -1,4 +1,4 @@
-;; Baris Metin <baris@metin.org>
+;; handy functions for The Bakery...
 
 (setq tags-table-list '("/studio/resource/rnd"))
 

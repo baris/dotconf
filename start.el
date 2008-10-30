@@ -6,6 +6,8 @@
 (require 'variables)
 (require 'functions)
 
+(server-start)
+
 ;;;;;;;;;;;
 ;; Style ;;
 ;;;;;;;;;;;
@@ -53,18 +55,6 @@
  '(font-lock-warning-face ((t (:underline t :foreground "VioletRed"))))
  '(font-lock-negation-char-face ((t (:bold t :foreground "#000000"))))
  '(font-lock-preprocessor-face ((t (:bold t :foreground "#000000")))))
-
-(defun change-frame-size-to-my-pref (frame)
-  (if (not (eq window-system nil))
-      (progn
-        (set-frame-width frame 120)
-        (set-frame-height frame
-                          (- (/ (x-display-pixel-height) (frame-char-height)) 5)))))
-(add-to-list 'after-make-frame-functions 'change-frame-size-to-my-pref)
-(if (not (eq window-system nil))
-    (progn
-      (change-frame-size-to-my-pref (selected-frame))
-      (set-frame-position (selected-frame) (- (x-display-pixel-width) (frame-width)) 0)))
 
 
 ;;;;;;;;;;;
@@ -165,7 +155,9 @@
               (font-lock-add-keywords nil
                                       '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
                                         ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
-              (local-set-key (kbd "C-j") 'newline-and-indent)
+              (local-set-key (kbd "C-j") 'newline-and-indent-with-curline-indent)
+              (local-set-key (kbd "C-o") 'open-line-keeping-indent)
+              (local-set-key (kbd "C-y") 'yank-keeping-indent)
               (outline-minor-mode)
               (textmate-mode)
               (imenu-add-menubar-index)))) ; generate index

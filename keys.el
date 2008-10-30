@@ -14,10 +14,6 @@
 (global-set-key (kbd "M-n") (lambda () (interactive) (scroll-up 1)))
 (global-set-key (kbd "M-p") (lambda () (interactive) (scroll-down 1)))
 
-(global-set-key (kbd "C-j") 'newline-and-indent)
-(global-set-key (kbd "C-o") 'open-line-keeping-indent)
-(global-set-key (kbd "C-y") 'yank-keeping-indent)
-
 ;;; completions
 (global-set-key (kbd "C-/") 'hippie-expand)
 (global-set-key (kbd "C-'") 'ff-find-other-file)  
@@ -38,6 +34,7 @@
 (global-set-key (kbd "C-t") 'switch-c-to-h)
 
 (global-set-key (kbd "C-|") 'enlarge-current-window-to-max)
+(global-set-key (kbd "C-\\") 'current-frame-to-my-pref)
 
 (global-set-key (kbd "C-M-S-SPC") 'other-window)
 
