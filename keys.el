@@ -34,7 +34,7 @@
 (global-set-key (kbd "C-t") 'switch-c-to-h)
 
 (global-set-key (kbd "C-|") 'enlarge-current-window-to-max)
-(global-set-key (kbd "C-\\") 'current-frame-to-my-pref)
+(global-set-key (kbd "C-\\") 'cascade-my-frames)
 
 (global-set-key (kbd "C-M-S-SPC") 'other-window)
 

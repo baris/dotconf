@@ -13,7 +13,7 @@
 ;;;;;;;;;;;
 (tool-bar-mode nil)
 (menu-bar-mode t)
-(set-scroll-bar-mode t)
+(set-scroll-bar-mode nil)
 ;;  (setq scroll-bar-mode-explicit t)
 (blink-cursor-mode t)
 (setq line-number-mode t)
