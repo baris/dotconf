@@ -178,38 +178,38 @@ Using this with KPDF works fine."
                   (- (/ (/ (x-display-pixel-height) (frame-char-height))
                         (ceiling (/ (float num-frames)
                                     (float num-max-columns))))
-                     ;; -4 for windowmanager decorations and modeline
+                     ;; -4 for windowmanager decorations, menubar and modeline
                      4))
           (setq force-height
                 (- (/ (x-display-pixel-height) (frame-char-height)) 5)))
         ;; define width of a frame
         (if (> num-frames 1)
             (setq force-width
-                  (- (/ (/ (x-display-pixel-width) (frame-char-width)) 2) 5)))
+                  (- (/ (/ (x-display-pixel-width) (frame-char-width)) 2)
+                     ;; -6 for window manager decorations
+                     6)))
         ;; resize frames and position them
         (dolist (elt (frames-on-display-list))
             (progn
               (set-frame-width elt force-width)
-              (set-frame-height elt force-height)
-              (if (eq num-frames 1)
-                  (set-frame-position elt
-                                      (- (x-display-pixel-width) (frame-width))
-                                      0)
-                (set-frame-position elt start-left start-top))
-              (if (eq start-left 0)
-                  (setq start-left (+ start-left
-                                      (* (frame-width elt) (frame-char-width))
-                                      ;; +4 for window manager decorations
-                                      (* 4 (frame-char-width))))
-                (progn
-                  (setq start-left 0)
-                  (setq start-top
-                        (+ start-top
-                           (* force-height (frame-char-height))
-                           ;; +6 for window manager decorations and modeline
-                           (* 6 (frame-char-height)))))))))))
-                    
-    
+              (set-frame-height elt force-height)))
+        (dolist (elt (frames-on-display-list))
+          (progn
+            (sleep-for 0 100)
+            (if (eq num-frames 1)
+                (set-frame-position elt
+                                    (- (x-display-pixel-width) (frame-pixel-width elt))
+                                    0)
+              (set-frame-position elt start-left start-top))
+            (if (eq start-left 0)
+                (setq start-left (+ start-left
+                                    (frame-pixel-width elt) 10))
+              (progn
+                (setq start-left 0)
+                (setq start-top
+                      (+ start-top
+                         (frame-pixel-height elt) 10)))))))))
+
 
 (defun rnd_make_call (&optional has_args)
   (interactive)
