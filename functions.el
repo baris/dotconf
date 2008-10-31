@@ -174,31 +174,40 @@ Using this with KPDF works fine."
             (start-left 0))
         ;; define height of a frame
         (if (> num-frames num-max-columns)
-            (setq force-height (- (/ (/ (x-display-pixel-height) (frame-char-height))
-                                     (ceiling (/ (float num-frames) (float num-max-columns))))
-                                  4)) ;; -4 for windowmanager decorations and modeline
-          (setq force-height (- (/ (x-display-pixel-height) (frame-char-height)) 5)))
+            (setq force-height
+                  (- (/ (/ (x-display-pixel-height) (frame-char-height))
+                        (ceiling (/ (float num-frames)
+                                    (float num-max-columns))))
+                     ;; -4 for windowmanager decorations and modeline
+                     4))
+          (setq force-height
+                (- (/ (x-display-pixel-height) (frame-char-height)) 5)))
         ;; define width of a frame
         (if (> num-frames 1)
-            (setq force-width (- (/ (/ (x-display-pixel-width) (frame-char-width)) 2) 5)))
+            (setq force-width
+                  (- (/ (/ (x-display-pixel-width) (frame-char-width)) 2) 5)))
         ;; resize frames and position them
         (dolist (elt (frames-on-display-list))
             (progn
               (set-frame-width elt force-width)
               (set-frame-height elt force-height)
               (if (eq num-frames 1)
-                  (set-frame-position elt (- (x-display-pixel-width) (frame-width)) 0)
+                  (set-frame-position elt
+                                      (- (x-display-pixel-width) (frame-width))
+                                      0)
                 (set-frame-position elt start-left start-top))
               (if (eq start-left 0)
                   (setq start-left (+ start-left
                                       (* (frame-width elt) (frame-char-width))
-                                      (* 4 (frame-char-width)))) ;; +4 for window manager decorations
+                                      ;; +4 for window manager decorations
+                                      (* 4 (frame-char-width))))
                 (progn
                   (setq start-left 0)
-                  (setq start-top (+ start-top
-                                     (* force-height (frame-char-height))
-                                     ;; +4 for window manager decorations and modeline
-                                     (* 6 (frame-char-height)))))))))))
+                  (setq start-top
+                        (+ start-top
+                           (* force-height (frame-char-height))
+                           ;; +6 for window manager decorations and modeline
+                           (* 6 (frame-char-height)))))))))))
                     
     
 
