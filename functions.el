@@ -162,6 +162,14 @@ Using this with KPDF works fine."
     (indent-region (mark) (point))))
 
 
+(defun setup-initial-frame-parameters ()
+  (if (not (eq window-system nil))
+      (progn 
+        (set-frame-position (selected-frame)
+                            (frame-parameter (selected-frame) 'left)
+                            0)
+        (set-frame-width (selected-frame) 120))))
+
 (defun cascade-my-frames ()
   (interactive)
   (if (not (eq window-system nil))

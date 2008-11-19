@@ -31,6 +31,8 @@
 (setq default-input-method "rfc1345")
 (setq visible-bell t) ;; don't beep 
 
+;; (setq line-spacing 0.1) ;; same line-spacing with TextMate
+
 (setq current-language-environment "UTF-8")
 (Windows
  (set-keyboard-coding-system 'iso8859-9)
@@ -56,6 +58,8 @@
  '(font-lock-negation-char-face ((t (:bold t :foreground "#000000"))))
  '(font-lock-preprocessor-face ((t (:bold t :foreground "#000000")))))
 
+
+(setup-initial-frame-parameters)
 
 ;;;;;;;;;;;
 ;; Modes ;;
