@@ -159,12 +159,17 @@
               (font-lock-add-keywords nil
                                       '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
                                         ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
-              (local-set-key (kbd "C-j") 'newline-and-indent-with-curline-indent)
               (local-set-key (kbd "C-o") 'open-line-keeping-indent)
               (local-set-key (kbd "C-y") 'yank-keeping-indent)
               (outline-minor-mode)
               (textmate-mode)
               (imenu-add-menubar-index)))) ; generate index
+
+(dolist (elt (list 'c++mode-hook 'c-mode-hook
+                   'java-mode-hook))
+  (add-hook elt
+            (lambda ()
+              (local-set-key (kbd "C-j") 'newline-and-indent-with-curline-indent))))
 
 
 ;; python-mode-hook
