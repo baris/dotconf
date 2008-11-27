@@ -79,6 +79,19 @@
     (find-file (concat (v_get "v_resource_dir") "/usr_update/" *date* "_" (v_get "v_usr_name")))))
 
 
+(defun rnd_make_call (&optional has_args)
+  (interactive)
+  (progn 
+    (setq rnd_make_args "")
+    (if has_args
+        (setq rnd_make_args (read-string "rnd_make arguments: ")))
+    (compile (concat "rnd_make " rnd_make_args))))
+
+(defun rnd_make ()
+  (interactive)
+  (rnd_make_call t))
+
+
 ;; commands for eshell
 (defun ccmd (&optional d) (cd (concat (v_get "v_usr_home_dir") "/work/cmd/" d)))
 (defun clib (&optional d) (cd (concat (v_get "v_usr_home_dir") "/work/lib/" d)))

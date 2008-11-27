@@ -219,19 +219,6 @@ Using this with KPDF works fine."
                          (frame-pixel-height elt) 10)))))))))
 
 
-(defun rnd_make_call (&optional has_args)
-  (interactive)
-  (progn 
-    (setq rnd_make_args "")
-    (if has_args
-        (setq rnd_make_args (read-string "rnd_make arguments: ")))
-    (compile (concat "rnd_make " rnd_make_args))))
-
-(defun rnd_make ()
-  (interactive)
-  (rnd_make_call t))
-
-
 (defun start-caml ()
   (interactive)
   (add-to-list 'load-path (concat 3rd_party-root "/caml-mode"))
@@ -240,26 +227,38 @@ Using this with KPDF works fine."
   (autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
   (require 'caml-font))
 
-;; Moving in the window quickly
-(defun u ()
-  (interactive)
-  (windmove-up))
-(defun d ()
-  (interactive)
-  (windmove-down))
-(defun l ()
-  (interactive)
-  (windmove-left))
-(defun r ()
-  (interactive)
-  (windmove-right))
+;; isn't running the shell in emacs is a big deal?
+(defconst my-shell-prefix "*shell-")
+(defconst my-default-shell-name "default")
 
 (defun new-shell (name)
-  (interactive "sName for shell: ")
-  (eshell)
-  (rename-buffer (format "*shell-%s*" name)))
+  (interactive "sNew Shell Name: ")
+  (ansi-term "/bin/bash") ;; switch back to eshell?
+  (if (eq name nil)
+      (setq name my-default-shell-name))
+  (rename-buffer (format "%s%s*" my-shell-prefix name)))
 
-(defun ff (filename)
-  (find-file filename))
+(defun shell-buffers ()
+  (interactive)
+  (let ((all-shell-buffers ))
+    (dolist (elt (buffer-list))
+      (if (string= my-shell-prefix (ignore-errors (substring (buffer-name elt) 0 7)))
+          (add-to-list 'all-shell-buffers (buffer-name elt))))
+    all-shell-buffers))
+
+(defun switch-to-shell ()
+  (interactive)
+  (let ((buffers (shell-buffers)))
+    (let ((buffers-len (safe-length buffers)))
+      (if (< buffers-len 2)
+          (if (= buffers-len 1)
+              (if (string= (buffer-name) (concat my-shell-prefix my-default-shell-name "*"))
+                  (new-shell (read-string "New Shell Name: "))
+                (switch-to-buffer (car buffers)))
+            (new-shell nil))
+        (switch-to-buffer (completing-read "Switch to Shell: " buffers))))))
+
+(global-set-key (kbd "<f2>") 'switch-to-shell)
+(global-set-key (kbd "<f3>") 'new-shell)
 
 (provide 'functions)

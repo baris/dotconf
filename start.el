@@ -196,7 +196,7 @@
 
 (require 'yasnippet-bundle)
 (defalias 'yes-or-no-p 'y-or-n-p)
-(defalias 'shell 'new-shell)
+;;(defalias 'shell 'new-shell)
 (require 'keys)
 
 
