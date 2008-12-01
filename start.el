@@ -66,10 +66,9 @@
 ;;;;;;;;;;;
 (add-to-list 'load-path 3rd_party-root)
 
-(setq compilation-scroll-output t)
+(use-ido-mode)
 
-(Emacs22+
- (require 'blog))
+(setq compilation-scroll-output t)
 
 ;; use English dictionary by default
 (Pardus
@@ -77,14 +76,10 @@
 (Darwin
  (setq ispell-program-name "aspell"))
 
-(use-ido-mode)
-
 (setq dired-listing-switches "-l")
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
 
-(Darwin
- (setq browse-url-browser-function 'browse-url-safari))
 (Linux
  (setq browse-url-browser-function 'browse-url-firefox))
 
