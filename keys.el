@@ -38,7 +38,8 @@
 
 (global-set-key (kbd "C-M-S-SPC") 'other-window)
 
-(global-set-key (kbd "<f5>") 'eshell)
+(global-set-key (kbd "<f2>") 'switch-to-shell)
+(global-set-key (kbd "<f3>") 'new-shell)
 (global-set-key (kbd "<f6>") 'compile)
 (global-set-key (kbd "<f7>") 'recompile)
 (global-set-key (kbd "<f8>") 'rnd_make_call)

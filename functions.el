@@ -258,7 +258,4 @@ Using this with KPDF works fine."
             (new-shell nil))
         (switch-to-buffer (completing-read "Switch to Shell: " buffers))))))
 
-(global-set-key (kbd "<f2>") 'switch-to-shell)
-(global-set-key (kbd "<f3>") 'new-shell)
-
 (provide 'functions)
