@@ -249,7 +249,7 @@ Using this with KPDF works fine."
 
 (defun switch-to-shell ()
   (interactive)
-  (if (not (string= my-shell-prefix (ignore-errors (substring (buffer-name elt) 0 7))))
+  (if (not (string= my-shell-prefix (ignore-errors (substring (buffer-name) 0 7))))
       (setq my-latest-non-shell-buffer (buffer-name)))
   (let ((buffers (shell-buffers)))
     (let ((buffers-len (safe-length buffers)))
