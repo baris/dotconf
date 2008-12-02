@@ -230,6 +230,7 @@ Using this with KPDF works fine."
 ;; isn't running the shell in emacs is a big deal?
 (defconst my-shell-prefix "*shell-")
 (defconst my-default-shell-name "default")
+(defvar my-latest-non-shell-buffer nil)
 
 (defun new-shell (name)
   (interactive "sNew Shell Name: ")
@@ -248,6 +249,8 @@ Using this with KPDF works fine."
 
 (defun switch-to-shell ()
   (interactive)
+  (if (not (string= my-shell-prefix (ignore-errors (substring (buffer-name elt) 0 7))))
+      (setq my-latest-non-shell-buffer (buffer-name)))
   (let ((buffers (shell-buffers)))
     (let ((buffers-len (safe-length buffers)))
       (if (< buffers-len 2)
@@ -257,5 +260,10 @@ Using this with KPDF works fine."
                 (switch-to-buffer (car buffers)))
             (new-shell nil))
         (switch-to-buffer (completing-read "Switch to Shell: " buffers))))))
+
+(defun switch-to-latest-non-shell ()
+  (interactive)
+  (if (not (null my-latest-non-shell-buffer))
+      (switch-to-buffer (get-buffer my-latest-non-shell-buffer))))
 
 (provide 'functions)

@@ -38,6 +38,7 @@
 
 (global-set-key (kbd "C-M-S-SPC") 'other-window)
 
+(global-set-key (kbd "<f1>") 'switch-to-latest-non-shell)
 (global-set-key (kbd "<f2>") 'switch-to-shell)
 (global-set-key (kbd "<f3>") 'new-shell)
 (global-set-key (kbd "<f6>") 'compile)
