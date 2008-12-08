@@ -190,6 +190,8 @@
 
 
 (require 'yasnippet-bundle)
+(require 'magit) ; fantastic git mode.
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;;(defalias 'shell 'new-shell)
 (require 'keys)
