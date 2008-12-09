@@ -4,7 +4,7 @@
   "extract major emacs version from emacs-version and return as integer"
   (progn
     (string-match "\\(^[0-9]+\\)\\.\\([0-9]+\\)" emacs-version)
-    (string-to-int (match-string 1 emacs-version))))
+    (string-to-number (match-string 1 emacs-version))))
 
 
 ;; Platform macros
