@@ -6,15 +6,13 @@
 (require 'variables)
 (require 'functions)
 
-(server-start)
-
 ;;;;;;;;;;;
 ;; Style ;;
 ;;;;;;;;;;;
 (tool-bar-mode nil)
 (menu-bar-mode t)
 (set-scroll-bar-mode nil)
-;;  (setq scroll-bar-mode-explicit t)
+(setq scroll-bar-mode-explicit t)
 (blink-cursor-mode t)
 (setq line-number-mode t)
 (setq column-number-mode t)
@@ -32,12 +30,10 @@
 (setq visible-bell t) ;; don't beep 
 
 ;; (setq line-spacing 0.1) ;; same line-spacing with TextMate
-
 (setq current-language-environment "UTF-8")
 (Windows
  (set-keyboard-coding-system 'iso8859-9)
  (setq current-language-environment "iso8859-9"))
-
 
 ;; my color theme...
 ;; (global-font-lock-mode 0)
@@ -57,7 +53,6 @@
  '(font-lock-warning-face ((t (:underline t :foreground "VioletRed"))))
  '(font-lock-negation-char-face ((t (:bold t :foreground "#000000"))))
  '(font-lock-preprocessor-face ((t (:bold t :foreground "#000000")))))
-
 
 (setup-initial-frame-parameters)
 
@@ -193,9 +188,7 @@
 (require 'magit) ; fantastic git mode.
 
 (defalias 'yes-or-no-p 'y-or-n-p)
-;;(defalias 'shell 'new-shell)
 (require 'keys)
-
 
 (provide 'start)
 

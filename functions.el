@@ -56,6 +56,7 @@
   (ido-mode t)
   (setq ido-enable-last-directory-history nil))
 
+;;;###autoload
 (defun preview-tex-file ()
   "Save the current buffer and run pdflatex on file.
 Using this with KPDF works fine."
@@ -64,6 +65,7 @@ Using this with KPDF works fine."
   (shell-command
    (format "%s %s" (executable-find "pdflatex") (buffer-file-name))))
 
+;;;###autoload
 (defun read-real-file ()
   "Open the actual file instead of the symlink"
   (let ((orig-fname buffer-file-name))
@@ -74,6 +76,7 @@ Using this with KPDF works fine."
 (add-hook 'find-file-hooks 'read-real-file)
 
 ;; start IRC client
+;;;###autoload
 (defun start-erc ()
   (interactive "")
   (autoload 'erc-select "erc" t)
@@ -90,20 +93,7 @@ Using this with KPDF works fine."
   (setq erc-pals '("cartman" "kartman" "caglar10ur" "meren" "madcat"))
   (erc-select))
 
-
-
-(defun log-keys ()
-  "log keys in a buffer using mwe-log-commands"
-  (interactive)
-  (progn
-    (require 'mwe-log-commands)
-    (save-selected-window
-      (mwe:log-keyboard-commands)
-      (mwe:open-command-log-buffer)
-      (let ((w-height (window-height (selected-window))))
-        (shrink-window (- w-height 10))))))
-
-
+;;;###autoload
 (defun switch-c-to-h ()
   "switch c to h"
   (interactive)
@@ -119,7 +109,7 @@ Using this with KPDF works fine."
             t)))
       (if other-file (find-file (car other-file))))))
 
-
+;;;###autoload
 (defun enlarge-current-window-to-max ()
   "enlarge the current window to maximum available heigth"
   (interactive)
@@ -141,12 +131,14 @@ Using this with KPDF works fine."
             new-width (window-width (selected-window)))
       (setq first-run nil))))
 
+;;;###autoload
 (defun newline-and-indent-with-curline-indent ()
   (interactive)
   (progn
     (indent-according-to-mode)
     (newline-and-indent)))
 
+;;;###autoload
 (defun open-line-keeping-indent ()
   (interactive)
   (progn
@@ -154,6 +146,7 @@ Using this with KPDF works fine."
     (open-line 1)
     (indent-according-to-mode)))
 
+;;;###autoload
 (defun yank-keeping-indent ()
   (interactive)
   (progn
@@ -161,7 +154,7 @@ Using this with KPDF works fine."
     (yank)
     (indent-region (mark) (point))))
 
-
+;;;###autoload
 (defun setup-initial-frame-parameters ()
   (if (not (eq window-system nil))
       (progn 
@@ -170,6 +163,7 @@ Using this with KPDF works fine."
                             0)
         (set-frame-width (selected-frame) 120))))
 
+;;;###autoload
 (defun cascade-my-frames ()
   (interactive)
   (if (not (eq window-system nil))
@@ -218,7 +212,7 @@ Using this with KPDF works fine."
                       (+ start-top
                          (frame-pixel-height elt) 10)))))))))
 
-
+;;;###autoload
 (defun start-caml ()
   (interactive)
   (add-to-list 'load-path (concat 3rd_party-root "/caml-mode"))
@@ -232,6 +226,7 @@ Using this with KPDF works fine."
 (defconst my-default-shell-name "default")
 (defvar my-latest-non-shell-buffer nil)
 
+;;;###autoload
 (defun new-shell (name)
   (interactive "sNew Shell Name: ")
   (ansi-term "/bin/bash") ;; switch back to eshell?
@@ -239,6 +234,7 @@ Using this with KPDF works fine."
       (setq name my-default-shell-name))
   (rename-buffer (format "%s%s*" my-shell-prefix name)))
 
+;;;###autoload
 (defun shell-buffers ()
   (interactive)
   (let ((all-shell-buffers ))
@@ -247,6 +243,7 @@ Using this with KPDF works fine."
           (add-to-list 'all-shell-buffers (buffer-name elt))))
     all-shell-buffers))
 
+;;;###autoload
 (defun switch-to-shell ()
   (interactive)
   (if (not (string= my-shell-prefix (ignore-errors (substring (buffer-name) 0 7))))
@@ -261,6 +258,7 @@ Using this with KPDF works fine."
             (new-shell nil))
         (switch-to-buffer (completing-read "Switch to Shell: " buffers))))))
 
+;;;###autoload
 (defun switch-to-latest-non-shell ()
   (interactive)
   (if (not (null my-latest-non-shell-buffer))
