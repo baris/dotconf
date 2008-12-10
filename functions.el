@@ -47,15 +47,6 @@
   "Print out a message"
   (message "%s" (propertize msg 'face 'message-face)))
 
-(defun use-ido-mode ()
-  (Emacs22+
-   (autoload 'ido-mode "ido" t))
-  (Emacs21
-   ;; older version of emacs. load ido.el
-   (load-3rd_party-file "ido.el"))
-  (ido-mode t)
-  (setq ido-enable-last-directory-history nil))
-
 ;;;###autoload
 (defun preview-tex-file ()
   "Save the current buffer and run pdflatex on file.
@@ -229,7 +220,8 @@ Using this with KPDF works fine."
 ;;;###autoload
 (defun new-shell (name)
   (interactive "sNew Shell Name: ")
-  (ansi-term "/bin/bash") ;; switch back to eshell?
+;;  (ansi-term "/bin/bash") ;; switch back to eshell?
+  (shell)
   (if (eq name nil)
       (setq name my-default-shell-name))
   (rename-buffer (format "%s%s*" my-shell-prefix name)))

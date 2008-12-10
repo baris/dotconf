@@ -61,9 +61,13 @@
 ;;;;;;;;;;;
 (add-to-list 'load-path 3rd_party-root)
 
-(use-ido-mode)
-
-(setq compilation-scroll-output t)
+(Emacs22+
+ (autoload 'ido-mode "ido" t))
+(Emacs21
+ ;; older version of emacs. load ido.el
+ (load-3rd_party-file "ido.el"))
+(ido-mode t)
+(setq ido-enable-last-directory-history nil)
 
 ;; use English dictionary by default
 (Pardus
@@ -74,6 +78,8 @@
 (setq dired-listing-switches "-l")
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
+
+(setq compilation-scroll-output t)
 
 (Linux
  (setq browse-url-browser-function 'browse-url-firefox))

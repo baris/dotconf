@@ -20,7 +20,7 @@
 
 ;; ido mode
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-x b") 'ibuffer)
+;;(global-set-key (kbd "C-x b") 'ibuffer)
 
 ;; dired
 (global-set-key (kbd "C-x d") 'ido-dired)
