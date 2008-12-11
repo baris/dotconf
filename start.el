@@ -6,6 +6,8 @@
 (require 'variables)
 (require 'functions)
 
+(setup-initial-frame-parameters)
+
 ;;;;;;;;;;;
 ;; Style ;;
 ;;;;;;;;;;;
@@ -54,12 +56,12 @@
  '(font-lock-negation-char-face ((t (:bold t :foreground "#000000"))))
  '(font-lock-preprocessor-face ((t (:bold t :foreground "#000000")))))
 
-(setup-initial-frame-parameters)
-
 ;;;;;;;;;;;
 ;; Modes ;;
 ;;;;;;;;;;;
 (add-to-list 'load-path 3rd_party-root)
+
+(setq tramp-default-method "ssh")
 
 (Emacs22+
  (ido-mode t)
@@ -79,30 +81,13 @@
 
 (Linux
  (setq browse-url-browser-function 'browse-url-firefox))
+(Darwin
+ (setq browse-url-browser-function 'browse-url-default-macosx-browser))
 
 ;; make same buffer/file names unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (setq uniquify-separator " -> ")
-
-;; ibuffer
-(Emacs21
-  (load-3rd_party-file "ibuffer.el"))
-(autoload 'ibuffer "ibuffer" "List Buffers" t)
-
-;; tramp for remote access
-(Emacs22+
- ;; no need to load as of version 22
- (require 'tramp))
-(setq tramp-default-method "ssh")
-
-;; javascript.el, a sane mode for .js files
-(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
-(autoload 'javascript-mode "javascript" nil t)
-
-;; css-mode.el
-(autoload 'css-mode "css-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
 
 ;; use c++-mode for header files
 (add-to-list 'auto-mode-alist
@@ -118,14 +103,17 @@
 (setq c-default-style
       '((java-mode . "java") (other . "stroustrup")))
 
-;; ChangeLog files (C-4-a)
-(setq add-log-full-name "Barış Metin"
-      add-log-mailing-address "baris@metin.org")
+;; javascript.el, a sane mode for .js files
+(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
+(autoload 'javascript-mode "javascript" nil t)
 
-;; org-mode
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
+;; css-mode.el
+(autoload 'css-mode "css-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
+
+;; lua-mode
+(setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 
 ;; textmate parens
 (load-3rd_party-file "textmate.el")
@@ -135,6 +123,10 @@
 
 ;; show functions in the mode line.
 (which-function-mode 1)
+
+;; ChangeLog files (C-4-a)
+(setq add-log-full-name "Barış Metin"
+      add-log-mailing-address "baris@metin.org")
 
 ;;;;;;;;;;;;;;;;
 ;; Mode Hooks ;;
@@ -163,15 +155,10 @@
             (lambda ()
               (local-set-key (kbd "C-j") 'newline-and-indent-with-curline-indent))))
 
-
 ;; python-mode-hook
 (add-hook 'python-mode-hook
           (lambda ()
             (setq outline-regexp " *\\(def \\|clas\\|#hea\\)")))
-
-;; lua-mode
-(setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
-(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 
 ;; Open the files designated by emacsclient in their own frame
 (add-hook 'server-switch-hook
@@ -179,6 +166,7 @@
             (let ((server-buf (current-buffer)))
               (bury-buffer)
               (switch-to-buffer-other-frame server-buf))))
+
 ;; Cleanup things
 (add-hook 'server-done-hook
           (lambda nil
