@@ -11,7 +11,7 @@
 ;;;;;;;;;;;
 (tool-bar-mode nil)
 (menu-bar-mode t)
-(set-scroll-bar-mode nil)
+;;(set-scroll-bar-mode nil)
 (setq scroll-bar-mode-explicit t)
 (blink-cursor-mode t)
 (setq line-number-mode t)
@@ -40,8 +40,8 @@
 (set-cursor-color "#000000")
 (custom-set-faces
  '(default ((t (:background "#f0f0f0" :foreground "#000000"))))
- '(ido-first-match ((t (:foreground "#99FF00"))))
- '(ido-subdir ((t (:foreground "#6BCFF7"))))
+;; '(ido-first-match ((t (:foreground "#33ff33"))))
+;; '(ido-subdir ((t (:foreground "#4444ff"))))
  '(font-lock-comment-face ((t (:foreground "#229955"))))
  '(font-lock-string-face ((t (:foreground "#4444ff"))))
  '(font-lock-keyword-face ((t (:bold nil :foreground "#851565"))))
@@ -62,12 +62,8 @@
 (add-to-list 'load-path 3rd_party-root)
 
 (Emacs22+
- (autoload 'ido-mode "ido" t))
-(Emacs21
- ;; older version of emacs. load ido.el
- (load-3rd_party-file "ido.el"))
-(ido-mode t)
-(setq ido-enable-last-directory-history nil)
+ (ido-mode t)
+ (setq ido-enable-last-directory-history nil))
 
 ;; use English dictionary by default
 (Pardus
