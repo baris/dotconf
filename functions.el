@@ -144,54 +144,20 @@ Using this with KPDF on KDE and Preview on Mac works fine."
                             0)
         (set-frame-width (selected-frame) 120))))
 
-;;;###autoload
-(defun cascade-my-frames ()
+(defun frame-move-x (x)
   (interactive)
-  (if (not (eq window-system nil))
-      (let ((num-frames (length (frames-on-display-list)))
-            (screen-width (x-display-pixel-width))
-            (num-max-columns 2)
-            (force-height 0)
-            (force-width 120)
-            (start-top 0)
-            (start-left 0))
-        ;; define height of a frame
-        (if (> num-frames num-max-columns)
-            (setq force-height
-                  (- (/ (/ (x-display-pixel-height) (frame-char-height))
-                        (ceiling (/ (float num-frames)
-                                    (float num-max-columns))))
-                     ;; -4 for windowmanager decorations, menubar and modeline
-                     4))
-          (setq force-height
-                (- (/ (x-display-pixel-height) (frame-char-height)) 5)))
-        ;; define width of a frame
-        (if (> num-frames 1)
-            (setq force-width
-                  (- (/ (/ (x-display-pixel-width) (frame-char-width)) 2)
-                     ;; -6 for window manager decorations
-                     6)))
-        ;; resize frames and position them
-        (dolist (elt (frames-on-display-list))
-            (progn
-              (set-frame-width elt force-width)
-              (set-frame-height elt force-height)))
-        (dolist (elt (frames-on-display-list))
-          (progn
-            (sleep-for 0 100)
-            (if (eq num-frames 1)
-                (set-frame-position elt
-                                    (- (x-display-pixel-width) (frame-pixel-width elt))
-                                    0)
-              (set-frame-position elt start-left start-top))
-            (if (eq start-left 0)
-                (setq start-left (+ start-left
-                                    (frame-pixel-width elt) 10))
-              (progn
-                (setq start-left 0)
-                (setq start-top
-                      (+ start-top
-                         (frame-pixel-height elt) 10)))))))))
+  (let ((cur-left (frame-parameter (selected-frame) 'left))
+        (max-left (x-display-pixel-width))
+        (min-left 0))
+    (let ((new-left (+ cur-left x)))
+      (if (not (or (> new-left max-left)
+                   (< new-left min-left)))
+          (set-frame-parameter (selected-frame) 'left new-left)))))
+
+(defun frame-move-y (y)
+  (interactive)
+  (set-frame-parameter (selected-frame) 'top
+                       (+ (frame-parameter (selected-frame) 'top) y)))
 
 ;;;###autoload
 (defun start-caml ()
@@ -255,3 +221,54 @@ Using this with KPDF on KDE and Preview on Mac works fine."
       (switch-to-buffer (get-buffer my-latest-non-shell-buffer))))
 
 (provide 'functions)
+
+;; A silly function to cascade all frame which is not very useful.
+;;
+;; ;;;###autoload
+;; (defun cascade-my-frames ()
+;;   (interactive)
+;;   (if (not (eq window-system nil))
+;;       (let ((num-frames (length (frames-on-display-list)))
+;;             (screen-width (x-display-pixel-width))
+;;             (num-max-columns 2)
+;;             (force-height 0)
+;;             (force-width 120)
+;;             (start-top 0)
+;;             (start-left 0))
+;;         ;; define height of a frame
+;;         (if (> num-frames num-max-columns)
+;;             (setq force-height
+;;                   (- (/ (/ (x-display-pixel-height) (frame-char-height))
+;;                         (ceiling (/ (float num-frames)
+;;                                     (float num-max-columns))))
+;;                      ;; -4 for windowmanager decorations, menubar and modeline
+;;                      4))
+;;           (setq force-height
+;;                 (- (/ (x-display-pixel-height) (frame-char-height)) 5)))
+;;         ;; define width of a frame
+;;         (if (> num-frames 1)
+;;             (setq force-width
+;;                   (- (/ (/ (x-display-pixel-width) (frame-char-width)) 2)
+;;                      ;; -6 for window manager decorations
+;;                      6)))
+;;         ;; resize frames and position them
+;;         (dolist (elt (frames-on-display-list))
+;;           (progn
+;;             (set-frame-width elt force-width)
+;;             (set-frame-height elt force-height)))
+;;         (dolist (elt (frames-on-display-list))
+;;           (progn
+;;             (sleep-for 0 100)
+;;             (if (eq num-frames 1)
+;;                 (set-frame-position elt
+;;                                     (- (x-display-pixel-width) (frame-pixel-width elt))
+;;                                     0)
+;;               (set-frame-position elt start-left start-top))
+;;             (if (eq start-left 0)
+;;                 (setq start-left (+ start-left
+;;                                     (frame-pixel-width elt) 10))
+;;               (progn
+;;                 (setq start-left 0)
+;;                 (setq start-top
+;;                       (+ start-top
+;;                          (frame-pixel-height elt) 10)))))))))

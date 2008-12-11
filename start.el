@@ -68,8 +68,6 @@
  (setq ido-enable-flex-matching t)
  (setq ido-enable-last-directory-history nil))
 
-(windmove-default-keybindings) ; use Shift + arrow keys to switch windows.
-
 ;; use English dictionary by default
 (Pardus
  (setq ispell-program-name "aspell-en"))

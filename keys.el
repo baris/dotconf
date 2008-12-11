@@ -1,5 +1,14 @@
 ;; Baris Metin <baris@metin.org>
 
+(windmove-default-keybindings 'meta) ; use Meta + arrow keys to switch windows.
+(global-set-key [C-M-left] '(lambda () (interactive) (frame-move-x -30)))
+(global-set-key [C-M-right] '(lambda () (interactive) (frame-move-x 30)))
+(global-unset-key [C-M-up])
+(global-set-key [C-M-up] '(lambda () (interactive) (frame-move-y -10)))
+(global-set-key [C-M-down] '(lambda () (interactive) (frame-move-y 10)))
+
+(global-set-key (kbd "C-|") 'enlarge-current-window-to-max)
+
 ; make ALT+backspace work
 (define-key global-map [(meta backspace)] 'backward-kill-word)
 
@@ -33,18 +42,13 @@
 
 (global-set-key (kbd "C-t") 'switch-c-to-h)
 
-(global-set-key (kbd "C-|") 'enlarge-current-window-to-max)
-(global-set-key (kbd "C-\\") 'cascade-my-frames)
-
-(global-set-key (kbd "C-M-S-SPC") 'other-window)
-
 (global-set-key (kbd "<f1>") 'switch-to-latest-non-shell)
 (global-set-key (kbd "<f2>") 'switch-to-shell)
 (global-set-key (kbd "<f3>") 'new-shell)
 (global-set-key (kbd "<f6>") 'compile)
 (global-set-key (kbd "<f7>") 'recompile)
-(global-set-key (kbd "<f8>") 'rnd_make_call)
-(global-set-key (kbd "<f9>") 'rnd_make)
+;;(global-set-key (kbd "<f8>") 'rnd_make_call)
+;;(global-set-key (kbd "<f9>") 'rnd_make)
 
 (Darwin
  (setq mac-command-modifier 'meta)
