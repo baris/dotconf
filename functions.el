@@ -248,7 +248,7 @@ Using this with KPDF works fine."
                   (new-shell (read-string "New Shell Name: "))
                 (switch-to-buffer (car buffers)))
             (new-shell nil))
-        (switch-to-buffer (completing-read "Switch to Shell: " buffers))))))
+        (switch-to-buffer (ido-completing-read "Switch to Shell: " buffers))))))
 
 ;;;###autoload
 (defun switch-to-latest-non-shell ()

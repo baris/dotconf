@@ -65,6 +65,7 @@
 
 (Emacs22+
  (ido-mode t)
+ (setq ido-enable-flex-matching t)
  (setq ido-enable-last-directory-history nil))
 
 ;; use English dictionary by default
