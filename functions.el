@@ -50,21 +50,11 @@
 ;;;###autoload
 (defun preview-tex-file ()
   "Save the current buffer and run pdflatex on file.
-Using this with KPDF works fine."
+Using this with KPDF on KDE and Preview on Mac works fine."
   (interactive "")
   (save-buffer)
   (shell-command
    (format "%s %s" (executable-find "pdflatex") (buffer-file-name))))
-
-;;;###autoload
-(defun read-real-file ()
-  "Open the actual file instead of the symlink"
-  (let ((orig-fname buffer-file-name))
-    (if (file-symlink-p orig-fname)
-        (let ((fname (file-truename orig-fname)))
-          (message (format "%s bağı yerine %s dosyasını açtım..." orig-fname fname))
-          (find-alternate-file fname)))))
-(add-hook 'find-file-hooks 'read-real-file)
 
 ;; start IRC client
 ;;;###autoload
@@ -212,45 +202,53 @@ Using this with KPDF works fine."
   (autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
   (require 'caml-font))
 
-;; isn't running the shell in emacs is a big deal?
+;; Manage shells inside emacs.
 (defconst my-shell-prefix "*shell-")
+(defconst my-shell-postfix "*")
 (defconst my-default-shell-name "default")
 (defvar my-latest-non-shell-buffer nil)
 
-;;;###autoload
 (defun new-shell (name)
   (interactive "sNew Shell Name: ")
-;;  (ansi-term "/bin/bash") ;; switch back to eshell?
+;;  (ansi-term "/bin/bash")
+;;  (eshell)
   (shell)
   (if (eq name nil)
       (setq name my-default-shell-name))
-  (rename-buffer (format "%s%s*" my-shell-prefix name)))
+  (rename-buffer (make-shell-buffer-name name)))
 
-;;;###autoload
+(defun make-shell-buffer-name (name)
+  (concat my-shell-prefix  name my-shell-postfix))
+
+(defun get-name-from-shell-buffer-name (shell-buffer-name)
+  (let ((prefix-len (length my-shell-prefix))
+        (postfix-len (length my-shell-postfix)))
+    (if (string= my-shell-prefix (ignore-errors (substring shell-buffer-name 0 prefix-len)))
+        (substring shell-buffer-name prefix-len (- postfix-len))
+      nil)))
+
 (defun shell-buffers ()
   (interactive)
   (let ((all-shell-buffers ))
     (dolist (elt (buffer-list))
-      (if (string= my-shell-prefix (ignore-errors (substring (buffer-name elt) 0 7)))
-          (add-to-list 'all-shell-buffers (buffer-name elt))))
+      (if (get-name-from-shell-buffer-name (buffer-name elt))
+          (add-to-list 'all-shell-buffers (get-name-from-shell-buffer-name (buffer-name elt)))))
     all-shell-buffers))
 
-;;;###autoload
 (defun switch-to-shell ()
   (interactive)
-  (if (not (string= my-shell-prefix (ignore-errors (substring (buffer-name) 0 7))))
+  (if (not (get-name-from-shell-buffer-name (buffer-name)))
       (setq my-latest-non-shell-buffer (buffer-name)))
   (let ((buffers (shell-buffers)))
     (let ((buffers-len (safe-length buffers)))
       (if (< buffers-len 2)
           (if (= buffers-len 1)
-              (if (string= (buffer-name) (concat my-shell-prefix my-default-shell-name "*"))
+              (if (string= (buffer-name) (make-shell-buffer-name my-default-shell-name))
                   (new-shell (read-string "New Shell Name: "))
-                (switch-to-buffer (car buffers)))
+                (switch-to-buffer (make-shell-buffer-name (car buffers))))
             (new-shell nil))
-        (switch-to-buffer (ido-completing-read "Switch to Shell: " buffers))))))
+        (switch-to-buffer (make-shell-buffer-name (ido-completing-read "Switch to Shell: " buffers)))))))
 
-;;;###autoload
 (defun switch-to-latest-non-shell ()
   (interactive)
   (if (not (null my-latest-non-shell-buffer))
