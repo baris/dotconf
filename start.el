@@ -3,9 +3,11 @@
 ;; emacs is such a slut, there's nothing she won't do for you ;)
 
 (add-to-list 'load-path (file-name-directory load-file-name))
+(require 'cl)
 (require 'variables)
 (require 'functions)
-(require 'mywiki)
+(ignore-errors
+ (require 'mywiki))
 
 (setup-initial-frame-parameters)
 
