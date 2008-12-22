@@ -74,21 +74,6 @@ Using this with KPDF on KDE and Preview on Mac works fine."
   (setq erc-pals '("cartman" "kartman" "caglar10ur" "meren" "madcat"))
   (erc-select))
 
-;;;###autoload
-(defun switch-c-to-h ()
-  "switch c to h"
-  (interactive)
-  (when (string-match "\\(.*\\)\\(\\..*\\)\\'" buffer-file-name)
-    (let ((other-file
-           (file-expand-wildcards
-            (concat (match-string 1 buffer-file-name)
-                    (if (string-match
-                         "\\.c\\(c\\|pp\\|xx\\|\\+\\+\\)?\\|\\.CC\\'"
-                         (match-string 2 buffer-file-name))
-                        ".[hH]*"
-                      ".[cC]*"))
-            t)))
-      (if other-file (find-file (car other-file))))))
 
 ;;;###autoload
 (defun enlarge-current-window-to-max ()
