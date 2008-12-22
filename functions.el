@@ -173,12 +173,13 @@ Using this with KPDF on KDE and Preview on Mac works fine."
 (defconst my-shell-postfix "*")
 (defconst my-default-shell-name "default")
 (defvar my-latest-non-shell-buffer nil)
+(defvar my-preferred-shell 'shell) ;;  eshell?
 
-(defun new-shell (name)
+(defun new-shell (name &optional ansi)
   (interactive "sNew Shell Name: ")
-;;  (ansi-term "/bin/bash")
-;;  (eshell)
-  (shell)
+  (if ansi
+      (ansi-term "/bin/bash")
+    (apply my-preferred-shell nil))
   (if (eq name nil)
       (setq name my-default-shell-name))
   (rename-buffer (make-shell-buffer-name name)))
