@@ -1,20 +1,22 @@
 ;; Baris Metin <baris@metin.org>
 
+                                        ; make ALT+backspace work
+(define-key global-map [(meta backspace)] 'backward-kill-word)
+
+;; window and frame keybindings
 (windmove-default-keybindings 'meta) ; use Meta + arrow keys to switch windows.
-(global-set-key [C-M-left] '(lambda () (interactive) (frame-move-x -30)))
-(global-set-key [C-M-right] '(lambda () (interactive) (frame-move-x 30)))
-(global-unset-key [C-M-up])
-(global-set-key [C-M-up] '(lambda () (interactive) (frame-move-y -10)))
-(global-set-key [C-M-down] '(lambda () (interactive) (frame-move-y 10)))
+(global-unset-key [C-S-up])
+(global-unset-key [C-S-down])
+(global-unset-key [C-S-left])
+(global-unset-key [C-S-right])
+(global-set-key [C-S-left] '(lambda () (interactive) (frame-move-x -30)))
+(global-set-key [C-S-right] '(lambda () (interactive) (frame-move-x 30)))
+(global-set-key [C-S-up] '(lambda () (interactive) (frame-move-y -10)))
+(global-set-key [C-S-down] '(lambda () (interactive) (frame-move-y 10)))
 
 (global-set-key (kbd "C-|") 'enlarge-current-window-to-max)
 
-; make ALT+backspace work
-(define-key global-map [(meta backspace)] 'backward-kill-word)
-
 ;; use Control keys instead of M-* keys like M-x (Yegge tip)
-(global-set-key (kbd "C-<") 'beginning-of-buffer)
-(global-set-key (kbd "C->") 'end-of-buffer)
 (global-set-key (kbd "C-x C-g") 'execute-extended-command)
 (define-key minibuffer-local-map "\C-n" 'next-complete-history-element)
 (define-key minibuffer-local-map "\C-p" 'previous-complete-history-element)
@@ -27,7 +29,6 @@
 (global-set-key (kbd "C-/") 'hippie-expand)
 (global-set-key (kbd "C-'") 'ff-find-other-file)  
 
-;; ido mode
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 ;;(global-set-key (kbd "C-x b") 'ibuffer)
 
@@ -39,8 +40,6 @@
 (global-set-key (kbd "C-c f") 'comint-dynamic-complete-filename)
 
 (global-set-key (kbd "C-c s") 'speedbar)
-
-(global-set-key (kbd "C-t") 'switch-c-to-h)
 
 (global-set-key (kbd "<f1>") 'switch-to-latest-non-shell)
 (global-set-key (kbd "<f2>") 'switch-to-shell)
