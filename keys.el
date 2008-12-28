@@ -13,6 +13,8 @@
 (global-set-key [C-S-right] '(lambda () (interactive) (frame-move-x 30)))
 (global-set-key [C-S-up] '(lambda () (interactive) (frame-move-y -10)))
 (global-set-key [C-S-down] '(lambda () (interactive) (frame-move-y 10)))
+(Darwin
+ (global-set-key [M-return] 'frame-toggle-fullscreen))
 
 (global-set-key (kbd "C-|") 'enlarge-current-window-to-max)
 
@@ -30,7 +32,7 @@
 (global-set-key (kbd "C-'") 'ff-find-other-file)  
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-;;(global-set-key (kbd "C-x b") 'ibuffer)
+(global-set-key (kbd "C-x b") 'ido-switch-buffer)
 
 ;; dired
 (global-set-key (kbd "C-x d") 'ido-dired)

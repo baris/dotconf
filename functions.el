@@ -129,6 +129,13 @@ Using this with KPDF on KDE and Preview on Mac works fine."
                             0)
         (set-frame-width (selected-frame) 120))))
 
+(Darwin
+ (defun frame-toggle-fullscreen ()
+  (interactive)
+  (set-frame-parameter nil 'fullscreen (if (frame-parameter nil 'fullscreen)
+                                           nil
+                                         'fullboth))))
+
 (defun frame-move-x (x)
   (interactive)
   (let ((cur-left (frame-parameter (selected-frame) 'left))
@@ -151,7 +158,10 @@ Using this with KPDF on KDE and Preview on Mac works fine."
   (setq auto-mode-alist
         (cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
   (autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
-  (require 'caml-font))
+  (autoload 'caml-mode "ocaml" (interactive)
+    "Major mode for editing Caml code." t)
+  (autoload 'camldebug "camldebug" (interactive) "Debug caml mode"))
+  
 
 ;; Manage shells inside emacs.
 (defconst my-shell-prefix "*shell-")

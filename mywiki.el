@@ -35,11 +35,4 @@
     (if (string= ".png" (ignore-errors (substring elt -4)))
         (copy-file (concat mywiki-path "/" elt) mywiki-html-path t))))
 
-(defun web-publish-mywiki ()
-  (interactive)
-  (publish-mywiki)
-  (shell-command
-   (format "%s -avz %s %s"
-           (executable-find "rsync") mywiki-html-path mywiki-remote-path)))
-
 (provide 'mywiki)
