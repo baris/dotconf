@@ -164,6 +164,8 @@ Using this with KPDF on KDE and Preview on Mac works fine."
   
 
 ;; Manage shells inside emacs.
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (defconst my-shell-prefix "*shell-")
 (defconst my-shell-postfix "*")
 (defconst my-default-shell-name "default")
