@@ -138,7 +138,7 @@
 
 (dolist (elt (list 'python-mode-hook
                    'lua-mode-hook
-                   'c++-mode-hook 'c-mode-hook
+                   'c++-mode-hook 'c-mode-hook 'objc-mode-hook
                    'java-mode-hook
                    'javascript-mode-hook
                    'emacs-lisp-mode-hook 'lisp-mode-hook))
@@ -152,6 +152,37 @@
               (outline-minor-mode)
               (textmate-mode)
               (imenu-add-menubar-index)))) ; generate index
+
+(setq cc-other-file-alist '(("\\.cc\\'"
+                             (".hh" ".h"))
+                            ("\\.hh\\'"
+                             (".cc" ".C"))
+                            ("\\.c\\'"
+                             (".h"))
+                            ("\\.h\\'"
+                             (".c" ".cc" ".C" ".CC" ".cxx" ".cpp" ".m"))
+                            ("\\.C\\'"
+                             (".H" ".hh" ".h"))
+                            ("\\.H\\'"
+                             (".C" ".CC"))
+                            ("\\.CC\\'"
+                             (".HH" ".H" ".hh" ".h"))
+                            ("\\.HH\\'"
+                             (".CC"))
+                            ("\\.c\\+\\+\\'"
+                             (".h++" ".hh" ".h"))
+                            ("\\.h\\+\\+\\'"
+                             (".c++"))
+                            ("\\.cpp\\'"
+                             (".hpp" ".hh" ".h"))
+                            ("\\.hpp\\'"
+                             (".cpp"))
+                            ("\\.cxx\\'"
+                             (".hxx" ".hh" ".h"))
+                            ("\\.hxx\\'"
+                             (".cxx"))
+                            ("\\.m\\'"
+                             (".h"))))
 
 (dolist (elt (list 'c++mode-hook 'c-mode-hook
                    'java-mode-hook))
