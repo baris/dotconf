@@ -13,8 +13,8 @@
 (global-set-key [C-S-right] '(lambda () (interactive) (frame-move-x 30)))
 (global-set-key [C-S-up] '(lambda () (interactive) (frame-move-y -10)))
 (global-set-key [C-S-down] '(lambda () (interactive) (frame-move-y 10)))
-(Darwin
- (global-set-key [M-return] 'frame-toggle-fullscreen))
+
+(global-set-key [M-return] 'frame-toggle-fullscreen)
 
 (global-set-key (kbd "C-|") 'enlarge-current-window-to-max)
 

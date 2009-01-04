@@ -129,12 +129,12 @@ Using this with KPDF on KDE and Preview on Mac works fine."
                             0)
         (set-frame-width (selected-frame) 120))))
 
-(Darwin
- (defun frame-toggle-fullscreen ()
+(defun frame-toggle-fullscreen ()
   (interactive)
   (set-frame-parameter nil 'fullscreen (if (frame-parameter nil 'fullscreen)
                                            nil
-                                         'fullboth))))
+                                         'fullboth)))
+
 
 (defun frame-move-x (x)
   (interactive)
