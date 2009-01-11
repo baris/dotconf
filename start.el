@@ -8,8 +8,7 @@
 (require 'cl)
 (require 'variables)
 (require 'functions)
-(ignore-errors
- (require 'mywiki))
+(require 'mywiki)
 
 (setup-initial-frame-parameters)
 
@@ -91,9 +90,9 @@
  (setq browse-url-browser-function 'browse-url-default-macosx-browser))
 
 ;; make same buffer/file names unique
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'reverse)
-(setq uniquify-separator " -> ")
+(when (require-maybe 'uniquify)
+  (setq uniquify-buffer-name-style 'reverse)
+  (setq uniquify-separator " -> "))
 
 ;; use c++-mode for header files
 (add-to-list 'auto-mode-alist

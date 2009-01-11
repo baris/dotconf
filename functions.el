@@ -6,7 +6,6 @@
     (string-match "\\(^[0-9]+\\)\\.\\([0-9]+\\)" emacs-version)
     (string-to-number (match-string 1 emacs-version))))
 
-
 ;; Platform macros
 (defmacro Emacs22+ (&rest body)
   (list 'if (>= emacs-major-version 22)
@@ -53,15 +52,6 @@
   "Print out a message"
   (message "%s" (propertize msg 'face 'message-face)))
 
-;;;###autoload
-(defun preview-tex-file ()
-  "Save the current buffer and run pdflatex on file.
-Using this with KPDF on KDE and Preview on Mac works fine."
-  (interactive "")
-  (save-buffer)
-  (shell-command
-   (format "%s %s" (executable-find "pdflatex") (buffer-file-name))))
-
 ;; start IRC client
 ;;;###autoload
 (defun start-erc ()
@@ -80,7 +70,6 @@ Using this with KPDF on KDE and Preview on Mac works fine."
         erc-pals '("cartman" "kartman" "caglar10ur" "meren" "madcat")
         erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
   (erc-select))
-
 
 ;;;###autoload
 (defun enlarge-current-window-to-max ()
@@ -142,6 +131,9 @@ Using this with KPDF on KDE and Preview on Mac works fine."
                                            nil
                                          'fullboth)))
 
+(defun frame-alpha (alpha-value)
+  (interactive "sAlpha Value: ")
+  (set-frame-parameter nil 'alpha (string-to-int alpha-value)))
 
 (defun frame-move-x (x)
   (interactive)
@@ -157,18 +149,6 @@ Using this with KPDF on KDE and Preview on Mac works fine."
   (interactive)
   (set-frame-parameter (selected-frame) 'top
                        (+ (frame-parameter (selected-frame) 'top) y)))
-
-;;;###autoload
-(defun start-caml ()
-  (interactive)
-  (add-to-list 'load-path (concat 3rd_party-root "/caml-mode"))
-  (setq auto-mode-alist
-        (cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
-  (autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
-  (autoload 'caml-mode "ocaml" (interactive)
-    "Major mode for editing Caml code." t)
-  (autoload 'camldebug "camldebug" (interactive) "Debug caml mode"))
-  
 
 ;; Manage shells inside emacs.
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
