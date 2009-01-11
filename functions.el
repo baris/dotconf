@@ -36,6 +36,12 @@
   (list 'if (string= window-system "w32")
         (cons 'progn body)))
 
+(defmacro require-maybe (feature &optional file)
+  `(require ,feature ,file 'noerror)) 
+
+(defmacro when-available (func foo)
+  `(when (fboundp ,func) ,foo)) 
+
 (defun load-3rd_party-file (filename)
   (load-file (concat 3rd_party-root "/" filename)))
 
@@ -70,8 +76,9 @@ Using this with KPDF on KDE and Preview on Mac works fine."
         erc-echo-notices-in-current-buffer t
         erc-max-buffer-size 30000
         erc-auto-query t
-        erc-send-wihespace-lines nil)
-  (setq erc-pals '("cartman" "kartman" "caglar10ur" "meren" "madcat"))
+        erc-send-wihespace-lines nil
+        erc-pals '("cartman" "kartman" "caglar10ur" "meren" "madcat")
+        erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
   (erc-select))
 
 

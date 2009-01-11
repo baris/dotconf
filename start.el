@@ -2,6 +2,8 @@
 ;;
 ;; emacs is such a slut, there's nothing she won't do for you ;)
 
+(defvar *emacs-start-time* (current-time))
+
 (add-to-list 'load-path (file-name-directory load-file-name))
 (require 'cl)
 (require 'variables)
@@ -214,6 +216,9 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (require 'keys)
+
+(message (format "Emacs configuration loaded in %ds." (- (nth 1 (current-time))
+                                                         (nth 1 *emacs-start-time*))))
 
 (provide 'start)
 

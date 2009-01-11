@@ -102,4 +102,40 @@
     (shell-command "v_get -e v_resource_dir")))
 
 
+(require 'derived)
+(require 'cc-mode)
+
+(defvar bakery-pod-indentation
+  '("bakery"
+    (c-basic-offset . 4)
+    (c-comment-only-line-offset . 4)))
+
+(define-derived-mode bakery-pod-mode c-mode "Bakery POD"
+  "Major mode to edit POD files"
+  (font-lock-add-keywords
+   nil
+   '(("true" . font-lock-constant-face)
+     ("false" . font-lock-constant-face)
+     ("\\([a-zA-Z][a-zA-Z0-9_:\.]*\\)[ \t]+[a-zA-Z][a-zA-Z0-9_:\.]*[ \t]*=" 1 font-lock-builtin-face)
+     ("[a-zA-Z][a-zA-Z0-9_:\.]*[ \t]+\\([a-zA-Z][a-zA-Z0-9_:\.]*\\)[ \t]*=" 1 font-lock-keyword-face)
+     ("\\([a-zA-Z][a-zA-Z0-9_:\.]*\\)[ \t]*=" 1 font-lock-keyword-face)
+     ("[^_]\\([e]?[-]?[0-9]+\\)" 1 font-lock-constant-face)))
+  
+  (setq bakery-pod-mode-imenu-expression
+        '((nil "[ \t\n\r{};]+\\([a-zA-Z][a-zA-Z0-9_:\.]*\\)[ \t]*=" 1)))
+  (setq imenu-generic-expression bakery-pod-mode-imenu-expression)
+  (imenu-add-menubar-index)
+  )
+
+(dolist (elt (list '("\\.pod" . bakery-pod-mode)
+                   '("\\.mud" . bakery-pod-mode)
+                   '("\\.gop" . bakery-pod-mode)
+                   '("\\.gos" . bakery-pod-mode)
+                   '("var" . bakery-pod-mode)))
+  (add-to-list 'auto-mode-alist elt))
+
+(add-to-list 'c-default-style
+             '(bakery-pod-mode . "bakery"))
+
+
 (provide 'bakery)
