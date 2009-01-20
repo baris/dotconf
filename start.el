@@ -35,7 +35,7 @@
 (setq default-input-method "rfc1345")
 (setq visible-bell t) ;; don't beep 
 
-;; (setq line-spacing 0.1) ;; same line-spacing with TextMate
+(setq default-line-spacing 0.1) ;; same line-spacing with TextMate
 (setq current-language-environment "UTF-8")
 (Windows
  (set-keyboard-coding-system 'iso8859-9)
@@ -45,7 +45,7 @@
 ;; (global-font-lock-mode 0)
 (set-cursor-color "#000000")
 (custom-set-faces
- '(default ((t (:background "#f0f0f0" :foreground "#000000"))))
+ '(default ((t (:background "#fff" :foreground "#000000"))))
 ;; '(ido-first-match ((t (:foreground "#33ff33"))))
 ;; '(ido-subdir ((t (:foreground "#4444ff"))))
  '(font-lock-comment-face ((t (:foreground "#229955"))))

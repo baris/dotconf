@@ -52,6 +52,11 @@
   "Print out a message"
   (message "%s" (propertize msg 'face 'message-face)))
 
+(defun count-words ()
+  (interactive)
+  (let ((b (if mark-active (mark) (point-min)))
+        (e (if mark-active (point) (point-max))))
+    (message (int-to-string (how-many "\\w+" b e)))))
 ;; start IRC client
 ;;;###autoload
 (defun start-erc ()
@@ -118,7 +123,7 @@
 
 ;;;###autoload
 (defun setup-initial-frame-parameters ()
-  (if (not (eq window-system nil))
+  (if window-system
       (progn 
         (set-frame-position (selected-frame)
                             (frame-parameter (selected-frame) 'left)
@@ -212,7 +217,7 @@
 ;; ;;;###autoload
 ;; (defun cascade-my-frames ()
 ;;   (interactive)
-;;   (if (not (eq window-system nil))
+;;   (if window-system
 ;;       (let ((num-frames (length (frames-on-display-list)))
 ;;             (screen-width (x-display-pixel-width))
 ;;             (num-max-columns 2)

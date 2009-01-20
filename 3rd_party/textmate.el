@@ -1,6 +1,8 @@
 ;; TextMate behaviour on Emacs
 ;; Copyright (C) 2008  Orestis Markou
 
+; slightly modified by Baris Metin
+
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License
 ;; as published by the Free Software Foundation; either version 2
@@ -89,7 +91,7 @@
 (setq defaults
       '(
         (?\" . (lambda () (skeleton-pair-insert-maybe nil) ))
-        (?\' . (lambda () (skeleton-pair-insert-maybe nil) ))
+        (?\' . (lambda () (if (eq major-mode 'emacs-lisp-mode) (insert-char ?\' 1) (skeleton-pair-insert-maybe nil) )))
         (?\) . (lambda () (insert-char ?\) 1) ))
         (?\] . (lambda () (insert-char ?\] 1) ))
         (?\} . (lambda () (insert-char ?\} 1) ))
