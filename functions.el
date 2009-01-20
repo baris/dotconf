@@ -121,15 +121,6 @@
     (yank)
     (indent-region (mark) (point))))
 
-;;;###autoload
-(defun setup-initial-frame-parameters ()
-  (if window-system
-      (progn 
-        (set-frame-position (selected-frame)
-                            (frame-parameter (selected-frame) 'left)
-                            0)
-        (set-frame-width (selected-frame) 120))))
-
 (defun frame-toggle-fullscreen ()
   (interactive)
   (set-frame-parameter nil 'fullscreen (if (frame-parameter nil 'fullscreen)

@@ -10,7 +10,19 @@
 (require 'functions)
 (require 'mywiki)
 
-(setup-initial-frame-parameters)
+
+(if window-system
+    (progn
+      (setq default-frame-alist '((top . 0)
+                                  (width . 120)))
+      (Darwin
+       (create-fontset-from-fontset-spec
+        (concat
+         "-apple-monaco-medium-r-normal--11-*-*-*-*-*-fontset-monaco,"
+         "ascii:-apple-monaco-medium-r-normal--11-100-*-*-m-100-mac-roman,"
+         "latin-iso8859-1:-apple-monaco-medium-r-normal--11-100-*-*-m-100-mac-roman"))
+       (add-to-list 'default-frame-alist '(font . "fontset-monaco"))
+       (add-to-list 'default-frame-alist '(alpha . 95)))))
 
 ;;;;;;;;;;;
 ;; Style ;;
