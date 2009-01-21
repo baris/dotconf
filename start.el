@@ -15,6 +15,9 @@
     (progn
       (setq default-frame-alist '((top . 0)
                                   (width . 120)))
+      (Pardus
+       (add-to-list 'default-frame-alist '(font . "monospace-10")))
+
       (Darwin
        (create-fontset-from-fontset-spec
         (concat
@@ -57,7 +60,7 @@
 ;; (global-font-lock-mode 0)
 (set-cursor-color "#000000")
 (custom-set-faces
- '(default ((t (:background "#fff" :foreground "#000000"))))
+ '(default ((t (:background "#ffffff" :foreground "#000000"))))
 ;; '(ido-first-match ((t (:foreground "#33ff33"))))
 ;; '(ido-subdir ((t (:foreground "#4444ff"))))
  '(font-lock-comment-face ((t (:foreground "#229955"))))
