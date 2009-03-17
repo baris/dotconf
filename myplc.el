@@ -2,8 +2,8 @@
 ;; Baris metin <tmetin ~at~ sophia.inria.fr>
 ;;
 ;; Basic setup
-;; (setq myplc-server "https://vplc18.inria.fr")
-;; (setq myplc-username "tmetin ~at~ sophia.inria.fr")
+;; (setq myplc-server "https://baris.onelab.eu")
+;; (setq myplc-username "tmetin@sophia.inria.fr")
 
 (require 'xml-rpc)
 
@@ -28,7 +28,7 @@
           (add-to-list '*myplc-methods* elt))))))
 
 (defun myplc-authentication ()
-  (setq myplc-password (read-passwd "MyPLC Password: "))
+  (if (not myplc-password) (setq myplc-password (read-passwd "MyPLC Password: ")))
   (list (cons "Username" myplc-username)
         (cons "AuthString" myplc-password)
         (cons "AuthMethod"  "password")
@@ -52,9 +52,23 @@
     (switch-to-buffer-other-window b)))
 
 
+(defmacro myplc-call (&rest args)
+  "first argument is the method name and the rest is parameters to the method"
+  (setq *myplc-dummy-method-call* (list 'xml-rpc-method-call
+                                        '(myplc-server-api)
+                                        (car args))) ;; first argument is the method name
+  (if (not (string= "system." (ignore-errors (substring (car args) 0 (length "system.")))))
+      ;; need to add the authentication for non-system methods
+      (add-to-list '*myplc-dummy-method-call* '(myplc-authentication) t))
+  ;; now add the parameters to the method
+  (dolist (elt (cdr args))
+    (add-to-list '*myplc-dummy-method-call* elt t))
+  *myplc-dummy-method-call*)
+
+
 ;; examples:
-;; (xml-rpc-method-call (myplc-server-api) "GetNodes" (myplc-authentication) '(("hostname" . "*")) '("hostname"))
-;; (xml-rpc-method-call (myplc-server-api) "system.methodSignature" "GetNodes")
+;; (myplc-call "GetNodes" '(("hostname" . "*")) '("hostname"))
+;; (myplc-call "system.methodSignature" "GetNodes")
 
 
 (provide 'myplc)
