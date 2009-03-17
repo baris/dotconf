@@ -57,3 +57,4 @@
 ;; (xml-rpc-method-call (myplc-server-api) "system.methodSignature" "GetNodes")
 
 
+(provide 'myplc)
