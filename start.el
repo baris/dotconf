@@ -2,22 +2,17 @@
 ;;
 ;; emacs is such a slut, there's nothing she won't do for you ;)
 
-(defvar *emacs-start-time* (current-time))
-
 (add-to-list 'load-path (file-name-directory load-file-name))
 (require 'cl)
 (require 'variables)
 (require 'functions)
-(require 'mywiki)
-
+(progn (cd emacs-root)
+       (normal-top-level-add-subdirs-to-load-path))
 
 (if window-system
     (progn
-      (setq default-frame-alist '((top . 0)
-                                  (width . 120)))
       (Pardus
        (add-to-list 'default-frame-alist '(font . "monospace-10")))
-
       (Darwin
        (create-fontset-from-fontset-spec
         (concat
@@ -27,12 +22,8 @@
        (add-to-list 'default-frame-alist '(font . "fontset-monaco"))
        (add-to-list 'default-frame-alist '(alpha . 95)))))
 
-;;;;;;;;;;;
-;; Style ;;
-;;;;;;;;;;;
 (tool-bar-mode nil)
 (menu-bar-mode t)
-;;(set-scroll-bar-mode nil)
 (setq scroll-bar-mode-explicit t)
 (blink-cursor-mode t)
 (setq line-number-mode t)
@@ -75,68 +66,24 @@
  '(font-lock-negation-char-face ((t (:bold t :foreground "#000000"))))
  '(font-lock-preprocessor-face ((t (:bold t :foreground "#000000")))))
 
-;;;;;;;;;;;
-;; Modes ;;
-;;;;;;;;;;;
-(add-to-list 'load-path 3rd_party-root)
-
-(setq tramp-default-method "ssh")
 
 (Emacs22+
  (ido-mode t)
  (setq ido-enable-flex-matching t)
  (setq ido-enable-last-directory-history nil))
 
-;; use English dictionary by default
-(Pardus
- (setq ispell-program-name "aspell-en"))
-(Darwin
- (setq ispell-program-name "aspell"))
+(setq compilation-scroll-output t)
+
+(setq tramp-default-method "ssh")
 
 (setq dired-listing-switches "-l")
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
 
-(setq compilation-scroll-output t)
-
-(Linux
- (setq browse-url-browser-function 'browse-url-firefox))
-(Darwin
- (setq browse-url-browser-function 'browse-url-default-macosx-browser))
-
 ;; make same buffer/file names unique
 (when (require-maybe 'uniquify)
   (setq uniquify-buffer-name-style 'reverse)
   (setq uniquify-separator " -> "))
-
-;; use c++-mode for header files
-(add-to-list 'auto-mode-alist
-             '("\\.h\\'" . c++-mode))
-
-;; use text-mode for lex/yacc until I find a better mode.
-(add-to-list 'auto-mode-alist
-             '("\\.lex\\'" . text-mode))
-(add-to-list 'auto-mode-alist
-             '("\\.yacc\\'" . text-mode))
-
-;; use a saner indentation style
-(setq c-default-style
-      '((java-mode . "java") (other . "stroustrup")))
-
-;; javascript.el, a sane mode for .js files
-(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
-(autoload 'javascript-mode "javascript" nil t)
-
-;; css-mode.el
-(autoload 'css-mode "css-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
-
-;; lua-mode
-(setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
-(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-
-;; textmate parens
-(load-3rd_party-file "textmate.el")
 
 ;; prety gdb mode
 (setq gdb-many-windows t)
@@ -144,16 +91,7 @@
 ;; show functions in the mode line.
 (which-function-mode 1)
 
-;; ChangeLog files (C-4-a)
-(setq add-log-full-name "Barış Metin"
-      add-log-mailing-address "baris@metin.org")
-
-;;;;;;;;;;;;;;;;
-;; Mode Hooks ;;
-;;;;;;;;;;;;;;;;
-
 (dolist (elt (list 'python-mode-hook
-                   'lua-mode-hook
                    'c++-mode-hook 'c-mode-hook 'objc-mode-hook
                    'java-mode-hook
                    'javascript-mode-hook
@@ -165,74 +103,19 @@
                                         ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
               (local-set-key (kbd "C-o") 'open-line-keeping-indent)
               (local-set-key (kbd "C-y") 'yank-keeping-indent)
+              (local-set-key (kbd "C-j") 'newline-and-indent-with-curline-indent)
               (outline-minor-mode)
-              (textmate-mode)
               (imenu-add-menubar-index)))) ; generate index
 
-(setq cc-other-file-alist '(("\\.cc\\'"
-                             (".hh" ".h"))
-                            ("\\.hh\\'"
-                             (".cc" ".C"))
-                            ("\\.c\\'"
-                             (".h"))
-                            ("\\.h\\'"
-                             (".c" ".cc" ".C" ".CC" ".cxx" ".cpp" ".m"))
-                            ("\\.C\\'"
-                             (".H" ".hh" ".h"))
-                            ("\\.H\\'"
-                             (".C" ".CC"))
-                            ("\\.CC\\'"
-                             (".HH" ".H" ".hh" ".h"))
-                            ("\\.HH\\'"
-                             (".CC"))
-                            ("\\.c\\+\\+\\'"
-                             (".h++" ".hh" ".h"))
-                            ("\\.h\\+\\+\\'"
-                             (".c++"))
-                            ("\\.cpp\\'"
-                             (".hpp" ".hh" ".h"))
-                            ("\\.hpp\\'"
-                             (".cpp"))
-                            ("\\.cxx\\'"
-                             (".hxx" ".hh" ".h"))
-                            ("\\.hxx\\'"
-                             (".cxx"))
-                            ("\\.m\\'"
-                             (".h"))))
-
-(dolist (elt (list 'c++mode-hook 'c-mode-hook
-                   'java-mode-hook))
-  (add-hook elt
-            (lambda ()
-              (local-set-key (kbd "C-j") 'newline-and-indent-with-curline-indent))))
-
-;; python-mode-hook
-(add-hook 'python-mode-hook
-          (lambda ()
-            (setq outline-regexp " *\\(def \\|clas\\|#hea\\)")))
-
-;; Open the files designated by emacsclient in their own frame
-(add-hook 'server-switch-hook
-          (lambda nil
-            (let ((server-buf (current-buffer)))
-              (bury-buffer)
-              (switch-to-buffer-other-frame server-buf))))
-
-;; Cleanup things
-(add-hook 'server-done-hook
-          (lambda nil
-            (kill-buffer nil)
-            (delete-frame)))
-
-
-(require 'yasnippet-bundle)
-(require 'magit) ; fantastic git mode.
+;; use a saner indentation style
+(setq c-default-style
+      '((java-mode . "java") (other . "stroustrup")))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
+(require 'mywiki)
+(require 'myplc)
 (require 'keys)
 
-(message (format "Emacs configuration loaded in %ds." (- (nth 1 (current-time))
-                                                         (nth 1 *emacs-start-time*))))
+(require 'magit)                        ; fantastic git mode.
 
 (provide 'start)
-
