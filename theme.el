@@ -1,5 +1,5 @@
 
-(defun baris-theme ()
+(defun theme-baris ()
   (interactive "")
   (set-cursor-color "#000000")
   (custom-set-faces
@@ -18,7 +18,7 @@
    '(font-lock-negation-char-face ((t (:bold t :foreground "#000000"))))
    '(font-lock-preprocessor-face ((t (:bold t :foreground "#000000"))))))
 
-(defun wombat-theme ()
+(defun theme-wombat ()
   (interactive "")
   (set-cursor-color "#656565")
   (custom-set-faces

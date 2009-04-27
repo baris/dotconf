@@ -52,7 +52,7 @@
 ;;(global-font-lock-mode 0)
 ;; my color themes
 (require 'theme)
-(wombat-theme)
+(theme-baris)
 
 (Emacs22+
  (ido-mode t)
