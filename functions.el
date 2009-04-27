@@ -201,6 +201,11 @@
   (if (not (null my-latest-non-shell-buffer))
       (switch-to-buffer (get-buffer my-latest-non-shell-buffer))))
 
+(defun baris-tr ()
+  (interactive "")
+  (insert "Barış"))
+
+
 (provide 'functions)
 
 ;; A silly function to cascade all frame which is not very useful.

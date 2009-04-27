@@ -28,7 +28,6 @@
 (global-set-key (kbd "M-p") (lambda () (interactive) (scroll-down 1)))
 
 ;;; completions
-(global-set-key (kbd "C-/") 'hippie-expand)
 (global-set-key (kbd "C-'") 'ff-find-other-file)  
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)

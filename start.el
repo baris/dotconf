@@ -6,13 +6,15 @@
 (require 'cl)
 (require 'variables)
 (require 'functions)
-(progn (cd emacs-root)
-       (normal-top-level-add-subdirs-to-load-path))
+(let ((__curdir (getenv "HOME"))) ;; FIXME: get current working dir
+      (progn (cd emacs-root)
+             (normal-top-level-add-subdirs-to-load-path)
+             (cd __curdir)))
 
 (if window-system
     (progn
-      (Pardus
-       (add-to-list 'default-frame-alist '(font . "monospace-10")))
+;;      (Pardus
+;;       (add-to-list 'default-frame-alist '(font . "monospace-10")))
       (Darwin
        (create-fontset-from-fontset-spec
         (concat
@@ -47,25 +49,10 @@
  (set-keyboard-coding-system 'iso8859-9)
  (setq current-language-environment "iso8859-9"))
 
-;; my color theme...
-;; (global-font-lock-mode 0)
-(set-cursor-color "#000000")
-(custom-set-faces
- '(default ((t (:background "#ffffff" :foreground "#000000"))))
-;; '(ido-first-match ((t (:foreground "#33ff33"))))
-;; '(ido-subdir ((t (:foreground "#4444ff"))))
- '(font-lock-comment-face ((t (:foreground "#229955"))))
- '(font-lock-string-face ((t (:foreground "#4444ff"))))
- '(font-lock-keyword-face ((t (:bold nil :foreground "#851565"))))
- '(font-lock-constant-face ((t (:bold t :foreground "#000000"))))
- '(font-lock-builtin-face ((t (:foreground "#851565"))))
- '(font-lock-type-face ((t (:foreground "#851565"))))
- '(font-lock-variable-name-face ((t (:foreground "#000000"))))
- '(font-lock-function-name-face ((t (:bold t :foreground "#000000"))))
- '(font-lock-warning-face ((t (:underline t :foreground "VioletRed"))))
- '(font-lock-negation-char-face ((t (:bold t :foreground "#000000"))))
- '(font-lock-preprocessor-face ((t (:bold t :foreground "#000000")))))
-
+;;(global-font-lock-mode 0)
+;; my color themes
+(require 'theme)
+(wombat-theme)
 
 (Emacs22+
  (ido-mode t)
@@ -117,5 +104,9 @@
 (require 'keys)
 
 (require 'magit)                        ; fantastic git mode.
+
+(require 'pabbrev)
+(global-pabbrev-mode)
+;;(setq pabbrev-read-only-error nil)
 
 (provide 'start)
