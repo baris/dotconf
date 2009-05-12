@@ -13,8 +13,6 @@
 
 (if window-system
     (progn
-;;      (Pardus
-;;       (add-to-list 'default-frame-alist '(font . "monospace-10")))
       (Darwin
        (create-fontset-from-fontset-spec
         (concat
@@ -98,12 +96,19 @@
 (setq c-default-style
       '((java-mode . "java") (other . "stroustrup")))
 
-(defalias 'yes-or-no-p 'y-or-n-p)
-(require 'mywiki)
-(require 'myplc)
-(require 'keys)
+;; org-mode stuff
+(setq org-todo-keywords
+      '((sequence "TODO" "FEEDBACK" "VERIFY" "PROGRESS" "|" "DONE" "DELEGATED" "CANCELED")))
 
-(require 'magit)                        ; fantastic git mode.
+(setq org-todo-keyword-faces
+      '(("TODO"      . org-warning)
+        ("PROGRESS"  . shadow)
+        ("CANCELED"  . (:foreground "green" :weight bold))))
+
+
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+(require 'keys)
 
 (require 'pabbrev)
 (global-pabbrev-mode)
