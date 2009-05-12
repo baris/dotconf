@@ -1,22 +1,22 @@
 ;; Baris Metin <baris@metin.org>
 
-                                        ; make ALT+backspace work
+;; make ALT+backspace work
 (define-key global-map [(meta backspace)] 'backward-kill-word)
 
-;; window and frame keybindings
-(windmove-default-keybindings 'meta) ; use Meta + arrow keys to switch windows.
-(global-unset-key [C-S-up])
-(global-unset-key [C-S-down])
-(global-unset-key [C-S-left])
-(global-unset-key [C-S-right])
-(global-set-key [C-S-left] '(lambda () (interactive) (frame-move-x -30)))
-(global-set-key [C-S-right] '(lambda () (interactive) (frame-move-x 30)))
-(global-set-key [C-S-up] '(lambda () (interactive) (frame-move-y -10)))
-(global-set-key [C-S-down] '(lambda () (interactive) (frame-move-y 10)))
+(idle-exec 
+ ;; window and frame keybindings
+ (windmove-default-keybindings 'meta) ; use Meta + arrow keys to switch windows.
+ (global-unset-key [C-S-up])
+ (global-unset-key [C-S-down])
+ (global-unset-key [C-S-left])
+ (global-unset-key [C-S-right])
+ (global-set-key [C-S-left] '(lambda () (interactive) (frame-move-x -30)))
+ (global-set-key [C-S-right] '(lambda () (interactive) (frame-move-x 30)))
+ (global-set-key [C-S-up] '(lambda () (interactive) (frame-move-y -10)))
+ (global-set-key [C-S-down] '(lambda () (interactive) (frame-move-y 10))))
+
 
 (global-set-key [M-return] 'frame-toggle-fullscreen)
-
-(global-set-key (kbd "C-|") 'enlarge-current-window-to-max)
 
 ;; use Control keys instead of M-* keys like M-x (Yegge tip)
 (global-set-key (kbd "C-x C-g") 'execute-extended-command)

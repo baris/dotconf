@@ -40,7 +40,6 @@
 (setq-default indent-tabs-mode nil)
 (setq default-input-method "rfc1345")
 (setq visible-bell t) ;; don't beep 
-
 (setq default-line-spacing 0.1) ;; same line-spacing with TextMate
 (setq current-language-environment "UTF-8")
 (Windows
@@ -48,69 +47,82 @@
  (setq current-language-environment "iso8859-9"))
 
 ;;(global-font-lock-mode 0)
-;; my color themes
-(require 'theme)
 (theme-baris)
 
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 (setq ido-enable-last-directory-history nil)
 
-(setq compilation-scroll-output t)
-
-(setq tramp-default-method "ssh")
-
 (setq dired-listing-switches "-l")
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
 
-;; make same buffer/file names unique
-(when (require-maybe 'uniquify)
-  (setq uniquify-buffer-name-style 'reverse)
-  (setq uniquify-separator " -> "))
-
-;; prety gdb mode
-(setq gdb-many-windows t)
-
-;; show functions in the mode line.
-(which-function-mode 1)
-
-(dolist (elt (list 'python-mode-hook
-                   'c++-mode-hook 'c-mode-hook 'objc-mode-hook
-                   'java-mode-hook
-                   'javascript-mode-hook
-                   'emacs-lisp-mode-hook 'lisp-mode-hook))
-  (add-hook elt
-            (lambda ()
-              (font-lock-add-keywords nil
-                                      '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
-                                        ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
-              (local-set-key (kbd "C-o") 'open-line-keeping-indent)
-              (local-set-key (kbd "C-y") 'yank-keeping-indent)
-              (local-set-key (kbd "C-j") 'newline-and-indent-with-curline-indent)
-              (outline-minor-mode)
-              (imenu-add-menubar-index)))) ; generate index
 
 ;; use a saner indentation style
 (setq c-default-style
       '((java-mode . "java") (other . "stroustrup")))
 
-;; org-mode stuff
-(setq org-todo-keywords
-      '((sequence "TODO" "FEEDBACK" "VERIFY" "PROGRESS" "|" "DONE" "DELEGATED" "CANCELED")))
 
-(setq org-todo-keyword-faces
-      '(("TODO"      . org-warning)
-        ("PROGRESS"  . shadow)
-        ("CANCELED"  . (:foreground "green" :weight bold))))
+;; lazy load additional settings
+(idle-exec
+ 
+ ;; make same buffer/file names unique
+ (when (require-maybe 'uniquify)
+   (setq uniquify-buffer-name-style 'reverse)
+   (setq uniquify-separator " -> "))
 
+ (setq gdb-many-windows t)  ;; prety gdb mode
+ (which-function-mode 1)  ;; show functions in the mode line.
+ (setq tramp-default-method "ssh")
+ (setq compilation-scroll-output t)
 
+ (dolist (elt (list 'python-mode-hook
+                    'c++-mode-hook 'c-mode-hook 'objc-mode-hook
+                    'java-mode-hook
+                    'javascript-mode-hook
+                    'emacs-lisp-mode-hook 'lisp-mode-hook))
+   (add-hook elt
+             (lambda ()
+               (font-lock-add-keywords nil
+                                       '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
+                                         ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
+               (local-set-key (kbd "C-o") 'open-line-keeping-indent)
+               (local-set-key (kbd "C-y") 'yank-keeping-indent)
+               (local-set-key (kbd "C-j") 'newline-and-indent-with-curline-indent)
+               (outline-minor-mode)
+               (imenu-add-menubar-index)))) ; generate index
+
+ ;; org-mode stuff
+ (setq org-todo-keywords
+       '((sequence "TODO" "FEEDBACK" "VERIFY" "PROGRESS" "|" "DONE" "DELEGATED" "CANCELED")))
+
+ (setq org-todo-keyword-faces
+       '(("TODO"      . org-warning)
+         ("PROGRESS"  . shadow)
+         ("CANCELED"  . (:foreground "green" :weight bold))))
+
+ ;; erc stuff
+ (autoload 'erc-select "erc" t)
+ (setq erc-server "irc.freenode.net"
+       erc-port 6667
+       erc-nick "barismetin"
+       erc-user-full-name "Baris Metin"
+       erc-email-userid "baris"
+       erc-prompt-for-nickserv-password t
+       erc-echo-notices-in-current-buffer t
+       erc-max-buffer-size 30000
+       erc-auto-query t
+       erc-send-wihespace-lines nil
+       erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
+
+ (require 'pabbrev)
+ ;;(setq pabbrev-read-only-error nil)
+ (global-pabbrev-mode)
+
+ (require 'myplc)
+ (require 'mywiki))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (require 'keys)
-
-(require 'pabbrev)
-(global-pabbrev-mode)
-;;(setq pabbrev-read-only-error nil)
 
 (provide 'start)
