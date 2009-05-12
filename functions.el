@@ -1,34 +1,12 @@
 ;; Baris Metin <baris@metin.org>
 
-(defun emacs-major-version ()
-  "extract major emacs version from emacs-version and return as integer"
-  (progn
-    (string-match "\\(^[0-9]+\\)\\.\\([0-9]+\\)" emacs-version)
-    (string-to-number (match-string 1 emacs-version))))
-
 ;; Platform macros
-(defmacro Emacs22+ (&rest body)
-  (list 'if (>= emacs-major-version 22)
-        (cons 'progn body)))
-
-(defmacro Emacs21 (&rest body)
-  (list 'if (= emacs-major-version 21)
-        (cons 'progn body)))
-
 (defmacro Darwin (&rest body)
   (list 'if (eq system-type 'darwin)
         (cons 'progn body)))
 
 (defmacro Linux (&rest body)
   (list 'if (eq system-type 'gnu/linux)
-        (cons 'progn body)))
-
-(defmacro Pardus (&rest body)
-  (list 'if (file-regular-p "/etc/pardus-release")
-        (cons 'progn body)))
-
-(defmacro !Pardus (&rest body)
-  (list 'if (not (file-regular-p "/etc/pardus-release"))
         (cons 'progn body)))
 
 (defmacro Windows (&rest body)
@@ -41,9 +19,6 @@
 (defmacro when-available (func foo)
   `(when (fboundp ,func) ,foo)) 
 
-(defun load-3rd_party-file (filename)
-  (load-file (concat 3rd_party-root "/" filename)))
-
 (defun error-message (msg)
   "Print out an error message"
   (message "Error: %s" (propertize msg 'face 'error-face)))
@@ -53,13 +28,15 @@
   (message "%s" (propertize msg 'face 'message-face)))
 
 (defun count-words ()
+  "Count words in a region or buffer"
   (interactive)
   (let ((b (if mark-active (mark) (point-min)))
         (e (if mark-active (point) (point-max))))
     (message (int-to-string (how-many "\\w+" b e)))))
-;; start IRC client
+
 ;;;###autoload
 (defun start-erc ()
+  "Start IRC client with personal settings"
   (interactive "")
   (autoload 'erc-select "erc" t)
   (setq erc-server "irc.freenode.net"
@@ -72,7 +49,6 @@
         erc-max-buffer-size 30000
         erc-auto-query t
         erc-send-wihespace-lines nil
-        erc-pals '("cartman" "kartman" "caglar10ur" "meren" "madcat")
         erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
   (erc-select))
 
@@ -207,54 +183,3 @@
 
 
 (provide 'functions)
-
-;; A silly function to cascade all frame which is not very useful.
-;;
-;; ;;;###autoload
-;; (defun cascade-my-frames ()
-;;   (interactive)
-;;   (if window-system
-;;       (let ((num-frames (length (frames-on-display-list)))
-;;             (screen-width (x-display-pixel-width))
-;;             (num-max-columns 2)
-;;             (force-height 0)
-;;             (force-width 120)
-;;             (start-top 0)
-;;             (start-left 0))
-;;         ;; define height of a frame
-;;         (if (> num-frames num-max-columns)
-;;             (setq force-height
-;;                   (- (/ (/ (x-display-pixel-height) (frame-char-height))
-;;                         (ceiling (/ (float num-frames)
-;;                                     (float num-max-columns))))
-;;                      ;; -4 for windowmanager decorations, menubar and modeline
-;;                      4))
-;;           (setq force-height
-;;                 (- (/ (x-display-pixel-height) (frame-char-height)) 5)))
-;;         ;; define width of a frame
-;;         (if (> num-frames 1)
-;;             (setq force-width
-;;                   (- (/ (/ (x-display-pixel-width) (frame-char-width)) 2)
-;;                      ;; -6 for window manager decorations
-;;                      6)))
-;;         ;; resize frames and position them
-;;         (dolist (elt (frames-on-display-list))
-;;           (progn
-;;             (set-frame-width elt force-width)
-;;             (set-frame-height elt force-height)))
-;;         (dolist (elt (frames-on-display-list))
-;;           (progn
-;;             (sleep-for 0 100)
-;;             (if (eq num-frames 1)
-;;                 (set-frame-position elt
-;;                                     (- (x-display-pixel-width) (frame-pixel-width elt))
-;;                                     0)
-;;               (set-frame-position elt start-left start-top))
-;;             (if (eq start-left 0)
-;;                 (setq start-left (+ start-left
-;;                                     (frame-pixel-width elt) 10))
-;;               (progn
-;;                 (setq start-left 0)
-;;                 (setq start-top
-;;                       (+ start-top
-;;                          (frame-pixel-height elt) 10)))))))))

@@ -52,10 +52,9 @@
 (require 'theme)
 (theme-baris)
 
-(Emacs22+
- (ido-mode t)
- (setq ido-enable-flex-matching t)
- (setq ido-enable-last-directory-history nil))
+(ido-mode t)
+(setq ido-enable-flex-matching t)
+(setq ido-enable-last-directory-history nil)
 
 (setq compilation-scroll-output t)
 
