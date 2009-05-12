@@ -53,28 +53,6 @@
   (erc-select))
 
 ;;;###autoload
-(defun enlarge-current-window-to-max ()
-  "enlarge the current window to maximum available heigth"
-  (interactive)
-  (let ((old-height (window-height (selected-window)))
-        (new-height (window-height (selected-window)))
-        (old-width (window-width (selected-window)))
-        (new-width (window-width (selected-window)))
-        (first-run t))
-    (while (or first-run
-               (or (> new-height old-height) (> new-width old-width)))
-      (enlarge-window 1)
-      (condition-case err
-          (enlarge-window-horizontally 1)
-        (error
-         nil))
-      (setq old-height new-height
-            new-height (window-height (selected-window))
-            old-width new-width
-            new-width (window-width (selected-window)))
-      (setq first-run nil))))
-
-;;;###autoload
 (defun newline-and-indent-with-curline-indent ()
   (interactive)
   (progn
