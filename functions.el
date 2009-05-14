@@ -224,7 +224,7 @@
    '(font-lock-negation-char-face ((t (:foreground "#e7f6da"))))
    '(link ((t (:foreground "#8ac6f2" :bold t :underline t))))
    '(show-paren-match ((t (:foreground "#f6f3e8" :background "#857b6f" :bold t))))
-   '(region ((t (:foreground "#f6f3e8" :background "#444444"))))
+   '(region ((t (:foreground "#444444" :background "#f6f3e8"))))
    '(lazy-highlight ((t (:foreground "black" :background "yellow"))))))
 
 
