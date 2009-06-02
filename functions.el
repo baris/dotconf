@@ -22,7 +22,7 @@
 (defmacro idle-exec (&rest body)
   "Run body with when emacs is idle"
   (list
-   'run-with-idle-timer 3 nil
+   'run-with-idle-timer 0.001 nil
    (list 'lambda nil (cons 'progn body))))
 
 
@@ -204,6 +204,24 @@
    '(font-lock-warning-face ((t (:underline t :foreground "VioletRed"))))
    '(font-lock-negation-char-face ((t (:bold t :foreground "#000000"))))
    '(font-lock-preprocessor-face ((t (:bold t :foreground "#000000"))))))
+
+;;;###autoload
+(defun theme-baris2 ()
+  (interactive "")
+  (set-cursor-color "#000000")
+  (custom-set-faces
+   '(font-lock-comment-face ((t (:foreground "#229955"))))
+   '(font-lock-string-face ((t (:foreground "#229955"))))
+   '(font-lock-keyword-face ((t (:bold nil :foreground "#851565"))))
+   '(font-lock-constant-face ((t (:bold t :foreground "default"))))
+   '(font-lock-builtin-face ((t (:foreground "#851565"))))
+   '(font-lock-type-face ((t (:foreground "#851565"))))
+   '(font-lock-variable-name-face ((t (:foreground "default"))))
+   '(font-lock-function-name-face ((t (:bold t :foreground "default"))))
+   '(font-lock-warning-face ((t (:underline t :foreground "VioletRed"))))
+   '(font-lock-negation-char-face ((t (:bold t :foreground "default"))))
+   '(font-lock-preprocessor-face ((t (:bold t :foreground "default"))))))
+
 
 ;;;###autoload
 (defun theme-wombat ()

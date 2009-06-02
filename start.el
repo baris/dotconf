@@ -6,21 +6,11 @@
 (require 'cl)
 (require 'variables)
 (require 'functions)
-(let ((__curdir (getenv "HOME"))) ;; FIXME: get current working dir
-      (progn (cd emacs-root)
-             (normal-top-level-add-subdirs-to-load-path)
-             (cd __curdir)))
 
-(if window-system
-    (progn
-      (Darwin
-       (create-fontset-from-fontset-spec
-        (concat
-         "-apple-monaco-medium-r-normal--11-*-*-*-*-*-fontset-monaco,"
-         "ascii:-apple-monaco-medium-r-normal--11-100-*-*-m-100-mac-roman,"
-         "latin-iso8859-1:-apple-monaco-medium-r-normal--11-100-*-*-m-100-mac-roman"))
-       (add-to-list 'default-frame-alist '(font . "fontset-monaco"))
-       (add-to-list 'default-frame-alist '(alpha . 95)))))
+(let ((__curdir (getenv "PWD")))
+  (progn (cd emacs-root)
+         (normal-top-level-add-subdirs-to-load-path)
+         (cd __curdir)))
 
 (tool-bar-mode nil)
 (menu-bar-mode t)
@@ -46,8 +36,19 @@
  (set-keyboard-coding-system 'iso8859-9)
  (setq current-language-environment "iso8859-9"))
 
+(Darwin
+ (if window-system
+     (progn
+       (create-fontset-from-fontset-spec
+        (concat
+         "-apple-monaco-medium-r-normal--11-*-*-*-*-*-fontset-monaco,"
+         "ascii:-apple-monaco-medium-r-normal--11-100-*-*-m-100-mac-roman,"
+         "latin-iso8859-1:-apple-monaco-medium-r-normal--11-100-*-*-m-100-mac-roman"))
+       (add-to-list 'default-frame-alist '(font . "fontset-monaco"))
+       (add-to-list 'default-frame-alist '(alpha . 95)))))
+
 ;;(global-font-lock-mode 0)
-(theme-baris)
+;;(theme-baris)
 
 (ido-mode t)
 (setq ido-enable-flex-matching t)
@@ -57,15 +58,12 @@
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
 
-
 ;; use a saner indentation style
 (setq c-default-style
       '((java-mode . "java") (other . "stroustrup")))
 
-
 ;; lazy load additional settings
 (idle-exec
- 
  ;; make same buffer/file names unique
  (when (require-maybe 'uniquify)
    (setq uniquify-buffer-name-style 'reverse)
