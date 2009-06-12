@@ -246,4 +246,22 @@
    '(lazy-highlight ((t (:foreground "black" :background "yellow"))))))
 
 
+(defun theater ()
+  (interactive)
+  (let ((theater-frame nil)
+        (frames (frames-on-display-list)))
+    (dolist (elt frames)
+            (if (> (frame-parameter elt 'internal-border-width) 0)
+                (setq theater-frame elt)))
+    (if theater-frame
+        (delete-frame theater-frame)
+      (select-frame (new-frame 
+                     '((menu-bar-lines . 0)
+                       (tool-bar-lines . 0)
+                       (vertical-scroll-bars . nil)
+                       (fullscreen . fullboth)
+                       (left-fringe . 0)
+                       (right-fringe . 0)
+                       (internal-border-width . 70)))))))
+          
 (provide 'functions)

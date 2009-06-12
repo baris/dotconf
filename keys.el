@@ -16,7 +16,7 @@
  (global-set-key [C-S-down] '(lambda () (interactive) (frame-move-y 10))))
 
 
-(global-set-key [M-return] 'frame-toggle-fullscreen)
+(global-set-key [M-return] 'theater)
 
 ;; use Control keys instead of M-* keys like M-x (Yegge tip)
 (global-set-key (kbd "C-x C-g") 'execute-extended-command)
