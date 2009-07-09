@@ -17,10 +17,6 @@
 (defvar emacs-root (concat depo-root "/emacs")
   "Personal emacs directory")
 
-(defvar 3rd_party-root (concat emacs-root "/3rd_party")
-  "Non-standard 3rd party modes directory")
-                           
-
 (defvar emacs-colors-initialized nil
   "color mode initialized?")
 

@@ -7,11 +7,6 @@
 (require 'variables)
 (require 'functions)
 
-(let ((__curdir (getenv "PWD")))
-  (progn (cd emacs-root)
-         (normal-top-level-add-subdirs-to-load-path)
-         (cd __curdir)))
-
 (tool-bar-mode nil)
 (menu-bar-mode t)
 (setq scroll-bar-mode-explicit t)
@@ -32,9 +27,6 @@
 (setq visible-bell t) ;; don't beep 
 (setq default-line-spacing 0.1) ;; same line-spacing with TextMate
 (setq current-language-environment "UTF-8")
-(Windows
- (set-keyboard-coding-system 'iso8859-9)
- (setq current-language-environment "iso8859-9"))
 
 (Darwin
  (if window-system
