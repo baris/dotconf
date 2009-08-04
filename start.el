@@ -23,21 +23,10 @@
 (setq show-paren-mode t)(show-paren-mode t)
 (setq transient-mark-mode t) ;; highlight selected region
 (setq-default indent-tabs-mode nil)
-(setq default-input-method "rfc1345")
 (setq visible-bell t) ;; don't beep 
 (setq default-line-spacing 0.1) ;; same line-spacing with TextMate
+(setq default-input-method "rfc1345")
 (setq current-language-environment "UTF-8")
-
-(Darwin
- (if window-system
-     (progn
-       (create-fontset-from-fontset-spec
-        (concat
-         "-apple-monaco-medium-r-normal--11-*-*-*-*-*-fontset-monaco,"
-         "ascii:-apple-monaco-medium-r-normal--11-100-*-*-m-100-mac-roman,"
-         "latin-iso8859-1:-apple-monaco-medium-r-normal--11-100-*-*-m-100-mac-roman"))
-       (add-to-list 'default-frame-alist '(font . "fontset-monaco"))
-       (add-to-list 'default-frame-alist '(alpha . 95)))))
 
 ;;(global-font-lock-mode 0)
 ;;(theme-baris)
