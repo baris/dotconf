@@ -32,90 +32,12 @@
   (message "Error: %s" (propertize msg 'face 'error-face)))
 
 ;;;###autoload
-(defun info-message (msg)
-  "Print out a message"
-  (message "%s" (propertize msg 'face 'message-face)))
-
-;;;###autoload
 (defun count-words ()
   "Count words in a region or buffer"
   (interactive)
   (let ((b (if mark-active (mark) (point-min)))
         (e (if mark-active (point) (point-max))))
     (message (int-to-string (how-many "\\w+" b e)))))
-
-;;;###autoload
-(defun start-erc ()
-  "Start IRC client with personal settings"
-  (interactive "")
-  (autoload 'erc-select "erc" t)
-  (setq erc-server "irc.freenode.net"
-        erc-port 6667
-        erc-nick "barismetin"
-        erc-user-full-name "Baris Metin"
-        erc-email-userid "baris"
-        erc-prompt-for-nickserv-password t
-        erc-echo-notices-in-current-buffer t
-        erc-max-buffer-size 30000
-        erc-auto-query t
-        erc-send-wihespace-lines nil
-        erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
-  (erc-select))
-
-;;;###autoload
-(defun newline-and-indent-with-curline-indent ()
-  (interactive)
-  (progn
-    (indent-according-to-mode)
-    (newline-and-indent)))
-
-;;;###autoload
-(defun open-line-keeping-indent ()
-  (interactive)
-  (progn
-    (move-beginning-of-line nil)
-    (open-line 1)
-    (indent-according-to-mode)))
-
-;;;###autoload
-(defun yank-keeping-indent ()
-  (interactive)
-  (progn
-    (set-mark (point))
-    (yank)
-    (indent-region (mark) (point))))
-
-;;
-;; Frame management
-;;
-;;;###autoload
-(defun frame-toggle-fullscreen ()
-  (interactive)
-  (set-frame-parameter nil 'fullscreen (if (frame-parameter nil 'fullscreen)
-                                           nil
-                                         'fullboth)))
-
-;;;###autoload
-(defun frame-alpha (alpha-value)
-  (interactive "sAlpha Value: ")
-  (set-frame-parameter nil 'alpha (string-to-int alpha-value)))
-
-;;;###autoload
-(defun frame-move-x (x)
-  (interactive)
-  (let ((cur-left (frame-parameter (selected-frame) 'left))
-        (max-left (x-display-pixel-width))
-        (min-left 0))
-    (let ((new-left (+ cur-left x)))
-      (if (not (or (> new-left max-left)
-                   (< new-left min-left)))
-          (set-frame-parameter (selected-frame) 'left new-left)))))
-
-;;;###autoload
-(defun frame-move-y (y)
-  (interactive)
-  (set-frame-parameter (selected-frame) 'top
-                       (+ (frame-parameter (selected-frame) 'top) y)))
 
 ;;
 ;; Shell management
@@ -181,23 +103,4 @@
   (if (not (null my-latest-non-shell-buffer))
       (switch-to-buffer (get-buffer my-latest-non-shell-buffer))))
 
-
-(defun theater ()
-  (interactive)
-  (let ((theater-frame nil)
-        (frames (frames-on-display-list)))
-    (dolist (elt frames)
-            (if (> (frame-parameter elt 'internal-border-width) 0)
-                (setq theater-frame elt)))
-    (if theater-frame
-        (delete-frame theater-frame)
-      (select-frame (new-frame 
-                     '((menu-bar-lines . 0)
-                       (tool-bar-lines . 0)
-                       (vertical-scroll-bars . nil)
-                       (fullscreen . fullboth)
-                       (left-fringe . 0)
-                       (right-fringe . 0)
-                       (internal-border-width . 70)))))))
-          
 (provide 'functions)
