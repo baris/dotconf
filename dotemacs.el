@@ -121,11 +121,6 @@
 ; use Meta + arrow keys to switch windows.
 (windmove-default-keybindings 'meta)
 
-;; use Control keys instead of M-* keys like M-x (Yegge tip)
-(global-set-key (kbd "C-x C-g") 'execute-extended-command)
-(define-key minibuffer-local-map "\C-n" 'next-complete-history-element)
-(define-key minibuffer-local-map "\C-p" 'previous-complete-history-element)
-
 ;; scroll window... vim had this nice thing too.
 (global-set-key (kbd "M-n") (lambda () (interactive) (scroll-up 1)))
 (global-set-key (kbd "M-p") (lambda () (interactive) (scroll-down 1)))
