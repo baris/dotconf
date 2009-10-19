@@ -28,9 +28,6 @@
 (setq default-input-method "rfc1345")
 (setq current-language-environment "UTF-8")
 
-;;(global-font-lock-mode 0)
-;;(theme-baris)
-
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 (setq ido-enable-last-directory-history nil)
