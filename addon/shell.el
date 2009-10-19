@@ -1,47 +1,9 @@
 ;; Baris Metin <baris@metin.org>
 
-;; Platform macros
-(defmacro Darwin (&rest body)
-  (list 'if (eq system-type 'darwin)
-        (cons 'progn body)))
+;;;;;;;;;;;;;;;;;;;;;;
+;; Shell management ;;
+;;;;;;;;;;;;;;;;;;;;;;
 
-(defmacro Linux (&rest body)
-  (list 'if (eq system-type 'gnu/linux)
-        (cons 'progn body)))
-
-(defmacro Windows (&rest body)
-  (list 'if (string= window-system "w32")
-        (cons 'progn body)))
-
-(defmacro require-maybe (feature &optional file)
-  `(require ,feature ,file 'noerror)) 
-
-(defmacro when-available (func foo)
-  `(when (fboundp ,func) ,foo)) 
-
-(defmacro idle-exec (&rest body)
-  "Run body with when emacs is idle"
-  (list
-   'run-with-idle-timer 0.001 nil
-   (list 'lambda nil (cons 'progn body))))
-
-
-;;;###autoload
-(defun error-message (msg)
-  "Print out an error message"
-  (message "Error: %s" (propertize msg 'face 'error-face)))
-
-;;;###autoload
-(defun count-words ()
-  "Count words in a region or buffer"
-  (interactive)
-  (let ((b (if mark-active (mark) (point-min)))
-        (e (if mark-active (point) (point-max))))
-    (message (int-to-string (how-many "\\w+" b e)))))
-
-;;
-;; Shell management
-;;
 (idle-exec
  (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)

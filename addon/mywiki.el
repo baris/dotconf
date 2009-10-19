@@ -1,14 +1,11 @@
 ;; Baris Metin <baris@metin.org>
 
-(require 'variables)
-(require 'functions)
-
 ;; muse stuff
 ;;(setq muse-file-extension nil muse-mode-auto-p t)
 (when (require-maybe 'muse-html)
   (require 'muse-wiki)
 
-  (defvar mywiki-path (concat depo-root "/muse"))
+  (defvar mywiki-path (concat (getenv "HOME") "/muse"))
   (defvar mywiki-html-path (concat mywiki-path "/html"))
   (defvar mywiki-remote-path "")
 
