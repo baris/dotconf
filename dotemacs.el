@@ -129,8 +129,8 @@
 (global-set-key (kbd "C-'") 'ff-find-other-file)  
 
 ;; switching buffers
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-x b") 'ido-switch-buffer)
+(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+(global-set-key (kbd "C-x b") 'ibuffer)
 
 ;; dired
 (global-set-key (kbd "C-x d") 'ido-dired)
@@ -154,6 +154,6 @@
 ;;;;;;;;;;;;;;;;;
 (when (file-name-directory load-file-name)
   (let ((addon-dir (concat (file-name-directory load-file-name) "addon")))
-    (dolist (elt (directory-files addon-dir t ".*\.el$"))
-      (load-file elt))))
+    (dolist (elt (ignore-errors (directory-files addon-dir t ".*\.el$")))
+          (load-file elt))))
 
