@@ -1,5 +1,4 @@
 ;; Baris Metin <baris@metin.org>
-
 (require 'cl)
 
 ;;;;;;;;;;;;;;;
@@ -7,28 +6,35 @@
 ;;;;;;;;;;;;;;;
 
 ;; Platform macros
+
+;;;###autoload
 (defmacro Darwin (&rest body)
   (list 'if (eq system-type 'darwin)
         (cons 'progn body)))
 
+;;;###autoload
 (defmacro Linux (&rest body)
   (list 'if (eq system-type 'gnu/linux)
         (cons 'progn body)))
 
+;;;###autoload
 (defmacro Windows (&rest body)
   (list 'if (string= window-system "w32")
         (cons 'progn body)))
 
+;;;###autoload
 (defmacro require-maybe (feature &optional file)
   `(require ,feature ,file 'noerror)) 
 
+;;;###autoload
 (defmacro when-available (func foo)
   `(when (fboundp ,func) ,foo)) 
 
+;;;###autoload
 (defmacro idle-exec (&rest body)
   "Run body with when emacs is idle"
   (list
-   'run-with-idle-timer 0.001 nil
+   'run-with-idle-timer 0.1 nil
    (list 'lambda nil (cons 'progn body))))
 
 ;;;###autoload
@@ -49,15 +55,12 @@
 ;; Basic Setup ;;
 ;;;;;;;;;;;;;;;;;
 (tool-bar-mode nil)
-(blink-cursor-mode t)
 (setq make-backup-files nil)
 (setq inhibit-startup-message t)
 (setq line-number-mode t)
 (setq column-number-mode t)
 (setq scroll-step 1)
-(setq show-trailing-whitespace nil)
 (setq frame-title-format "%b (%m)") ;; filename (mode)
-(global-hl-line-mode -1)
 (setq show-paren-style 'mixed)
 (setq show-paren-mode t)(show-paren-mode t)
 (setq transient-mark-mode t) ;; highlight selected region
@@ -77,36 +80,22 @@
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
 
-;; use a saner indentation style
-(setq c-default-style
-      '((java-mode . "java") (other . "stroustrup")))
 
 ;; make same buffer/file names unique
 (when (require-maybe 'uniquify)
   (setq uniquify-buffer-name-style 'reverse)
   (setq uniquify-separator " -> "))
 
+(setq tramp-default-method "ssh")
 (setq gdb-many-windows t)  ;; prety gdb mode
 (which-function-mode 1)  ;; show functions in the mode line.
-(setq tramp-default-method "ssh")
 (setq compilation-scroll-output t)
-
-(dolist (elt (list 'python-mode-hook
-                   'c++-mode-hook 'c-mode-hook 'objc-mode-hook
-                   'java-mode-hook
-                   'javascript-mode-hook
-                   'emacs-lisp-mode-hook 'lisp-mode-hook))
-  (add-hook elt
-            (lambda ()
-              (font-lock-add-keywords nil
-                                      '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
-                                        ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
-              (flyspell-prog-mode)
-              (outline-minor-mode)
-              (imenu-add-menubar-index)))) ; generate index
 
 (add-hook 'text-mode-hook
           (lambda ()
+            (font-lock-add-keywords nil
+                                    '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
+                                      ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
             (flyspell-mode)))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -152,8 +141,9 @@
 ;;;;;;;;;;;;;;;;;
 ;; Load addons ;;
 ;;;;;;;;;;;;;;;;;
-(when (file-name-directory load-file-name)
-  (let ((addon-dir (concat (file-name-directory load-file-name) "addon")))
-    (dolist (elt (ignore-errors (directory-files addon-dir t ".*\.el$")))
-          (load-file elt))))
+(idle-exec 
+ (when (file-name-directory load-file-name)
+   (let ((addon-dir (concat (file-name-directory load-file-name) "addon")))
+     (dolist (elt (ignore-errors (directory-files addon-dir t ".*\.el$")))
+       (load-file elt)))))
 
