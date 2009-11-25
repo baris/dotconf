@@ -34,7 +34,7 @@
 (defmacro idle-exec (&rest body)
   "Run body with when emacs is idle"
   (list
-   'run-with-idle-timer 0.1 nil
+   'run-with-idle-timer 0.5 nil
    (list 'lambda nil (cons 'progn body))))
 
 ;;;###autoload
@@ -54,7 +54,7 @@
 ;;;;;;;;;;;;;;;;;
 ;; Basic Setup ;;
 ;;;;;;;;;;;;;;;;;
-(tool-bar-mode nil)
+(tool-bar-mode -1)
 (setq make-backup-files nil)
 (setq inhibit-startup-message t)
 (setq line-number-mode t)
@@ -128,12 +128,6 @@
 ; make CTRL+C f complete filename
 (global-set-key (kbd "C-c f") 'comint-dynamic-complete-filename)
 
-(global-set-key (kbd "<f1>") 'switch-to-latest-non-shell)
-(global-set-key (kbd "<f2>") 'switch-to-shell)
-(global-set-key (kbd "<f3>") 'new-shell)
-(global-set-key (kbd "<f6>") 'compile)
-(global-set-key (kbd "<f7>") 'recompile)
-
 (Darwin
  (setq mac-command-modifier 'meta)
  (setq x-select-enable-clipboard t))
@@ -141,9 +135,9 @@
 ;;;;;;;;;;;;;;;;;
 ;; Load addons ;;
 ;;;;;;;;;;;;;;;;;
-(idle-exec 
- (when (file-name-directory load-file-name)
-   (let ((addon-dir (concat (file-name-directory load-file-name) "addon")))
-     (dolist (elt (ignore-errors (directory-files addon-dir t ".*\.el$")))
-       (load-file elt)))))
+(when (file-name-directory load-file-name)
+  (setq *emacs-addon-dir* (concat (file-name-directory load-file-name) "addon")))
+(idle-exec
+ (dolist (elt (ignore-errors (directory-files *emacs-addon-dir* t ".*\.el$")))
+   (load-file elt)))
 
