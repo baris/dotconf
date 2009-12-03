@@ -129,6 +129,7 @@
 (global-set-key (kbd "C-c f") 'comint-dynamic-complete-filename)
 
 (Darwin
+ (setq mac-option-modifier 'meta)
  (setq mac-command-modifier 'meta)
  (setq x-select-enable-clipboard t))
 
