@@ -50,6 +50,13 @@
         (e (if mark-active (point) (point-max))))
     (message (int-to-string (how-many "\\w+" b e)))))
 
+;;;###autoload
+(defun fs ()
+  "toggle fullscreen frame"
+  (interactive)
+  (set-frame-parameter nil 'fullscreen (if (frame-parameter nil 'fullscreen)
+                                           nil
+                                         'fullboth)))
 
 ;;;;;;;;;;;;;;;;;
 ;; Basic Setup ;;
@@ -104,7 +111,9 @@
 ;; Keys Setup ;;
 ;;;;;;;;;;;;;;;;
 
-;; make ALT+backspace work
+(global-set-key (kbd "C-.") 'hippie-expand)
+
+;; Make ALT+backspace work
 (define-key global-map [(meta backspace)] 'backward-kill-word)
 
 ; use Meta + arrow keys to switch windows.
