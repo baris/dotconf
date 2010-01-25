@@ -119,6 +119,12 @@
 ; use Meta + arrow keys to switch windows.
 (windmove-default-keybindings 'meta)
 
+; use meta + {-,+} to resize windows.
+(global-unset-key (kbd "M--"))   (global-set-key (kbd "M--")   (lambda () (interactive) (enlarge-window -2)))
+(global-unset-key (kbd "M-="))   (global-set-key (kbd "M-=")   (lambda () (interactive) (enlarge-window 2)))
+(global-unset-key (kbd "M-C--")) (global-set-key (kbd "M-C--") (lambda () (interactive) (enlarge-window -2 t)))
+(global-unset-key (kbd "M-C-=")) (global-set-key (kbd "M-C-=") (lambda () (interactive) (enlarge-window 2 t)))
+
 ;; scroll window... vim had this nice thing too.
 (global-set-key (kbd "M-n") (lambda () (interactive) (scroll-up 1)))
 (global-set-key (kbd "M-p") (lambda () (interactive) (scroll-down 1)))
