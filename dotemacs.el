@@ -120,10 +120,19 @@
 (windmove-default-keybindings 'meta)
 
 ; use meta + {-,+} to resize windows.
-(global-unset-key (kbd "M--"))   (global-set-key (kbd "M--")   (lambda () (interactive) (enlarge-window -2)))
-(global-unset-key (kbd "M-="))   (global-set-key (kbd "M-=")   (lambda () (interactive) (enlarge-window 2)))
+(global-unset-key (kbd "M--")) (global-set-key (kbd "M--")   (lambda () (interactive) (enlarge-window -2)))
+(global-set-key (kbd "<M-wheel-down>")   (lambda () (interactive) nil))
+(global-set-key (kbd "<M-double-wheel-down>")   (lambda () (interactive) (enlarge-window -1)))
+
+(global-unset-key (kbd "M-=")) (global-set-key (kbd "M-=")   (lambda () (interactive) (enlarge-window 2)))
+(global-set-key (kbd "<M-wheel-up>")   (lambda () (interactive) nil))
+(global-set-key (kbd "<M-double-wheel-up>")   (lambda () (interactive) (enlarge-window 1)))
+
 (global-unset-key (kbd "M-C--")) (global-set-key (kbd "M-C--") (lambda () (interactive) (enlarge-window -2 t)))
+(global-set-key (kbd "<C-M-wheel-down>")   (lambda () (interactive) (enlarge-window -2 t)))
+
 (global-unset-key (kbd "M-C-=")) (global-set-key (kbd "M-C-=") (lambda () (interactive) (enlarge-window 2 t)))
+(global-set-key (kbd "<C-M-wheel-up>")   (lambda () (interactive) (enlarge-window 2 t)))
 
 ;; scroll window... vim had this nice thing too.
 (global-set-key (kbd "M-n") (lambda () (interactive) (scroll-up 1)))
