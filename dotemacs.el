@@ -98,12 +98,16 @@
 (which-function-mode 1)  ;; show functions in the mode line.
 (setq compilation-scroll-output t)
 
-(add-hook 'text-mode-hook
-          (lambda ()
-            (font-lock-add-keywords nil
-                                    '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
-                                      ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
-            (flyspell-mode)))
+(dolist (elt (list 'python-mode-hook 'c-mode-hook 'c++-mode-hook))
+             (add-hook elt
+                       (lambda ()
+                         (font-lock-add-keywords nil
+                                                 '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
+                                                   ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
+                         (outline-minor-mode)
+                         (flyspell-prog-mode))))
+
+(add-hook 'text-mode-hook (lambda () (flyspell-mode)))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
