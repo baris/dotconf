@@ -75,6 +75,7 @@
 (setq visible-bell t) ;; don't beep 
 (setq default-line-spacing 0.1) ;; same line-spacing with TextMate
 (setq current-language-environment "UTF-8")
+(setq tab-width 4)
 
 (setq ispell-program-name "aspell")
 (ispell-change-dictionary "english" 1)
@@ -98,14 +99,18 @@
 (which-function-mode 1)  ;; show functions in the mode line.
 (setq compilation-scroll-output t)
 
-(dolist (elt (list 'python-mode-hook 'c-mode-hook 'c++-mode-hook))
-             (add-hook elt
-                       (lambda ()
-                         (font-lock-add-keywords nil
-                                                 '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
-                                                   ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
-                         (outline-minor-mode)
-                         (flyspell-prog-mode))))
+(defun add-mode-hooks (lst f)
+  (dolist (elt lst)
+    (add-hook elt f)))
+
+(add-mode-hooks (list 'python-mode-hook 'c-mode-hook 'c++-mode-hook 'objc-mode-hook)
+                (lambda ()
+                  (font-lock-add-keywords nil
+                                          '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
+                                            ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
+                  (outline-minor-mode)
+                  (setq c-basic-offset 4)
+                  (flyspell-prog-mode)))
 
 (add-hook 'text-mode-hook (lambda () (flyspell-mode)))
 
