@@ -115,6 +115,8 @@
 (add-hook 'text-mode-hook (lambda () (flyspell-mode)))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
+(defalias 'm 'magit-status)
+
 
 ;;;;;;;;;;;;;;;;
 ;; Keys Setup ;;
