@@ -67,6 +67,8 @@
 (setq line-number-mode t)
 (setq column-number-mode t)
 (setq scroll-step 1)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq frame-title-format "%b (%m)") ;; filename (mode)
 (setq show-paren-style 'mixed)
 (setq show-paren-mode t)(show-paren-mode t)
@@ -109,8 +111,7 @@
                                           '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
                                             ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
                   (outline-minor-mode)
-                  (setq c-basic-offset 4)
-                  (flyspell-prog-mode)))
+                  (setq c-basic-offset 4)))
 
 (add-hook 'text-mode-hook (lambda () (flyspell-mode)))
 
