@@ -38,11 +38,6 @@
    (list 'lambda nil (cons 'progn body))))
 
 ;;;###autoload
-(defun error-message (msg)
-  "Print out an error message"
-  (message "Error: %s" (propertize msg 'face 'error-face)))
-
-;;;###autoload
 (defun count-words ()
   "Count words in a region or buffer"
   (interactive)
@@ -75,7 +70,7 @@
 (setq transient-mark-mode t) ;; highlight selected region
 (setq-default indent-tabs-mode nil)
 (setq visible-bell t) ;; don't beep 
-(setq default-line-spacing 0.1) ;; same line-spacing with TextMate
+;;(setq default-line-spacing 0) ;; same line-spacing with TextMate
 (setq current-language-environment "UTF-8")
 (setq tab-width 4)
 
@@ -89,7 +84,6 @@
 (setq dired-listing-switches "-l")
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
-
 
 ;; make same buffer/file names unique
 (when (require-maybe 'uniquify)
@@ -116,7 +110,10 @@
 (add-hook 'text-mode-hook (lambda () (flyspell-mode)))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
-(defalias 'm 'magit-status)
+
+(idle-exec 
+ (when (require-maybe 'magit)
+   (defalias 'm 'magit-status)))
 
 
 ;;;;;;;;;;;;;;;;
@@ -124,9 +121,6 @@
 ;;;;;;;;;;;;;;;;
 
 (global-set-key (kbd "C-.") 'hippie-expand)
-
-;; Make ALT+backspace work
-(define-key global-map [(meta backspace)] 'backward-kill-word)
 
 ; use Meta + arrow keys to switch windows.
 (windmove-default-keybindings 'meta)
@@ -177,4 +171,3 @@
 (idle-exec
  (dolist (elt (ignore-errors (directory-files *emacs-addon-dir* t ".*\.el$")))
    (load-file elt)))
-
