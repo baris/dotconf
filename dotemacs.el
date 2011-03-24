@@ -56,7 +56,7 @@
 ;;;;;;;;;;;;;;;;;
 ;; Basic Setup ;;
 ;;;;;;;;;;;;;;;;;
-(tool-bar-mode -1)
+(if window-system (tool-bar-mode -1))
 (setq make-backup-files nil)
 (setq inhibit-startup-message t)
 (setq line-number-mode t)
