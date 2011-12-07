@@ -70,12 +70,14 @@
 (setq transient-mark-mode t) ;; highlight selected region
 (setq-default indent-tabs-mode nil)
 (setq visible-bell t) ;; don't beep 
+(set-default 'cursor-type 'box)
+
 ;;(setq default-line-spacing 0) ;; same line-spacing with TextMate
 (setq current-language-environment "UTF-8")
 (setq tab-width 4)
 
-(setq ispell-program-name "aspell")
-(ispell-change-dictionary "english" 1)
+;(setq ispell-program-name "aspell")
+;(ispell-change-dictionary "english" 1)
 
 (ido-mode t)
 (setq ido-enable-flex-matching t)
@@ -159,9 +161,13 @@
 (global-set-key (kbd "C-c f") 'comint-dynamic-complete-filename)
 
 (Darwin
+ (setq x-select-enable-clipboard t)
  (setq mac-option-modifier 'meta)
  (setq mac-command-modifier 'meta)
- (setq x-select-enable-clipboard t))
+ ;; re-assign other-frame to Command-` (s-`) since we take s- away
+ ;; we'll need a way to switch frames.
+ (global-set-key (kbd "M-`") 'other-frame)
+)
 
 ;;;;;;;;;;;;;;;;;
 ;; Load addons ;;
