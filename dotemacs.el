@@ -57,7 +57,7 @@
     (let
         ((frame-width (floor (/ (* 0.9 (x-display-pixel-width)) (frame-char-width))))
          (frame-height (floor (/ (* 0.85 (x-display-pixel-height)) (frame-char-height))))
-         (frame-top 0)
+         (frame-top 25)
          (frame-left (floor (* 0.05 (x-display-pixel-width)))))
       (progn
         (set-frame-size (selected-frame) frame-width frame-height)
