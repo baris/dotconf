@@ -55,15 +55,15 @@
 
 (if window-system
     (let
-        ((frame-width (floor (/ (* 0.8 (x-display-pixel-width)) (frame-char-width))))
+        ((frame-width (floor (/ (* 0.9 (x-display-pixel-width)) (frame-char-width))))
          (frame-height (floor (/ (* 0.85 (x-display-pixel-height)) (frame-char-height))))
          (frame-top 0)
-         (frame-left (floor (* 0.1 (x-display-pixel-width)))))
+         (frame-left (floor (* 0.05 (x-display-pixel-width)))))
       (progn
         (set-frame-size (selected-frame) frame-width frame-height)
         (set-frame-position (selected-frame) frame-left frame-top)
         (if (>= emacs-major-version 24)
-            (load-theme 'tango t)))))
+            (load-theme 'adwaita t)))))
 
 
 ;;;;;;;;;;;;;;;;;
