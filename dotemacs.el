@@ -52,18 +52,20 @@
   (set-frame-parameter nil 'fullscreen (if (frame-parameter nil 'fullscreen)
                                            nil
                                          'fullboth)))
-
-(if window-system
-    (let
-        ((frame-width (floor (/ (* 0.9 (x-display-pixel-width)) (frame-char-width))))
-         (frame-height (floor (/ (* 0.85 (x-display-pixel-height)) (frame-char-height))))
-         (frame-top 25)
-         (frame-left (floor (* 0.05 (x-display-pixel-width)))))
-      (progn
-        (set-frame-size (selected-frame) frame-width frame-height)
-        (set-frame-position (selected-frame) frame-left frame-top)
-        (if (>= emacs-major-version 24)
-            (load-theme 'adwaita t)))))
+(defun setup-window ()
+  (interactive)
+  (if window-system
+      (let
+          ((frame-width (floor (/ (* 0.9 (x-display-pixel-width)) (frame-char-width))))
+           (frame-height (floor (/ (* 0.85 (x-display-pixel-height)) (frame-char-height))))
+           (frame-top 25)
+           (frame-left (floor (* 0.05 (x-display-pixel-width)))))
+        (progn
+          (set-frame-size (selected-frame) frame-width frame-height)
+          (set-frame-position (selected-frame) frame-left frame-top)
+          (if (>= emacs-major-version 24)
+              (load-theme 'adwaita t))))))
+(setup-window)
 
 
 ;;;;;;;;;;;;;;;;;
