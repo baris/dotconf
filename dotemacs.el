@@ -52,20 +52,47 @@
   (set-frame-parameter nil 'fullscreen (if (frame-parameter nil 'fullscreen)
                                            nil
                                          'fullboth)))
-(defun setup-window ()
+(defun setup-window (width height left top)
   (interactive)
   (if window-system
-      (let
-          ((frame-width (floor (/ (* 0.9 (x-display-pixel-width)) (frame-char-width))))
-           (frame-height (floor (/ (* 0.85 (x-display-pixel-height)) (frame-char-height))))
-           (frame-top 25)
-           (frame-left (floor (* 0.05 (x-display-pixel-width)))))
-        (progn
-          (set-frame-size (selected-frame) frame-width frame-height)
-          (set-frame-position (selected-frame) frame-left frame-top)
+      (progn
+        (set-frame-size (selected-frame) width height)
+        (set-frame-position (selected-frame) left top)
           (if (>= emacs-major-version 24)
-              (load-theme 'adwaita t))))))
-(setup-window)
+              (load-theme 'deeper-blue t)))))
+
+(defun setup-main-window ()
+  (interactive)
+  (let
+      ((width (floor (/ (* 0.9 (x-display-pixel-width)) (frame-char-width))))
+       (height (floor (/ (* 0.85 (x-display-pixel-height)) (frame-char-height))))
+       (top 25)
+       (left (floor (* 0.05 (x-display-pixel-width)))))
+    (progn
+      (setup-window width height left top))))
+
+(defun setup-side-window (left)
+  (interactive)
+  (let
+      ((width (floor (/ (* 0.48 (x-display-pixel-width)) (frame-char-width))))
+       (height (floor (/ (* 0.90 (x-display-pixel-height)) (frame-char-height))))
+       (top 25))
+    (progn
+      (setup-window width height left top))))
+
+(defun setup-left-window ()
+  (interactive)
+  (setup-side-window 0))
+
+(defun setup-right-window ()
+  (interactive)
+  (setup-side-window (floor (* 0.50 (x-display-pixel-width)))))
+
+(defalias 'wm 'setup-main-window)
+(defalias 'wl 'setup-left-window)
+(defalias 'wr 'setup-right-window)
+(wm)
+
 
 
 ;;;;;;;;;;;;;;;;;
