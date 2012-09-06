@@ -59,7 +59,7 @@
         (set-frame-size (selected-frame) width height)
         (set-frame-position (selected-frame) left top)
           (if (>= emacs-major-version 24)
-              (load-theme 'deeper-blue t)))))
+              (load-theme 'tango t)))))
 
 (defun setup-main-window ()
   (interactive)
@@ -88,10 +88,21 @@
   (interactive)
   (setup-side-window (floor (* 0.50 (x-display-pixel-width)))))
 
-(defalias 'wm 'setup-main-window)
-(defalias 'wl 'setup-left-window)
-(defalias 'wr 'setup-right-window)
-(wm)
+(if window-system
+    (progn
+      (defalias 'wm 'setup-main-window)
+      (defalias 'wl 'setup-left-window)
+      (defalias 'wr 'setup-right-window)
+      (wm))
+  (progn
+    (require 'mouse)
+    (xterm-mouse-mode t)
+    (global-set-key [mouse-4] '(lambda ()
+                                 (interactive)
+                                 (scroll-down 1)))
+    (global-set-key [mouse-5] '(lambda ()
+                                 (interactive)
+                                 (scroll-up 1)))))
 
 
 
@@ -164,25 +175,25 @@
 ;; Keys Setup ;;
 ;;;;;;;;;;;;;;;;
 
-(global-set-key (kbd "C-.") 'hippie-expand)
+(global-set-key (kbd "C-x .") 'hippie-expand)
 
 ; use Meta + arrow keys to switch windows.
 (windmove-default-keybindings 'meta)
 
 ; use meta + {-,+} to resize windows.
-(global-unset-key (kbd "M--")) (global-set-key (kbd "M--")   (lambda () (interactive) (enlarge-window -2)))
+(global-unset-key (kbd "M--")) (global-set-key (kbd "M--") (lambda () (interactive) (enlarge-window -2)))
 (global-set-key (kbd "<M-wheel-down>")   (lambda () (interactive) nil))
 (global-set-key (kbd "<M-double-wheel-down>")   (lambda () (interactive) (enlarge-window -1)))
 
-(global-unset-key (kbd "M-=")) (global-set-key (kbd "M-=")   (lambda () (interactive) (enlarge-window 2)))
-(global-set-key (kbd "<M-wheel-up>")   (lambda () (interactive) nil))
-(global-set-key (kbd "<M-double-wheel-up>")   (lambda () (interactive) (enlarge-window 1)))
+(global-unset-key (kbd "M-=")) (global-set-key (kbd "M-=") (lambda () (interactive) (enlarge-window 2)))
+(global-set-key (kbd "<M-wheel-up>") (lambda () (interactive) nil))
+(global-set-key (kbd "<M-double-wheel-up>") (lambda () (interactive) (enlarge-window 1)))
 
-(global-unset-key (kbd "M-C--")) (global-set-key (kbd "M-C--") (lambda () (interactive) (enlarge-window -2 t)))
-(global-set-key (kbd "<C-M-wheel-down>")   (lambda () (interactive) (enlarge-window -2 t)))
+(global-unset-key (kbd "M-_")) (global-set-key (kbd "M-_") (lambda () (interactive) (enlarge-window -2 t)))
+(global-set-key (kbd "<C-M-wheel-down>") (lambda () (interactive) (enlarge-window -2 t)))
 
-(global-unset-key (kbd "M-C-=")) (global-set-key (kbd "M-C-=") (lambda () (interactive) (enlarge-window 2 t)))
-(global-set-key (kbd "<C-M-wheel-up>")   (lambda () (interactive) (enlarge-window 2 t)))
+(global-unset-key (kbd "M-+")) (global-set-key (kbd "M-+") (lambda () (interactive) (enlarge-window 2 t)))
+(global-set-key (kbd "<C-M-wheel-up>") (lambda () (interactive) (enlarge-window 2 t)))
 
 ;; scroll window... vim had this nice thing too.
 (global-set-key (kbd "M-n") (lambda () (interactive) (scroll-up 1)))
