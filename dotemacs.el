@@ -105,6 +105,27 @@
                                  (scroll-up 1)))))
 
 
+;;;;;;;;;;;;;;;;;;;;;;
+;; Install packages ;;
+;;;;;;;;;;;;;;;;;;;;;;
+(if (>= emacs-major-version 24)
+    (progn
+      (require 'package)
+      (add-to-list 'package-archives
+                   '("marmalade" .
+                     "http://marmalade-repo.org/packages/"))
+      (package-initialize)
+
+      (mapc
+       (lambda (pkg)
+         (if (not (package-installed-p pkg))
+             (package-install pkg)))
+       '(magit find-file-in-repository emacsd-tile))
+
+      (require 'find-file-in-repository)
+      (require 'emacsd-tile)
+      (require 'magit)))
+
 
 ;;;;;;;;;;;;;;;;;
 ;; Basic Setup ;;
@@ -212,6 +233,9 @@
 
 ; make CTRL+C f complete filename
 (global-set-key (kbd "C-c f") 'comint-dynamic-complete-filename)
+
+; use find-file-in-repository by default
+(global-set-key (kbd "C-x C-f") 'find-file-in-repository)
 
 (Darwin
  (setq x-select-enable-clipboard t)
