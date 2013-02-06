@@ -235,7 +235,7 @@
 (global-set-key (kbd "C-c f") 'comint-dynamic-complete-filename)
 
 ; use find-file-in-repository by default
-(global-set-key (kbd "C-x C-f") 'find-file-in-repository)
+(global-set-key (kbd "C-x C-r") 'find-file-in-repository)
 
 (Darwin
  (setq x-select-enable-clipboard t)
