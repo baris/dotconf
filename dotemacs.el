@@ -108,23 +108,24 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages ;;
 ;;;;;;;;;;;;;;;;;;;;;;
-(if (>= emacs-major-version 24)
-    (progn
-      (require 'package)
-      (add-to-list 'package-archives
-                   '("marmalade" .
-                     "http://marmalade-repo.org/packages/"))
-      (package-initialize)
+(idle-exec 
+ (if (>= emacs-major-version 24)
+     (progn
+       (require 'package)
+       (add-to-list 'package-archives
+                    '("marmalade" .
+                      "http://marmalade-repo.org/packages/"))
+       (package-initialize)
 
-      (mapc
-       (lambda (pkg)
-         (if (not (package-installed-p pkg))
-             (package-install pkg)))
-       '(magit find-file-in-repository emacsd-tile))
+       (mapc
+        (lambda (pkg)
+          (if (not (package-installed-p pkg))
+              (package-install pkg)))
+        '(magit find-file-in-repository emacsd-tile))
 
-      (require 'find-file-in-repository)
-      (require 'emacsd-tile)
-      (require 'magit)))
+       (require 'find-file-in-repository)
+       (require 'emacsd-tile)
+       (require 'magit))))
 
 
 ;;;;;;;;;;;;;;;;;
