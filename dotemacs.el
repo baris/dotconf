@@ -18,11 +18,11 @@
 
 ;;;###autoload
 (defmacro require-maybe (feature &optional file)
-  `(require ,feature ,file 'noerror)) 
+  `(require ,feature ,file 'noerror))
 
 ;;;###autoload
 (defmacro when-available (func foo)
-  `(when (fboundp ,func) ,foo)) 
+  `(when (fboundp ,func) ,foo))
 
 ;;;###autoload
 (defmacro idle-exec (&rest body)
@@ -44,21 +44,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages ;;
 ;;;;;;;;;;;;;;;;;;;;;;
-(idle-exec 
- (if (>= emacs-major-version 24)
-     (progn
-       (require 'package)
-       (add-to-list 'package-archives
-                    '("marmalade" .
-                      "http://marmalade-repo.org/packages/"))
-       (package-initialize)
-       (mapc
-        (lambda (pkg)
-          (if (not (package-installed-p pkg))
-              (progn
-                (package-install pkg)
-                (require pkg))))
-        '(dash s magit puppet-mode)))))
+(if (>= emacs-major-version 24)
+    (progn
+      (require 'package)
+      (add-to-list 'package-archives
+                   '("marmalade" .
+                     "http://marmalade-repo.org/packages/"))
+      (package-initialize)
+
+      (mapc
+       (lambda (pkg)
+         (if (package-installed-p pkg)
+             (require pkg)
+           (package-install pkg)))
+       '(dash s magit))))
 
 
 ;;;;;;;;;;;;;;;;;
@@ -99,7 +98,7 @@
 (setq show-paren-mode t)(show-paren-mode t)
 (setq transient-mark-mode t) ;; highlight selected region
 (setq-default indent-tabs-mode nil)
-(setq visible-bell t) ;; don't beep 
+(setq visible-bell t) ;; don't beep
 (set-default 'cursor-type 'box)
 
 ;;(setq default-line-spacing 0) ;; same line-spacing with TextMate
@@ -128,7 +127,7 @@
 (setq compilation-scroll-output t)
 
 (dolist (*mode-hook* (list 'python-mode-hook 'c-mode-hook 'c++-mode-hook 'objc-mode-hook))
-        (add-hook *mode-hook* 
+        (add-hook *mode-hook*
                   (lambda ()
                     (font-lock-add-keywords nil
                                             '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
@@ -139,9 +138,10 @@
 
 (add-hook 'text-mode-hook (lambda () (flyspell-mode)))
 
-(defalias 'yes-or-no-p 'y-or-n-p)
+(idle-exec
+ (defalias 'yes-or-no-p 'y-or-n-p))
 
-(idle-exec 
+(idle-exec
  (when (require-maybe 'magit)
    (defalias 'm 'magit-status)))
 
@@ -150,46 +150,47 @@
 ;; Keys Setup ;;
 ;;;;;;;;;;;;;;;;
 
-(global-set-key (kbd "C-x .") 'hippie-expand)
+(idle-exec
+ (global-set-key (kbd "C-x .") 'hippie-expand)
 
-; use Meta + arrow keys to switch windows.
-(windmove-default-keybindings 'meta)
+ ;; use Meta + arrow keys to switch windows.
+ (windmove-default-keybindings 'meta)
 
-; use meta + {-,+} to resize windows.
-(global-unset-key (kbd "M--")) (global-set-key (kbd "M--") (lambda () (interactive) (enlarge-window -2)))
-(global-set-key (kbd "<M-wheel-down>")   (lambda () (interactive) nil))
-(global-set-key (kbd "<M-double-wheel-down>")   (lambda () (interactive) (enlarge-window -1)))
+ ;; use meta + {-,+} to resize windows.
+ (global-unset-key (kbd "M--")) (global-set-key (kbd "M--") (lambda () (interactive) (enlarge-window -2)))
+ (global-set-key (kbd "<M-wheel-down>")   (lambda () (interactive) nil))
+ (global-set-key (kbd "<M-double-wheel-down>")   (lambda () (interactive) (enlarge-window -1)))
 
-(global-unset-key (kbd "M-=")) (global-set-key (kbd "M-=") (lambda () (interactive) (enlarge-window 2)))
-(global-set-key (kbd "<M-wheel-up>") (lambda () (interactive) nil))
-(global-set-key (kbd "<M-double-wheel-up>") (lambda () (interactive) (enlarge-window 1)))
+ (global-unset-key (kbd "M-=")) (global-set-key (kbd "M-=") (lambda () (interactive) (enlarge-window 2)))
+ (global-set-key (kbd "<M-wheel-up>") (lambda () (interactive) nil))
+ (global-set-key (kbd "<M-double-wheel-up>") (lambda () (interactive) (enlarge-window 1)))
 
-(global-unset-key (kbd "M-_")) (global-set-key (kbd "M-_") (lambda () (interactive) (enlarge-window -2 t)))
-(global-set-key (kbd "<C-M-wheel-down>") (lambda () (interactive) (enlarge-window -2 t)))
+ (global-unset-key (kbd "M-_")) (global-set-key (kbd "M-_") (lambda () (interactive) (enlarge-window -2 t)))
+ (global-set-key (kbd "<C-M-wheel-down>") (lambda () (interactive) (enlarge-window -2 t)))
 
-(global-unset-key (kbd "M-+")) (global-set-key (kbd "M-+") (lambda () (interactive) (enlarge-window 2 t)))
-(global-set-key (kbd "<C-M-wheel-up>") (lambda () (interactive) (enlarge-window 2 t)))
+ (global-unset-key (kbd "M-+")) (global-set-key (kbd "M-+") (lambda () (interactive) (enlarge-window 2 t)))
+ (global-set-key (kbd "<C-M-wheel-up>") (lambda () (interactive) (enlarge-window 2 t)))
 
-;; scroll window... vim had this nice thing too.
-(global-set-key (kbd "M-n") (lambda () (interactive) (scroll-up 1)))
-(global-set-key (kbd "M-p") (lambda () (interactive) (scroll-down 1)))
+ ;; scroll window... vim had this nice thing too.
+ (global-set-key (kbd "M-n") (lambda () (interactive) (scroll-up 1)))
+ (global-set-key (kbd "M-p") (lambda () (interactive) (scroll-down 1)))
 
-;;; file completions
-(global-set-key (kbd "C-'") 'ff-find-other-file)  
+ ;; file completions
+ (global-set-key (kbd "C-'") 'ff-find-other-file)
 
-;; switching buffers
-(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-(global-set-key (kbd "C-x b") 'ibuffer)
+ ;; switching buffers
+ (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+ (global-set-key (kbd "C-x b") 'ibuffer)
 
-;; dired
-(global-set-key (kbd "C-x d") 'ido-dired)
-(global-set-key (kbd "C-x C-d") 'ido-dired)
+ ;; dired
+ (global-set-key (kbd "C-x d") 'ido-dired)
+ (global-set-key (kbd "C-x C-d") 'ido-dired)
 
-; make CTRL+C f complete filename
-(global-set-key (kbd "C-c f") 'comint-dynamic-complete-filename)
+ ;; make CTRL+C f complete filename
+ (global-set-key (kbd "C-c f") 'comint-dynamic-complete-filename)
 
-; use find-file-in-repository by default
-(global-set-key (kbd "C-x C-r") 'find-file-in-repository)
+ ;; use find-file-in-repository by default
+ (global-set-key (kbd "C-x C-r") 'find-file-in-repository)
 
-; shell
-(global-set-key (kbd "C-c t") 'toggle-shell)
+ ;; shell
+ (global-set-key (kbd "C-c t") 'toggle-shell))
