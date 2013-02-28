@@ -5,8 +5,6 @@
 ;; Functions ;;
 ;;;;;;;;;;;;;;;
 
-;; Platform macros
-
 ;;;###autoload
 (defmacro Darwin (&rest body)
   (list 'if (eq system-type 'darwin)
@@ -52,6 +50,7 @@
   (set-frame-parameter nil 'fullscreen (if (frame-parameter nil 'fullscreen)
                                            nil
                                          'fullboth)))
+
 (defun setup-window (width height left top)
   (interactive)
   (if window-system
@@ -59,7 +58,7 @@
         (set-frame-size (selected-frame) width height)
         (set-frame-position (selected-frame) left top)
           (if (>= emacs-major-version 24)
-              (load-theme 'tango t)))))
+              (load-theme 'wombat t)))))
 
 (defun setup-main-window ()
   (interactive)
@@ -120,12 +119,10 @@
        (mapc
         (lambda (pkg)
           (if (not (package-installed-p pkg))
-              (package-install pkg)))
-        '(magit find-file-in-repository emacsd-tile))
-
-       (require 'find-file-in-repository)
-       (require 'emacsd-tile)
-       (require 'magit))))
+              (progn
+                (package-install pkg)
+                (require pkg))))
+        '(dash s magit puppet-mode emacsd-tile)))))
 
 
 ;;;;;;;;;;;;;;;;;
@@ -250,8 +247,9 @@
 ;;;;;;;;;;;;;;;;;
 ;; Load addons ;;
 ;;;;;;;;;;;;;;;;;
-(when (file-name-directory load-file-name)
+(when load-in-progress
   (setq *emacs-addon-dir* (concat (file-name-directory load-file-name) "addon")))
+
 (idle-exec
  (dolist (elt (ignore-errors (directory-files *emacs-addon-dir* t ".*\.el$")))
    (load-file elt)))
