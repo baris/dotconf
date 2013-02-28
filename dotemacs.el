@@ -1,10 +1,6 @@
 ;; Baris Metin <baris@metin.org>
 (require 'cl)
 
-;;;;;;;;;;;;;;;
-;; Functions ;;
-;;;;;;;;;;;;;;;
-
 ;;;###autoload
 (defmacro Darwin (&rest body)
   (list 'if (eq system-type 'darwin)
@@ -35,74 +31,15 @@
    'run-with-idle-timer 0.5 nil
    (list 'lambda nil (cons 'progn body))))
 
-;;;###autoload
-(defun count-words ()
-  "Count words in a region or buffer"
-  (interactive)
-  (let ((b (if mark-active (mark) (point-min)))
-        (e (if mark-active (point) (point-max))))
-    (message (int-to-string (how-many "\\w+" b e)))))
 
-;;;###autoload
-(defun fs ()
-  "toggle fullscreen frame"
-  (interactive)
-  (set-frame-parameter nil 'fullscreen (if (frame-parameter nil 'fullscreen)
-                                           nil
-                                         'fullboth)))
+;;;;;;;;;;;;;;;;;
+;; Load addons ;;
+;;;;;;;;;;;;;;;;;
+(when load-in-progress
+  (setq *emacs-addon-dir* (concat (file-name-directory load-file-name) "addon")))
 
-(defun setup-window (width height left top)
-  (interactive)
-  (if window-system
-      (progn
-        (set-frame-size (selected-frame) width height)
-        (set-frame-position (selected-frame) left top)
-          (if (>= emacs-major-version 24)
-              (load-theme 'wombat t)))))
-
-(defun setup-main-window ()
-  (interactive)
-  (let
-      ((width (floor (/ (* 0.9 (x-display-pixel-width)) (frame-char-width))))
-       (height (floor (/ (* 0.85 (x-display-pixel-height)) (frame-char-height))))
-       (top 25)
-       (left (floor (* 0.05 (x-display-pixel-width)))))
-    (progn
-      (setup-window width height left top))))
-
-(defun setup-side-window (left)
-  (interactive)
-  (let
-      ((width (floor (/ (* 0.48 (x-display-pixel-width)) (frame-char-width))))
-       (height (floor (/ (* 0.90 (x-display-pixel-height)) (frame-char-height))))
-       (top 25))
-    (progn
-      (setup-window width height left top))))
-
-(defun setup-left-window ()
-  (interactive)
-  (setup-side-window 0))
-
-(defun setup-right-window ()
-  (interactive)
-  (setup-side-window (floor (* 0.50 (x-display-pixel-width)))))
-
-(if window-system
-    (progn
-      (defalias 'wm 'setup-main-window)
-      (defalias 'wl 'setup-left-window)
-      (defalias 'wr 'setup-right-window)
-      (wm))
-  (progn
-    (require 'mouse)
-    (xterm-mouse-mode t)
-    (global-set-key [mouse-4] '(lambda ()
-                                 (interactive)
-                                 (scroll-down 1)))
-    (global-set-key [mouse-5] '(lambda ()
-                                 (interactive)
-                                 (scroll-up 1)))))
-
+(dolist (elt (ignore-errors (directory-files *emacs-addon-dir* t ".*\.el$")))
+  (load-file elt))
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages ;;
@@ -115,20 +52,41 @@
                     '("marmalade" .
                       "http://marmalade-repo.org/packages/"))
        (package-initialize)
-
        (mapc
         (lambda (pkg)
           (if (not (package-installed-p pkg))
               (progn
                 (package-install pkg)
                 (require pkg))))
-        '(dash s magit puppet-mode emacsd-tile)))))
+        '(dash s magit puppet-mode)))))
 
 
 ;;;;;;;;;;;;;;;;;
 ;; Basic Setup ;;
 ;;;;;;;;;;;;;;;;;
-(if window-system (tool-bar-mode -1))
+(if window-system
+    (progn
+      (tool-bar-mode -1)
+      (wm))
+  (progn
+    (require 'mouse)
+    (xterm-mouse-mode t)
+    (global-set-key [mouse-4] '(lambda ()
+                                 (interactive)
+                                 (scroll-down 1)))
+    (global-set-key [mouse-5] '(lambda ()
+                                 (interactive)
+                                 (scroll-up 1)))))
+
+(Darwin
+ (setq x-select-enable-clipboard t)
+ (setq mac-option-modifier 'meta)
+ (setq mac-command-modifier 'meta)
+ ;; re-assign other-frame to Command-` (s-`) since we take s- away
+ ;; we'll need a way to switch frames.
+ (global-set-key (kbd "M-`") 'other-frame)
+)
+
 (setq make-backup-files nil)
 (setq inhibit-startup-message t)
 (setq line-number-mode t)
@@ -169,17 +127,15 @@
 (which-function-mode 1)  ;; show functions in the mode line.
 (setq compilation-scroll-output t)
 
-(defun add-mode-hooks (lst f)
-  (dolist (elt lst)
-    (add-hook elt f)))
-
-(add-mode-hooks (list 'python-mode-hook 'c-mode-hook 'c++-mode-hook 'objc-mode-hook)
-                (lambda ()
-                  (font-lock-add-keywords nil
-                                          '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
-                                            ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
-                  (outline-minor-mode)
-                  (setq c-basic-offset 4)))
+(dolist (*mode-hook* (list 'python-mode-hook 'c-mode-hook 'c++-mode-hook 'objc-mode-hook))
+        (add-hook *mode-hook* 
+                  (lambda ()
+                    (font-lock-add-keywords nil
+                                            '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
+                                              ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
+                    (outline-minor-mode)
+                    (setq c-basic-offset 4)
+                    (flyspell-prog-mode))))
 
 (add-hook 'text-mode-hook (lambda () (flyspell-mode)))
 
@@ -235,21 +191,5 @@
 ; use find-file-in-repository by default
 (global-set-key (kbd "C-x C-r") 'find-file-in-repository)
 
-(Darwin
- (setq x-select-enable-clipboard t)
- (setq mac-option-modifier 'meta)
- (setq mac-command-modifier 'meta)
- ;; re-assign other-frame to Command-` (s-`) since we take s- away
- ;; we'll need a way to switch frames.
- (global-set-key (kbd "M-`") 'other-frame)
-)
-
-;;;;;;;;;;;;;;;;;
-;; Load addons ;;
-;;;;;;;;;;;;;;;;;
-(when load-in-progress
-  (setq *emacs-addon-dir* (concat (file-name-directory load-file-name) "addon")))
-
-(idle-exec
- (dolist (elt (ignore-errors (directory-files *emacs-addon-dir* t ".*\.el$")))
-   (load-file elt)))
+; shell
+(global-set-key (kbd "C-c t") 'toggle-shell)

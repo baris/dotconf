@@ -65,6 +65,12 @@
   (if (not (null my-latest-non-shell-buffer))
       (switch-to-buffer (get-buffer my-latest-non-shell-buffer))))
 
+;;;###autoload
+(defun toggle-shell ()
+  (interactive)
+  (if (s-starts-with? my-shell-prefix (buffer-name))
+      (switch-to-latest-non-shell)
+    (switch-to-shell)))
 
 (defalias 'sh 'switch-to-shell)
 (defalias 'nh 'new-shell)
