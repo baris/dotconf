@@ -21,7 +21,9 @@
     (apply my-preferred-shell nil))
   (if (eq name nil)
       (setq name my-default-shell-name))
-  (rename-buffer (make-shell-buffer-name name)))
+  (let ((new-buffer-name (make-shell-buffer-name name)))
+    (rename-buffer (make-shell-buffer-name name))
+    new-buffer-name))
 
 ;;;###autoload
 (defun make-shell-buffer-name (name)
@@ -50,14 +52,11 @@
   (if (not (get-name-from-shell-buffer-name (buffer-name)))
       (setq my-latest-non-shell-buffer (buffer-name)))
   (let ((buffers (shell-buffers)))
-    (let ((buffers-len (safe-length buffers)))
-      (if (< buffers-len 2)
-          (if (= buffers-len 1)
-              (if (string= (buffer-name) (make-shell-buffer-name my-default-shell-name))
-                  (new-shell (read-string "New Shell Name: "))
-                (switch-to-buffer (make-shell-buffer-name (car buffers))))
-            (new-shell nil))
-        (switch-to-buffer (make-shell-buffer-name (ido-completing-read "Switch to Shell: " buffers)))))))
+    (if (>= (safe-length buffers) 1)
+        (let ((buffer-to-switch (ido-completing-read "Switch to Shell: " buffers)))
+          (if (member buffer-to-switch buffers)
+              (switch-to-buffer (make-shell-buffer-name buffer-to-switch))
+            (switch-to-buffer (new-shell buffer-to-switch)))))))
 
 ;;;###autoload
 (defun switch-to-latest-non-shell ()
