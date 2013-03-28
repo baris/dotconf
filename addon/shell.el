@@ -56,7 +56,8 @@
         (let ((buffer-to-switch (ido-completing-read "Switch to Shell: " buffers)))
           (if (member buffer-to-switch buffers)
               (switch-to-buffer (make-shell-buffer-name buffer-to-switch))
-            (switch-to-buffer (new-shell buffer-to-switch)))))))
+            (switch-to-buffer (new-shell buffer-to-switch))))
+      (new-shell nil))))
 
 ;;;###autoload
 (defun switch-to-latest-non-shell ()
