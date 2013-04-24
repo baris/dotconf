@@ -57,7 +57,7 @@
          (if (package-installed-p pkg)
              (require pkg)
            (package-install pkg)))
-       '(dash s magit))))
+       '(dash s magit ahg go-mode))))
 
 
 ;;;;;;;;;;;;;;;;;
@@ -126,12 +126,13 @@
 (which-function-mode 1)  ;; show functions in the mode line.
 (setq compilation-scroll-output t)
 
-(dolist (*mode-hook* (list 'python-mode-hook 'c-mode-hook 'c++-mode-hook 'objc-mode-hook))
+(dolist (*mode-hook* (list 'python-mode-hook 'c-mode-hook 'c++-mode-hook 'objc-mode-hook 'go-mode-hook))
         (add-hook *mode-hook*
                   (lambda ()
                     (font-lock-add-keywords nil
                                             '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
-                                              ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
+                                              ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))q
+                    (setq show-trailing-whitespace 1)
                     (outline-minor-mode)
                     (setq c-basic-offset 4)
                     (flyspell-prog-mode))))
@@ -154,7 +155,7 @@
  (global-set-key (kbd "C-x .") 'hippie-expand)
 
  ;; use Meta + arrow keys to switch windows.
- (windmove-default-keybindings 'meta)
+ ;; (windmove-default-keybindings 'meta)
 
  ;; use meta + {-,+} to resize windows.
  (global-unset-key (kbd "M--")) (global-set-key (kbd "M--") (lambda () (interactive) (enlarge-window -2)))
@@ -193,4 +194,5 @@
  (global-set-key (kbd "C-x C-r") 'find-file-in-repository)
 
  ;; shell
- (global-set-key (kbd "C-c t") 'toggle-shell))
+ (global-set-key (kbd "C-c t") 'toggle-shell)
+ (global-set-key (kbd "C-c s") 'switch-to-shell))
