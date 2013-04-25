@@ -1,7 +1,6 @@
 ;;;;;;;;;;;;;;;;
 ;; Keys Setup ;;
 ;;;;;;;;;;;;;;;;
-
 (defvar baris-keys-minor-mode-map (make-keymap) "baris-keys-minor-mode keymap.")
 
 (define-key baris-keys-minor-mode-map (kbd "C-x .") 'hippie-expand)
@@ -9,6 +8,12 @@
 ;; use Meta + arrow keys to switch windows.
 ;; (windmove-default-keybindings 'meta)
 (define-key baris-keys-minor-mode-map (kbd "C-M-o") 'other-window)
+  ;; (lambda ()
+  ;;   (interactive)
+  ;;   (progn
+  ;;     (set (make-variable-buffer-local 'mode-line-frame-identification) "-%F  ")
+  ;;     (other-window 1)
+  ;;     (set (make-variable-buffer-local 'mode-line-frame-identification) "-%F (ACTIVE) "))))
 
 ;; use meta + {-,+} to resize windows.
 (define-key baris-keys-minor-mode-map (kbd "M--") (lambda () (interactive) (enlarge-window -2)))

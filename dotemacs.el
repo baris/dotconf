@@ -63,6 +63,11 @@
 ;;;;;;;;;;;;;;;;;
 ;; Basic Setup ;;
 ;;;;;;;;;;;;;;;;;
+(set-face-foreground 'modeline "white")
+(set-face-foreground 'modeline-inactive "black")
+(set-face-background 'modeline "black")
+(set-face-background 'modeline-inactive "white")
+
 (if window-system
     (progn
       (tool-bar-mode -1)
