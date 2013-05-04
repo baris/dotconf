@@ -1,19 +1,30 @@
+;;; -*- lexical-binding: t -*-
+
 ;;;;;;;;;;;;;;;;
 ;; Keys Setup ;;
 ;;;;;;;;;;;;;;;;
 (defvar baris-keys-minor-mode-map (make-keymap) "baris-keys-minor-mode keymap.")
 
-(define-key baris-keys-minor-mode-map (kbd "C-x .") 'hippie-expand)
+(defvar default-mode-key "*default-mode-key*")
+(defun conditional-behavior (mode-behavior-map)
+  (let ((default-behavior (gethash default-mode-key mode-behavior-map (lambda () nil)))
+        (call-default 't))
+    (maphash (lambda (name behavior)
+               (if (and
+                    (string-match name mode-name)
+                    (not (string= name default-mode-key)))
+                   (progn
+                     (funcall behavior)
+                     (setq call-default nil))))
+             mode-behavior-map)
+    (if call-default
+        (funcall default-behavior))))
 
-;; use Meta + arrow keys to switch windows.
-;; (windmove-default-keybindings 'meta)
+(define-key baris-keys-minor-mode-map (kbd "M-{") 'previous-buffer)
+(define-key baris-keys-minor-mode-map (kbd "M-}") 'next-buffer)
+(define-key baris-keys-minor-mode-map (kbd "C-M-b") 'ido-switch-buffer)
 (define-key baris-keys-minor-mode-map (kbd "C-M-o") 'other-window)
-  ;; (lambda ()
-  ;;   (interactive)
-  ;;   (progn
-  ;;     (set (make-variable-buffer-local 'mode-line-frame-identification) "-%F  ")
-  ;;     (other-window 1)
-  ;;     (set (make-variable-buffer-local 'mode-line-frame-identification) "-%F (ACTIVE) "))))
+(define-key baris-keys-minor-mode-map (kbd "C-x .") 'hippie-expand)
 
 ;; use meta + {-,+} to resize windows.
 (define-key baris-keys-minor-mode-map (kbd "M--") (lambda () (interactive) (enlarge-window -2)))
@@ -33,18 +44,19 @@
 ;; scroll window... vim had this nice thing too.
 (add-hook 'minibuffer-setup-hook (lambda () (baris-keys-minor-mode nil)))
 
-(define-key baris-keys-minor-mode-map (kbd "M-n")
-  (lambda ()
-    (interactive)
-    (if (string-match ".*Minibuffer.*" mode-name)
-        (next-history-element 1)
-      (scroll-down 1))))
-(define-key baris-keys-minor-mode-map (kbd "M-p")
-  (lambda ()
-    (interactive)
-    (if (string-match ".*Minibuffer.*" mode-name)
-        (previous-history-element 1)
-      (scroll-up 1))))
+(let ((behavior-map (make-hash-table :test 'equal)))
+  (puthash ".*Minibuffer.*" '(lambda () (next-history-element 1)) behavior-map)
+  (puthash "Shell" '(lambda () (comint-next-input 1)) behavior-map)
+  (puthash default-mode-key '(lambda () (scroll-down 1)) behavior-map)
+  (define-key baris-keys-minor-mode-map (kbd "M-n")
+    (lambda () (interactive) (conditional-behavior behavior-map))))
+
+(let ((behavior-map (make-hash-table :test 'equal)))
+  (puthash ".*Minibuffer.*" '(lambda () (previous-history-element 1)) behavior-map)
+  (puthash "Shell" '(lambda () (comint-previous-input 1)) behavior-map)
+  (puthash default-mode-key '(lambda () (scroll-up 1)) behavior-map)
+  (define-key baris-keys-minor-mode-map (kbd "M-p")
+    (lambda () (interactive) (conditional-behavior behavior-map))))
 
 ;; file completions
 (define-key baris-keys-minor-mode-map (kbd "C-'") 'ff-find-other-file)
