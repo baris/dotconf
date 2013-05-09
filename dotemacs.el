@@ -4,6 +4,10 @@
 
 (require 'cl)
 
+;;;;;;;;;;;;;;;;;;;;;;
+;; Helper Functions ;;
+;;;;;;;;;;;;;;;;;;;;;;
+
 ;;;###autoload
 (defmacro Darwin (&rest body)
   (list 'if (eq system-type 'darwin)
@@ -34,6 +38,13 @@
    'run-with-idle-timer 0.5 nil
    (list 'lambda nil (cons 'progn body))))
 
+(defun shell-command-on-buffer (command &optional replace)
+  (interactive "sShell Command: ")
+  (shell-command-on-region (point-min) (point-max) command nil replace))
+
+(defun json-beautify-buffer ()
+  (interactive)
+  (shell-command-on-buffer "python -m json.tool" t))
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages ;;
@@ -44,6 +55,7 @@
                                go-mode          ; Go mode
                                lua-mode         ; Lua mode
                                js2-mode         ; JavaScript mode
+                               json-mode        ; JSON mode
                                magit            ; git repository management
                                mo-git-blame     ; git-blame mode
                                ahg              ; mercurial repository management
