@@ -1,4 +1,7 @@
-;; Baris Metin <baris@metin.org>
+; -*- compile-command: "find . -name '*.el' | xargs etags -a" -*-
+;
+; Baris Metin <baris@metin.org>
+
 (require 'cl)
 
 ;;;###autoload
@@ -35,7 +38,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages ;;
 ;;;;;;;;;;;;;;;;;;;;;;
-(setq external-packages-list '(dash s go-mode magit mo-git-blame ahg paredit browse-kill-ring))
+(setq external-packages-list '(dash             ; a modern list library for elisp
+                               s                ; string manipulation library
+                               python-mode      ; Python mode
+                               go-mode          ; Go mode
+                               lua-mode         ; Lua mode
+                               js2-mode         ; JavaScript mode
+                               magit            ; git repository management
+                               mo-git-blame     ; git-blame mode
+                               ahg              ; mercurial repository management
+                               paredit          ; parentheses editing (for lisp modes)
+                               full-ack         ; search with ack
+                               browse-kill-ring ; interactively select items from kill-ring
+                               ))
 
 (if (>= emacs-major-version 24)
     (progn
@@ -64,7 +79,7 @@
 ;;;;;;;;;;;;;;;;;
 ;; Basic Setup ;;
 ;;;;;;;;;;;;;;;;;
-(set-face-foreground 'modeline "white")
+(set-face-foreground 'modeline "green")
 (set-face-foreground 'modeline-inactive "black")
 (set-face-background 'modeline "black")
 (set-face-background 'modeline-inactive "white")
