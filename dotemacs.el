@@ -32,18 +32,11 @@
    (list 'lambda nil (cons 'progn body))))
 
 
-;;;;;;;;;;;;;;;;;
-;; Load addons ;;
-;;;;;;;;;;;;;;;;;
-(when load-in-progress
-  (setq *emacs-addon-dir* (concat (file-name-directory load-file-name) "addon")))
-
-(dolist (elt (ignore-errors (directory-files *emacs-addon-dir* t ".*\.el$")))
-  (load-file elt))
-
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages ;;
 ;;;;;;;;;;;;;;;;;;;;;;
+(setq external-packages-list '(dash s go-mode magit mo-git-blame ahg paredit browse-kill-ring))
+
 (if (>= emacs-major-version 24)
     (progn
       (require 'package)
@@ -57,8 +50,16 @@
          (if (package-installed-p pkg)
              (require pkg)
            (package-install pkg)))
-       '(dash s magit ahg go-mode))))
+       external-packages-list)))
 
+;;;;;;;;;;;;;;;;;
+;; Load addons ;;
+;;;;;;;;;;;;;;;;;
+(when load-in-progress
+  (setq *emacs-addon-dir* (concat (file-name-directory load-file-name) "addon")))
+
+(dolist (elt (ignore-errors (directory-files *emacs-addon-dir* t ".*\.el$")))
+  (load-file elt))
 
 ;;;;;;;;;;;;;;;;;
 ;; Basic Setup ;;
@@ -131,19 +132,45 @@
 (which-function-mode 1)  ;; show functions in the mode line.
 (setq compilation-scroll-output t)
 
-(dolist (*mode-hook* (list 'python-mode-hook 'c-mode-hook 'c++-mode-hook 'objc-mode-hook 'go-mode-hook))
-        (add-hook *mode-hook*
-                  (lambda ()
-                    (font-lock-add-keywords nil
-                                            '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
-                                              ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))q
-                    (setq show-trailing-whitespace 1)
-                    (outline-minor-mode)
-                    (setq c-basic-offset 4)
-                    (flyspell-prog-mode))))
 
-(add-hook 'text-mode-hook (lambda () (flyspell-mode)))
+;;;;;;;;;;;;;;;;
+;; Mode Hooks ;;
+;;;;;;;;;;;;;;;;
+(add-hook 'text-mode-hook (lambda () 
+                            (flyspell-mode)))
 
+(setq *lisp-prog-mode-hooks* (list
+                       'emacs-lisp-mode-hook
+                       'ielm-mode-hook
+                       'eval-expression-minibuffer-setup-hook))
+
+(setq *other-prog-mode-hooks* (list
+                               'python-mode-hook
+                               'c-mode-hook
+                               'c++-mode-hook
+                               'objc-mode-hook
+                               'go-mode-hook))
+
+(setq *prog-mode-hooks* (append *other-prog-mode-hooks* *lisp-prog-mode-hooks*))
+
+(dolist (*mode-hook* *prog-mode-hooks*)
+  (add-hook *mode-hook*
+            (lambda ()
+              (font-lock-add-keywords
+               nil
+               '(("\\<\\(FIXME\\):" 1 font-lock-warning-face t)
+                 ("\\<\\(TODO\\):" 1 font-lock-warning-face t)))
+              (setq show-trailing-whitespace 1)
+              (outline-minor-mode)
+              (setq c-basic-offset 4)
+              (flyspell-prog-mode))))
+
+(dolist (*mode-hook* *lisp-prog-mode-hooks*)
+        (add-hook *mode-hook* #'enable-paredit-mode))
+
+;;;;;;;;;;;;;
+;; Aliases ;;
+;;;;;;;;;;;;;
 (idle-exec
  (defalias 'yes-or-no-p 'y-or-n-p))
 
