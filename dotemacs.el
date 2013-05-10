@@ -64,6 +64,8 @@
 (setq el-get-sources
       '((:name company :type elpa :description "Complete Anything")
         (:name json-mode :type elpa :description "JSON mode")
+        (:name pyflakes :type elpa :description "Run pyflakes")
+        (:name pysmell :type elpa :description "Python auto-complete helper")
         (:name magit :type elpa :description "Git repository management")))
 
 (el-get 'sync)
@@ -71,6 +73,8 @@
 (setq external-packages-list
       '(python-mode      ; Python mode
         pymacs           ; interface between Python and Emacs
+        pysmell          ; python auto-complete helper uses pymacs
+        pyflakes         ; run pyflakes
         go-mode          ; Go mode
         lua-mode         ; Lua mode
         js2-mode         ; JavaScript mode
