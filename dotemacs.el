@@ -53,6 +53,9 @@
 (setq external-packages-list '(dash             ; a modern list library for elisp
                                s                ; string manipulation library
                                python-mode      ; Python mode
+                               pymacs           ; interface between Python and Emacs
+                               pysmell          ; PYthon code completion
+                               pyflakes         ; run pyflakes checker
                                go-mode          ; Go mode
                                lua-mode         ; Lua mode
                                js2-mode         ; JavaScript mode
