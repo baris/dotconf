@@ -85,4 +85,5 @@
   "A minor mode for my key bindings."
   t " baris-keys" 'baris-keys-minor-mode-map)
 
+;; Initialize
 (baris-keys-minor-mode 1)

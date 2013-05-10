@@ -75,5 +75,3 @@
 (defalias 'sh 'switch-to-shell)
 (defalias 'nh 'new-shell)
 (defalias 'sb 'switch-to-latest-non-shell)
-
-(provide 'functions)

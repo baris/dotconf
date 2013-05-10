@@ -39,6 +39,7 @@
    (list 'lambda nil (cons 'progn body))))
 
 (defun shell-command-on-buffer (command &optional replace)
+  "Run a shell command on current buffer"
   (interactive "sShell Command: ")
   (shell-command-on-region (point-min) (point-max) command nil replace))
 
@@ -60,6 +61,7 @@
                                mo-git-blame     ; git-blame mode
                                ahg              ; mercurial repository management
                                paredit          ; parentheses editing (for lisp modes)
+                               company          ; Complete Anything
                                full-ack         ; search with ack
                                browse-kill-ring ; interactively select items from kill-ring
                                ))
@@ -91,34 +93,6 @@
 ;;;;;;;;;;;;;;;;;
 ;; Basic Setup ;;
 ;;;;;;;;;;;;;;;;;
-(set-face-foreground 'modeline "green")
-(set-face-foreground 'modeline-inactive "black")
-(set-face-background 'modeline "black")
-(set-face-background 'modeline-inactive "white")
-
-(if window-system
-    (progn
-      (tool-bar-mode -1)
-      (wm))
-  (progn
-    (require 'mouse)
-    (xterm-mouse-mode t)
-    (global-set-key [mouse-4] '(lambda ()
-                                 (interactive)
-                                 (scroll-down 1)))
-    (global-set-key [mouse-5] '(lambda ()
-                                 (interactive)
-                                 (scroll-up 1)))))
-
-(Darwin
- (setq x-select-enable-clipboard t)
- (setq mac-option-modifier 'meta)
- (setq mac-command-modifier 'meta)
- ;; re-assign other-frame to Command-` (s-`) since we take s- away
- ;; we'll need a way to switch frames.
- (global-set-key (kbd "M-`") 'other-frame)
-)
-
 (setq make-backup-files nil)
 (setq inhibit-startup-message t)
 (setq line-number-mode t)
@@ -134,7 +108,7 @@
 (setq visible-bell t) ;; don't beep
 (set-default 'cursor-type 'box)
 
-;;(setq default-line-spacing 0) ;; same line-spacing with TextMate
+(setq default-line-spacing 0.1) ;; same line-spacing with TextMate
 (setq current-language-environment "UTF-8")
 (setq tab-width 4)
 
@@ -163,7 +137,7 @@
 ;;;;;;;;;;;;;;;;
 ;; Mode Hooks ;;
 ;;;;;;;;;;;;;;;;
-(add-hook 'text-mode-hook (lambda () 
+(add-hook 'text-mode-hook (lambda ()
                             (flyspell-mode)))
 
 (setq *lisp-prog-mode-hooks* (list
@@ -174,6 +148,9 @@
 (setq *other-prog-mode-hooks* (list
                                'python-mode-hook
                                'c-mode-hook
+                               'lua-mode-hook
+                               'js2-mode-hook
+                               'json-mode-hook
                                'c++-mode-hook
                                'objc-mode-hook
                                'go-mode-hook))
@@ -195,12 +172,27 @@
 (dolist (*mode-hook* *lisp-prog-mode-hooks*)
         (add-hook *mode-hook* #'enable-paredit-mode))
 
-;;;;;;;;;;;;;
-;; Aliases ;;
-;;;;;;;;;;;;;
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-hook 'js2-mode-hook
+          (lambda ()
+            (slime-js-minor-mode 1)))
+
+(add-hook 'css-mode-hook
+          (lambda ()
+            (define-key css-mode-map "\M-\C-x" 'slime-js-refresh-css)
+            (define-key css-mode-map "\C-c\C-r" 'slime-js-embed-css)))
+
+
+;; Enable company mode globally
+(add-hook 'after-init-hook 'global-company-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;
+;; Function Aliases ;;
+;;;;;;;;;;;;;;;;;;;;;;
 (idle-exec
  (defalias 'yes-or-no-p 'y-or-n-p))
 
 (idle-exec
  (when (require-maybe 'magit)
    (defalias 'm 'magit-status)))
+

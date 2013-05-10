@@ -11,14 +11,21 @@
                                          'fullboth)))
 
 ;;;###autoload
+(defun setup-modeline-colors ()
+  (set-face-foreground 'modeline "black")
+  (set-face-foreground 'modeline-inactive "white")
+  (set-face-background 'modeline "yellow")
+  (set-face-background 'modeline-inactive "black")
+
+;;;###autoload
+  )
 (defun setup-window (width height left top)
-  (interactive)
   (if window-system
       (progn
         (set-frame-size (selected-frame) width height)
         (set-frame-position (selected-frame) left top)
-          (if (>= emacs-major-version 24)
-              (load-theme 'wombat t)))))
+        (if (>= emacs-major-version 24)
+            (load-theme 'adwaita)))))
 
 ;;;###autoload
 (defun setup-main-window ()
@@ -33,7 +40,6 @@
 
 ;;;###autoload
 (defun setup-side-window (left)
-  (interactive)
   (let
       ((width (floor (/ (* 0.48 (x-display-pixel-width)) (frame-char-width))))
        (height (floor (/ (* 0.90 (x-display-pixel-height)) (frame-char-height))))
@@ -54,3 +60,10 @@
 (defalias 'wm 'setup-main-window)
 (defalias 'wl 'setup-left-window)
 (defalias 'wr 'setup-right-window)
+
+;; Initialization
+(if window-system
+    (progn
+      (setup-main-window)
+      (setup-modeline-colors)
+      (tool-bar-mode 1)))
