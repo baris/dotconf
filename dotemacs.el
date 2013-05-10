@@ -50,39 +50,46 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages ;;
 ;;;;;;;;;;;;;;;;;;;;;;
-(setq external-packages-list '(dash             ; a modern list library for elisp
-                               s                ; string manipulation library
-                               python-mode      ; Python mode
-                               pymacs           ; interface between Python and Emacs
-                               pysmell          ; PYthon code completion
-                               pyflakes         ; run pyflakes checker
-                               go-mode          ; Go mode
-                               lua-mode         ; Lua mode
-                               js2-mode         ; JavaScript mode
-                               json-mode        ; JSON mode
-                               magit            ; git repository management
-                               mo-git-blame     ; git-blame mode
-                               ahg              ; mercurial repository management
-                               paredit          ; parentheses editing (for lisp modes)
-                               company          ; Complete Anything
-                               full-ack         ; search with ack
-                               browse-kill-ring ; interactively select items from kill-ring
-                               ))
 
-(if (>= emacs-major-version 24)
-    (progn
-      (require 'package)
-      (add-to-list 'package-archives
-                   '("marmalade" .
-                     "http://marmalade-repo.org/packages/"))
-      (package-initialize)
+;; Install el-get
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(unless (require-maybe 'el-get)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (let (el-get-master-branch)
+      (goto-char (point-max))
+      (eval-print-last-sexp))))
 
-      (mapc
-       (lambda (pkg)
-         (if (package-installed-p pkg)
-             (require pkg)
-           (package-install pkg)))
-       external-packages-list)))
+(setq el-get-sources
+      '((:name company :type elpa :description "Complete Anything")
+        (:name json-mode :type elpa :description "JSON mode")
+        (:name magit :type elpa :description "Git repository management")))
+
+(el-get 'sync)
+
+(setq external-packages-list
+      '(python-mode      ; Python mode
+        pymacs           ; interface between Python and Emacs
+        go-mode          ; Go mode
+        lua-mode         ; Lua mode
+        js2-mode         ; JavaScript mode
+        json-mode        ; JSON mode
+        magit            ; git repository management
+        mo-git-blame     ; git-blame mode
+        ahg              ; mercurial repository management
+        paredit          ; parentheses editing (for lisp modes)
+        company          ; Complete Anything
+        full-ack         ; search with ack
+        browse-kill-ring ; interactively select items from kill-ring
+        ))
+
+(mapc
+ (lambda (pkg)
+   (if (el-get-package-is-installed pkg)
+       (require pkg)
+     (el-get-install pkg)))
+ external-packages-list)
 
 ;;;;;;;;;;;;;;;;;
 ;; Load addons ;;
@@ -153,7 +160,6 @@
                                'c-mode-hook
                                'lua-mode-hook
                                'js2-mode-hook
-                               'json-mode-hook
                                'c++-mode-hook
                                'objc-mode-hook
                                'go-mode-hook))
@@ -188,6 +194,8 @@
 
 ;; Enable company mode globally
 (add-hook 'after-init-hook 'global-company-mode)
+
+(setq py-load-pymacs-p t)
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Function Aliases ;;
