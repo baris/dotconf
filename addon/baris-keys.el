@@ -24,7 +24,10 @@
 (define-key baris-keys-minor-mode-map (kbd "M-}") 'next-buffer)
 (define-key baris-keys-minor-mode-map (kbd "C-M-b") 'ido-switch-buffer)
 (define-key baris-keys-minor-mode-map (kbd "C-M-o") 'other-window)
-(define-key baris-keys-minor-mode-map (kbd "C-x .") 'hippie-expand)
+
+(if (boundp 'company-mode)
+    (define-key baris-keys-minor-mode-map (kbd "C-x .") 'company-complete)
+  (define-key baris-keys-minor-mode-map (kbd "C-x .") 'hippie-expand))
 
 ;; use meta + {-,+} to resize windows.
 (define-key baris-keys-minor-mode-map (kbd "M--") (lambda () (interactive) (enlarge-window -2)))
