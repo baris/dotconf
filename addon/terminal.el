@@ -3,7 +3,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;###autoload
-(defun setup-modeline-colors ()
+(defun setup-terminal-modeline-colors ()
   (set-face-foreground 'modeline "green")
   (set-face-foreground 'modeline-inactive "black")
   (set-face-background 'modeline "black")
@@ -20,4 +20,5 @@
       (global-set-key [mouse-5] '(lambda ()
                                    (interactive)
                                    (scroll-up 1)))
+      (setup-terminal-modeline-colors)
       (load-theme 'wombat)))

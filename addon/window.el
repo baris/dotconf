@@ -11,14 +11,13 @@
                                          'fullboth)))
 
 ;;;###autoload
-(defun setup-modeline-colors ()
+(defun setup-window-modeline-colors ()
   (set-face-foreground 'modeline "black")
   (set-face-foreground 'modeline-inactive "white")
   (set-face-background 'modeline "yellow")
-  (set-face-background 'modeline-inactive "black")
+  (set-face-background 'modeline-inactive "black"))
 
 ;;;###autoload
-  )
 (defun setup-window (width height left top)
   (if window-system
       (progn
@@ -65,5 +64,5 @@
 (if window-system
     (progn
       (setup-main-window)
-      (setup-modeline-colors)
+      (ignore-errors (setup-window-modeline-colors))
       (tool-bar-mode 1)))
