@@ -25,7 +25,7 @@
         (set-frame-size (selected-frame) width height)
         (set-frame-position (selected-frame) left top)
         (if (>= emacs-major-version 24)
-            (load-theme 'adwaita)))))
+            (load-theme 'wombat)))))
 
 ;;;###autoload
 (defun setup-main-window ()

@@ -51,7 +51,7 @@
   (puthash ".*Minibuffer.*" '(lambda () (next-history-element 1)) behavior-map)
   (puthash "Shell" '(lambda () (comint-next-input 1)) behavior-map)
   (puthash "IELM" '(lambda () (comint-next-input 1)) behavior-map)
-  (puthash default-mode-key '(lambda () (scroll-down 1)) behavior-map)
+  (puthash default-mode-key '(lambda () (scroll-up 1)) behavior-map)
   (define-key baris-keys-minor-mode-map (kbd "M-n")
     (lambda () (interactive) (conditional-behavior behavior-map))))
 
@@ -59,7 +59,7 @@
   (puthash ".*Minibuffer.*" '(lambda () (previous-history-element 1)) behavior-map)
   (puthash "Shell" '(lambda () (comint-previous-input 1)) behavior-map)
   (puthash "IELM" '(lambda () (comint-previous-input 1)) behavior-map)
-  (puthash default-mode-key '(lambda () (scroll-up 1)) behavior-map)
+  (puthash default-mode-key '(lambda () (scroll-down 1)) behavior-map)
   (define-key baris-keys-minor-mode-map (kbd "M-p")
     (lambda () (interactive) (conditional-behavior behavior-map))))
 
