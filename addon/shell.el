@@ -68,7 +68,7 @@
 ;;;###autoload
 (defun toggle-shell ()
   (interactive)
-  (if (s-starts-with? my-shell-prefix (buffer-name))
+  (if (string-prefix-p my-shell-prefix (buffer-name))
       (switch-to-latest-non-shell)
     (switch-to-shell)))
 
