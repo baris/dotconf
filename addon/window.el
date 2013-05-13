@@ -65,4 +65,4 @@
     (progn
       (setup-main-window)
       (ignore-errors (setup-window-modeline-colors))
-      (tool-bar-mode 1)))
+      (tool-bar-mode -1)))
