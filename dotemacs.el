@@ -43,6 +43,11 @@
   (interactive "sShell Command: ")
   (shell-command-on-region (point-min) (point-max) command nil replace))
 
+(defun shell-command-on-current-file (command)
+  "Run a shell command on current file"
+  (interactive "sShell Command: ")
+  (shell-command command (buffer-file-name)))
+
 (defun json-beautify-buffer ()
   (interactive)
   (shell-command-on-buffer "python -m json.tool" t))
@@ -65,7 +70,7 @@
       '((:name company :type elpa :description "Complete Anything")
         (:name json-mode :type elpa :description "JSON mode")
         (:name pyflakes :type elpa :description "Run pyflakes")
-        (:name pysmell :type elpa :description "Python auto-complete helper")
+;;        (:name pysmell :type elpa :description "Python auto-complete helper")
         (:name magit :type elpa :description "Git repository management")))
 
 (el-get 'sync)
@@ -73,7 +78,7 @@
 (setq external-packages-list
       '(python-mode      ; Python mode
         pymacs           ; interface between Python and Emacs
-        pysmell          ; python auto-complete helper uses pymacs
+;;        pysmell          ; python auto-complete helper uses pymacs
         pyflakes         ; run pyflakes
         go-mode          ; Go mode
         lua-mode         ; Lua mode
@@ -200,6 +205,8 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 (setq py-load-pymacs-p t)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Function Aliases ;;
