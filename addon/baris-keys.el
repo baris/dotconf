@@ -49,7 +49,7 @@
 
 (let ((behavior-map (make-hash-table :test 'equal)))
   (puthash ".*Minibuffer.*" '(lambda () (next-history-element 1)) behavior-map)
-  (puthash "Shell" '(lambda () (comint-next-input 1)) behavior-map)
+  (puthash "Shell$" '(lambda () (comint-next-input 1)) behavior-map)
   (puthash "IELM" '(lambda () (comint-next-input 1)) behavior-map)
   (puthash default-mode-key '(lambda () (scroll-up 1)) behavior-map)
   (define-key baris-keys-minor-mode-map (kbd "M-n")
@@ -57,7 +57,7 @@
 
 (let ((behavior-map (make-hash-table :test 'equal)))
   (puthash ".*Minibuffer.*" '(lambda () (previous-history-element 1)) behavior-map)
-  (puthash "Shell" '(lambda () (comint-previous-input 1)) behavior-map)
+  (puthash "Shell$" '(lambda () (comint-previous-input 1)) behavior-map)
   (puthash "IELM" '(lambda () (comint-previous-input 1)) behavior-map)
   (puthash default-mode-key '(lambda () (scroll-down 1)) behavior-map)
   (define-key baris-keys-minor-mode-map (kbd "M-p")
@@ -67,8 +67,9 @@
 (define-key baris-keys-minor-mode-map (kbd "C-'") 'ff-find-other-file)
 
 ;; switching buffers
-(define-key baris-keys-minor-mode-map (kbd "C-x C-b") 'ido-switch-buffer)
-(define-key baris-keys-minor-mode-map (kbd "C-x b") 'ibuffer)
+;(define-key baris-keys-minor-mode-map (kbd "C-x C-b") 'ido-switch-buffer)
+(define-key baris-keys-minor-mode-map (kbd "C-x C-b") 'ibuffer)
+;(define-key baris-keys-minor-mode-map (kbd "C-x b") 'ibuffer)
 
 ;; dired
 (define-key baris-keys-minor-mode-map (kbd "C-x d") 'ido-dired)
