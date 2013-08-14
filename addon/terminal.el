@@ -4,10 +4,10 @@
 
 ;;;###autoload
 (defun setup-terminal-modeline-colors ()
-  (set-face-foreground 'modeline "green")
-  (set-face-foreground 'modeline-inactive "black")
-  (set-face-background 'modeline "black")
-  (set-face-background 'modeline-inactive "white"))
+  (ignore-errors (set-face-foreground 'modeline "green"))
+  (ignore-errors (set-face-foreground 'modeline-inactive "black"))
+  (ignore-errors (set-face-background 'modeline "black"))
+  (ignore-errors (set-face-background 'modeline-inactive "white")))
 
 ;; Initialization
 (if (not window-system)
