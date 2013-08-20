@@ -76,8 +76,9 @@
 (el-get 'sync)
 
 (setq external-packages-list
-      '(python-mode      ; Python mode
-        pymacs           ; interface between Python and Emacs
+      '(
+;;        python-mode      ; Python mode
+;;        pymacs           ; interface between Python and Emacs
 ;;        pysmell          ; python auto-complete helper uses pymacs
         pyflakes         ; run pyflakes
         go-mode          ; Go mode
@@ -217,4 +218,3 @@
 (idle-exec
  (when (require-maybe 'magit)
    (defalias 'm 'magit-status)))
-
