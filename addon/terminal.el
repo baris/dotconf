@@ -20,5 +20,4 @@
       (global-set-key [mouse-5] '(lambda ()
                                    (interactive)
                                    (scroll-up 1)))
-      (setup-terminal-modeline-colors)
-      (load-theme 'wombat)))
+      (setup-terminal-modeline-colors)))
