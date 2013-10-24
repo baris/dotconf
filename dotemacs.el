@@ -71,7 +71,8 @@
         (:name json-mode :type elpa :description "JSON mode")
         (:name pyflakes :type elpa :description "Run pyflakes")
 ;;        (:name pysmell :type elpa :description "Python auto-complete helper")
-        (:name magit :type elpa :description "Git repository management")))
+        (:name magit :type github :description "Git repository management" :pkgname "magit/magit")
+        (:name git-modes :type github :description "Git modes" :pkgname "magit/git-modes")))
 
 (el-get 'sync)
 
@@ -80,11 +81,13 @@
 ;;        python-mode      ; Python mode
 ;;        pymacs           ; interface between Python and Emacs
 ;;        pysmell          ; python auto-complete helper uses pymacs
+        cl-lib           ; Common Lisp functions
         pyflakes         ; run pyflakes
         go-mode          ; Go mode
         lua-mode         ; Lua mode
         js2-mode         ; JavaScript mode
         json-mode        ; JSON mode
+        git-modes         ; git modes for magit
         magit            ; git repository management
         mo-git-blame     ; git-blame mode
         ahg              ; mercurial repository management
@@ -97,7 +100,7 @@
 (mapc
  (lambda (pkg)
    (if (el-get-package-is-installed pkg)
-       (require pkg)
+       (ignore-errors (require pkg))
      (el-get-install pkg)))
  external-packages-list)
 
@@ -217,4 +220,9 @@
 
 (idle-exec
  (when (require-maybe 'magit)
-   (defalias 'm 'magit-status)))
+   (progn
+     (defalias 'm 'magit-status)
+     (set-face-foreground 'magit-diff-add "green3")
+     (set-face-foreground 'magit-diff-del "red3")
+     (set-face-foreground 'magit-item-highlight "white")
+     (set-face-background 'magit-item-highlight "black"))))
