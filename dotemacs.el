@@ -56,6 +56,10 @@
   (interactive)
   (find-file (concat "/sudo::" (buffer-file-name))))
 
+(defun align-assignments (begin end)
+  (interactive "r")
+  (align-regexp begin end (concat "\\(\\s-*\\)=" )  1 1))
+
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages ;;
 ;;;;;;;;;;;;;;;;;;;;;;
