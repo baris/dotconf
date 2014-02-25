@@ -1,0 +1,13 @@
+[user]
+	email = baris@metin.org
+	name = Baris Metin
+
+[alias]
+	st = status
+	ci = checkout
+	co = commit
+        lol = log --graph --oneline --decorate --color
+        l = log -p --color
+
+[color]
+	ui = true

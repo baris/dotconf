@@ -1,0 +1,8 @@
+startup_message off
+escape ^tT
+altscreen on
+defscrollback 100000
+caption always
+caption string "%{= kG}[%H]%{= kw} %= %-w%{r}(%n %t)%{w}%+w %="
+shelltitle ""
+
