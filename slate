@@ -67,10 +67,10 @@ bind l:cmd;alt;ctrl focus 'LimeChat'
 bind e:cmd;alt;ctrl focus 'Emacs'
 
 # 2 Monitor layout
-layout 2monitors 'iTerm':REPEAT         ${1-righthalf}
-layout 2monitors 'Emacs':REPEAT         ${2-lefthalf}
-layout 2monitors 'LimeChat':REPEAT      ${2-righthalf}
-layout 2monitors 'Google Chrome':REPEAT ${1-full}
+layout 2monitors 'iTerm':REPEAT         ${2-full}
+layout 2monitors 'Emacs':REPEAT         ${1-lefthalf}
+layout 2monitors 'LimeChat':REPEAT      ${1-righthalf}
+layout 2monitors 'Google Chrome':REPEAT ${2-full}
 
 # 1 Monitor layout
 layout 1monitor 'iTerm':REPEAT         ${1-righthalf}
@@ -79,8 +79,13 @@ layout 1monitor 'LimeChat':REPEAT      ${1-righthalf}
 layout 1monitor 'Google Chrome':REPEAT ${1-full}
 
 # Default Layouts
-default 2monitors resolutions:${mon-mac};${mon-ext};
-default 1monitor  resolutions:${mon-mac}
+default 1monitor count:1 resolutions:${mon-mac}
+#default 2monitors resolutions:${mon-mac};${mon-ext};
 
 bind 1:cmd;alt;ctrl layout 1monitor
-bind 2:cmd;alt;ctrl layout 2monitors
+bind 0:cmd;alt;ctrl layout 2monitors
+
+
+# Resize
+bind =:cmd;alt;ctrl resize +5% +5%
+bind -:cmd;alt;ctrl resize -5% -5%
