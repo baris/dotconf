@@ -53,7 +53,9 @@ bind 2:alt,ctrl throw 1 resize
 
 # Use the keys below to put the selected window
 bind a:cmd;ctrl;alt           ${lefthalf}
+bind s:cmd;ctrl;alt           ${lefthalf}
 bind ;:cmd;ctrl;alt           ${righthalf}
+bind ':cmd;ctrl;alt           ${righthalf}
 bind f:cmd;ctrl;alt           ${full}
 bind left:cmd;ctrl;alt        ${topleft}
 bind right:cmd;ctrl;alt       ${topright}
@@ -85,7 +87,16 @@ default 1monitor count:1 resolutions:${mon-mac}
 bind 1:cmd;alt;ctrl layout 1monitor
 bind 0:cmd;alt;ctrl layout 2monitors
 
-
 # Resize
 bind =:cmd;alt;ctrl resize +5% +5%
 bind -:cmd;alt;ctrl resize -5% -5%
+bind left:shift;cmd;ctrl resize -5% 0%
+bind right:shift;cmd;ctrl resize +5% 0%
+bind up:shift;cmd;ctrl resize 0% -5%
+bind down:shift;cmd;ctrl resize 0% +5%
+
+# move
+bind left:cmd;ctrl nudge -40 +0
+bind right:cmd;ctrl nudge +40 +0
+bind up:cmd;ctrl nudge +0 -40
+bind down:cmd;ctrl nudge +0 +40
