@@ -21,11 +21,15 @@ export PYTHONSTARTUP=$HOME/.pythonstartup.py
 export GOROOT="$HOME/src/go"
 
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH:$HOME/repos/toolbox:$GOROOT/bin"
-export PS1="\$(__ps1_bgcolor) \u@\h:\w $(tput setab 4)$(tput setaf 7) ✣ $(tput sgr0)\$(__git_ps1) "
+export PS1="\$(__ps1_bgcolor) \u@\h:\w $(tput setab 4)$(tput setaf 7)$(tput sgr0)\n✣ \$(__git_ps1) "
 
 export EDITOR=e
 
-alias ls='ls -G'
+if [ "x$(uname -s)" == "xDarwin" ]; then
+    alias ls='ls -G -F'
+else
+    alias ls='ls --color -F'
+fi
 alias ll='ls -l'
 alias la='ll -a'
 
