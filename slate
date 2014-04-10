@@ -45,8 +45,8 @@ bind e:cmd hint ASDFGHJKLQWERTYUIOPCVBN
 bind g:cmd grid padding:5 0:6,2 1:8,2
 
 # Send a program to a particular screen
-bind 1:alt,ctrl throw 0 resize
-bind 2:alt,ctrl throw 1 resize
+bind 1:cmd;ctrl throw ${mon-mac} resize
+bind 2:cmd;ctrl throw ${mon-ext} resize
 
 #Use the Slate task switcher
 #bind tab:cmd switch
@@ -75,14 +75,14 @@ layout 2monitors 'LimeChat':REPEAT      ${1-righthalf}
 layout 2monitors 'Google Chrome':REPEAT ${2-full}
 
 # 1 Monitor layout
-layout 1monitor 'iTerm':REPEAT         ${1-righthalf}
+layout 1monitor 'iTerm':REPEAT         ${1-full}
 layout 1monitor 'Emacs':REPEAT         ${1-lefthalf}
 layout 1monitor 'LimeChat':REPEAT      ${1-righthalf}
 layout 1monitor 'Google Chrome':REPEAT ${1-full}
 
 # Default Layouts
 default 1monitor count:1 resolutions:${mon-mac}
-#default 2monitors resolutions:${mon-mac};${mon-ext};
+default 2monitors resolutions:${mon-mac};${mon-ext};
 
 bind 1:cmd;alt;ctrl layout 1monitor
 bind 0:cmd;alt;ctrl layout 2monitors
@@ -90,10 +90,10 @@ bind 0:cmd;alt;ctrl layout 2monitors
 # Resize
 bind =:cmd;alt;ctrl resize +5% +5%
 bind -:cmd;alt;ctrl resize -5% -5%
-bind left:shift;cmd;ctrl resize -5% 0%
-bind right:shift;cmd;ctrl resize +5% 0%
-bind up:shift;cmd;ctrl resize 0% -5%
-bind down:shift;cmd;ctrl resize 0% +5%
+bind left:alt;ctrl resize -5% 0%
+bind right:alt;ctrl resize +5% 0%
+bind up:alt;ctrl resize 0% -5%
+bind down:alt;ctrl resize 0% +5%
 
 # move
 bind left:cmd;ctrl nudge -40 +0
