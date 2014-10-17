@@ -48,6 +48,9 @@ bind g:cmd grid padding:5 0:6,2 1:8,2
 bind 1:cmd;ctrl throw ${mon-mac} resize
 bind 2:cmd;ctrl throw ${mon-ext} resize
 
+# Send to next screen
+bind n:cmd;ctrl;alt throw next
+
 #Use the Slate task switcher
 #bind tab:cmd switch
 
