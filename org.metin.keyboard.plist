@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC -//Apple Computer//DTD PLIST 1.0//EN http://www.apple.com/DTDs/PropertyList-1.0.dtd >
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>org.metin.mskeyboard</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/bin/bash</string>
+      <string>-c</string>
+      <string>/Applications/Karabiner.app/Contents/Library/bin/karabiner select_by_name ms; while /usr/sbin/system_profiler SPUSBDataType|grep -q "Ergonomic Keyboard"; do sleep 3; done; /Applications/Karabiner.app/Contents/Library/bin/karabiner select_by_name mac</string>
+      <string>select_by_name</string>
+      <string>ms</string>
+    </array>
+    <key>LaunchEvents</key>
+    <dict>
+      <key>com.apple.iokit.matching</key>
+      <dict>
+        <key>com.apple.device-attach</key>
+        <dict>
+          <key>idProduct</key>
+          <integer>219</integer>
+          <key>idVendor</key>
+          <integer>1118</integer>
+          <key>IOProviderClass</key>
+          <string>IOUSBDevice</string>
+          <key>IOMatchStream</key>
+          <true/>
+        </dict>
+      </dict>
+    </dict>
+  </dict>
+</plist>

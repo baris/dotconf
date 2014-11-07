@@ -19,8 +19,9 @@ function __ps1_bgcolor() {
 
 export PYTHONSTARTUP=$HOME/.pythonstartup.py
 export GOROOT="$HOME/src/go"
+export GOPATH="$HOME/src/gopath"
 
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH:$HOME/repos/toolbox:$GOROOT/bin"
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH:$HOME/repos/toolbox:$GOROOT/bin:$GOPATH/bin"
 export PS1="\$(__ps1_bgcolor) \u@\h:\w $(tput setab 4)$(tput setaf 7)$(tput sgr0)\n--> \$(__git_ps1) "
 
 export EDITOR=e
