@@ -99,7 +99,6 @@
         magit            ; git repository management
         mo-git-blame     ; git-blame mode
         ahg              ; mercurial repository management
-        paredit          ; parentheses editing (for lisp modes)
         company          ; Complete Anything
         full-ack         ; search with ack
         browse-kill-ring ; interactively select items from kill-ring
@@ -198,9 +197,6 @@
               (outline-minor-mode)
               (setq c-basic-offset 4)
               (flyspell-prog-mode))))
-
-(dolist (*mode-hook* *lisp-prog-mode-hooks*)
-        (add-hook *mode-hook* #'enable-paredit-mode))
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-hook 'js2-mode-hook
