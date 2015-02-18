@@ -17,10 +17,12 @@ function __ps1_bgcolor() {
     printf "$(tput setab $BG_COLOR)$(tput setaf 0)"
 }
 
-export PYTHONSTARTUP=$HOME/.pythonstartup.py
-export GOROOT="$HOME/src/go"
+export PYTHONSTARTUP="$HOME/.pythonstartup.py"
+export REPOPATH="$HOME/repos/"
+export SRCPATH="$HOME/src"
+export GOPATH="$SRCPATH"
 
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH:$HOME/repos/toolbox:$GOROOT/bin"
+export PATH="/opt/emacs/bin:/usr/local/bin:/usr/local/sbin:$REPOPATH/toolbox:$SRCPATH/go/bin:$PATH"
 export PS1="\$(__ps1_bgcolor) \u@\h:\w $(tput setab 4)$(tput setaf 7)$(tput sgr0)\n> \$(__git_ps1) "
 
 export EDITOR=e
