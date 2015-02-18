@@ -22,9 +22,9 @@ export EDITOR=e
 export PYTHONSTARTUP="$HOME/.pythonstartup.py"
 export REPOPATH="$HOME/repos/"
 export SRCPATH="$HOME/src"
-export GOPATH="$SRCPATH"
+export GOPATH="$HOME"
 export PATH="/opt/emacs/bin:/usr/local/bin:/usr/local/sbin:$PATH"
-export PATH="$REPOPATH/toolbox:$SRCPATH/go/bin:$PATH"
+export PATH="$HOME/bin:$REPOPATH/toolbox:$SRCPATH/go/bin:$PATH"
 export PS1="\$(__ps1_bgcolor) \u@\h:\w $(tput setab 4)$(tput setaf 7)$(tput sgr0)\n--> \$(__git_ps1) "
 
 if [ "x$(uname -s)" == "xDarwin" ]; then
