@@ -48,6 +48,9 @@ bind g:cmd grid padding:5 0:6,2 1:8,2
 bind 1:cmd;ctrl throw ${mon-mac} resize
 bind 2:cmd;ctrl throw ${mon-ext} resize
 
+# Send to next screen
+bind n:cmd;ctrl;alt throw next
+
 #Use the Slate task switcher
 #bind tab:cmd switch
 
@@ -56,6 +59,8 @@ bind a:cmd;ctrl;alt           ${lefthalf}
 bind s:cmd;ctrl;alt           ${lefthalf}
 bind ;:cmd;ctrl;alt           ${righthalf}
 bind ':cmd;ctrl;alt           ${righthalf}
+bind u:cmd;ctrl;alt           ${tophalf}
+bind d:cmd;ctrl;alt           ${bottomhalf}
 bind f:cmd;ctrl;alt           ${full}
 bind left:cmd;ctrl;alt        ${topleft}
 bind right:cmd;ctrl;alt       ${topright}
