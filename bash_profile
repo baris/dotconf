@@ -19,6 +19,7 @@ function __ps1_bgcolor() {
 }
 
 export EDITOR=e
+export TERM=xterm
 export PYTHONSTARTUP="$HOME/.pythonstartup.py"
 export REPOPATH="$HOME/repos/"
 export SRCPATH="$HOME/src"
@@ -36,4 +37,6 @@ alias ll='ls -l'
 alias la='ll -a'
 alias tm='tmux attach -t main || tmux new -s main'
 
-source $HOME/repos/awstools/awshelpers.sh
+if [ -f $HOME/repos/awstools/awshelpers.sh ]; then
+    source $HOME/repos/awstools/awshelpers.sh
+fi

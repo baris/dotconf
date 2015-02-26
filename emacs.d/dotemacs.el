@@ -167,8 +167,9 @@
 ;;;;;;;;;;;;;;;;
 ;; Mode Hooks ;;
 ;;;;;;;;;;;;;;;;
-(add-hook 'text-mode-hook (lambda ()
-                            (flyspell-mode)))
+(add-hook 'text-mode-hook
+          (lambda ()
+            (flyspell-mode)))
 
 (setq *lisp-prog-mode-hooks* (list
                        'emacs-lisp-mode-hook
@@ -215,6 +216,7 @@
 (setq py-load-pymacs-p t)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook 'gofmt-before-save)
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Function Aliases ;;
