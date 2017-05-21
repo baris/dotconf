@@ -77,8 +77,6 @@
 (setq el-get-sources
       '((:name company :type elpa :description "Complete Anything")
         (:name json-mode :type elpa :description "JSON mode")
-        (:name pyflakes :type elpa :description "Run pyflakes")
-        (:name pysmell :type elpa :description "Python auto-complete helper")
         (:name magit :type github :description "Git repository management" :pkgname "magit/magit")
         (:name git-modes :type github :description "Git modes" :pkgname "magit/git-modes")
         (:name ensime :type github :description "Ensime" :pkgname "aemoncannon/ensime")))
@@ -88,10 +86,7 @@
 (setq external-packages-list
       '(
         cl-lib           ; Common Lisp functions
-        pyflakes         ; run pyflakes
         go-mode          ; Go mode
-        scala-mode2      ; Scala
-        ensime           ; ENhanced Scala Interaction Mode
         lua-mode         ; Lua mode
         js2-mode         ; JavaScript mode
         json-mode        ; JSON mode
