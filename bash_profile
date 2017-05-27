@@ -3,6 +3,7 @@
 if [ -f "/Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh" ]; then
     source /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
 else
+    source /usr/share/git-core/contrib/completion/git-prompt.sh
     __git_ps1=true
 fi
 
@@ -23,7 +24,7 @@ export TERM=xterm
 export PYTHONSTARTUP="$HOME/.pythonstartup.py"
 export REPOPATH="$HOME/repos/"
 export SRCPATH="$HOME/src"
-export GOPATH="$HOME"
+export GOPATH="$SRCPATH/go"
 export PATH="/opt/emacs/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$HOME/bin:$REPOPATH/toolbox:$SRCPATH/go/bin:$PATH"
 export PS1="\$(__ps1_bgcolor) \u@\h:\w $(tput setab 4)$(tput setaf 7)$(tput sgr0)\n--> \$(__git_ps1) "
