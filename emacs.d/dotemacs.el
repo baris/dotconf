@@ -64,47 +64,10 @@
 ;; Install packages ;;
 ;;;;;;;;;;;;;;;;;;;;;;
 
-;; Install el-get
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-(unless (require-maybe 'el-get)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (let (el-get-master-branch)
-      (goto-char (point-max))
-      (eval-print-last-sexp))))
-
-(setq el-get-sources
-      '((:name company :type elpa :description "Complete Anything")
-        (:name json-mode :type elpa :description "JSON mode")
-        (:name magit :type github :description "Git repository management" :pkgname "magit/magit")
-        (:name git-modes :type github :description "Git modes" :pkgname "magit/git-modes")
-        (:name ensime :type github :description "Ensime" :pkgname "aemoncannon/ensime")))
-
-(el-get 'sync)
-
-(setq external-packages-list
-      '(
-        cl-lib           ; Common Lisp functions
-        go-mode          ; Go mode
-        lua-mode         ; Lua mode
-        js2-mode         ; JavaScript mode
-        json-mode        ; JSON mode
-        git-modes        ; git modes for magit
-        magit            ; git repository management
-        mo-git-blame     ; git-blame mode
-        ahg              ; mercurial repository management
-        company          ; Complete Anything
-        full-ack         ; search with ack
-        browse-kill-ring ; interactively select items from kill-ring
-        ))
-
-(mapc
- (lambda (pkg)
-   (if (el-get-package-is-installed pkg)
-       (ignore-errors (require pkg))
-     (el-get-install pkg)))
- external-packages-list)
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
 
 ;;;;;;;;;;;;;;;;;
 ;; Load addons ;;
